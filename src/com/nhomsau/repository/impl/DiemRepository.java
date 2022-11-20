@@ -22,11 +22,11 @@ import java.util.logging.Logger;
 public class DiemRepository implements IDiemRepository {
 
     @Override
-    public List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idKy,String idNganh) {
-        String sql = "{call proc_diem_trung_binh_theo_mon(?,?,?)}";
+    public List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idKy,String idNganh,Float min,Float max) {
+        String sql = "{call proc_diem_trung_binh_theo_mon(?,?,?,?,?)}";
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromProc(sql, idMon,idKy,idNganh);
+            ResultSet rs = DBConnection.getDataFromProc(sql, idMon,idKy,idNganh,min,max);
             while(rs.next()){
                 String idSv = rs.getString("IdSinhVien");
                 String idLop = rs.getString("IdLop");
@@ -41,7 +41,7 @@ public class DiemRepository implements IDiemRepository {
     }
     
     @Override
-    public List<BangDiemTheoMon> thongKeDiemTatCaMon(String idNganh,String idKy){
+    public List<BangDiemTheoMon> thongKeDiemTatCaMon(String idNganh,String idKy,Double min, Double max){
         StringBuilder sql = new StringBuilder();
         sql.append("select Diem.IdSinhVien  ,SinhVien_Lop.IdLop 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh'");
         sql.append(" from Diem ");
@@ -53,7 +53,14 @@ public class DiemRepository implements IDiemRepository {
         sql.append("group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc");
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(),idNganh,idKy);
+            ResultSet rs = null;
+            if(max != null && min != null){
+            sql.append(" having Sum(Diem.Diem * DauDiem_Mon.HeSo/100) between ? and ?");
+            rs = DBConnection.getDataFromQuery(sql.toString(),idNganh,idKy,min,max);
+            }
+            else{
+                rs = DBConnection.getDataFromQuery(sql.toString(),idNganh,idKy );
+            }
             while(rs.next()){
                 String idSv = rs.getString("IdSinhVien");
                 String idLop = rs.getString("IdLop");

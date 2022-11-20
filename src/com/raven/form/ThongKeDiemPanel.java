@@ -23,9 +23,23 @@ import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.SinhVienView;
 import com.raven.swing.table.Table;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 /**
  *
@@ -78,6 +92,11 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         cbxNganh = new com.raven.swing.combobox.Combobox();
         cbxMon = new com.raven.swing.combobox.Combobox();
         btnPreview = new com.raven.swing.button.Button();
+        btnExport = new com.raven.swing.button.Button();
+        txtMin = new com.raven.swing.textfield.TextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtMax = new com.raven.swing.textfield.TextField();
+        btnLoc = new com.raven.swing.button.Button();
         pnTable = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.raven.swing.table.Table();
@@ -116,6 +135,23 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
             }
         });
 
+        btnExport.setText("Export ");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 14)); // NOI18N
+        jLabel1.setText("To");
+
+        btnLoc.setText("Loc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
@@ -128,8 +164,19 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 .addGap(45, 45, 45)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbxMon, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(350, Short.MAX_VALUE))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                        .addComponent(txtMin, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtMax, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,10 +185,15 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxKy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(28, 28, 28)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -241,12 +293,12 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
         if(cbxMon.getSelectedIndex() == 0){
             if(ky != null && nganh != null){
-             list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId());
+             list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(),null,null);
             }
         } else{
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
             if(mon!= null){
-            list = this.diemService.thongKeDiemTheoMon(mon.getId(),nganh.getId(),ky.getId());
+            list = this.diemService.thongKeDiemTheoMon(mon.getId(),nganh.getId(),ky.getId(),null,null);
             }
         }
     }//GEN-LAST:event_cbxMonItemStateChanged
@@ -255,8 +307,76 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_cbxMonActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser("C:\\Users\\Nguyen Duy Hung\\OneDrive\\Documents\\Export Java File");
+        fileChooser.showSaveDialog(this);
+        File saveFile = fileChooser.getSelectedFile();
+        if(saveFile != null){
+            FileOutputStream fos = null;
+            try {
+                saveFile = new File(saveFile.toString() + ".xlsx");
+                Workbook workbook = new SXSSFWorkbook();
+                Sheet sheet = workbook.createSheet("Bang Diem");
+                Row rowCol = sheet.createRow(0);
+                for(int i = 0 ; i < table1.getColumnCount(); i++){
+                    Cell cell = rowCol.createCell(i);
+                    cell.setCellValue(table1.getColumnName(i));
+                    
+                }   for(int i = 0; i < table1.getRowCount(); i++){
+                    Row row =sheet.createRow(i+1);
+                    for(int j = 0 ; j < table1.getColumnCount(); j++){
+                        Cell cell = row.createCell(j);
+                        if(table1.getValueAt(i, j) != null)
+                        {
+                            cell.setCellValue(table1.getValueAt(i, j).toString());
+                        }
+                    }
+                }   
+                fos = new FileOutputStream(new File(saveFile.toString()));
+                workbook.write(fos);
+                workbook.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if(fos != null)
+                    fos.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "That Bai");
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
+
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        // TODO add your handling code here:
+        QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
+        QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        float min = Float.valueOf(txtMin.getText());
+        float max = Float.valueOf(txtMax.getText());
+        if(cbxMon.getSelectedIndex() == 0){
+            if(ky != null && nganh != null){
+             list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(),(double)min,(double)max);
+            }
+        } else{
+            QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
+            if(mon!= null){
+            list = this.diemService.thongKeDiemTheoMon(mon.getId(),nganh.getId(),ky.getId(),null,null);
+            }
+        }
+        showTable();
+    }//GEN-LAST:event_btnLocActionPerformed
     private void initData(){
         initCombobox();
+        txtMax.setLabelText("Max");
+        txtMin.setLabelText("Min");
     }
     private void initCombobox(){
         List<QuanLyNganh> listNganhs = this.nganhService.findAll();
@@ -300,8 +420,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                         sinhVienView.getMa(),
                         lop.getTenLop(),
                         mon.getTinChi(),
-                        b.getDiemTB(),
-                        b.getTrangThai()
+                        b.getDiemTB()
                     };
                     table1.addRow(obj);
                 }
@@ -332,13 +451,18 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.swing.button.Button btnExport;
+    private com.raven.swing.button.Button btnLoc;
     private com.raven.swing.button.Button btnPreview;
     private com.raven.swing.combobox.Combobox cbxKy;
     private com.raven.swing.combobox.Combobox cbxMon;
     private com.raven.swing.combobox.Combobox cbxNganh;
+    private javax.swing.JLabel jLabel1;
     private com.raven.swing.PanelTransparent jPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private com.raven.swing.PanelTransparent pnTable;
     private com.raven.swing.table.Table table1;
+    private com.raven.swing.textfield.TextField txtMax;
+    private com.raven.swing.textfield.TextField txtMin;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Nguyen Duy Hung
  */
 public interface IDiemRepository {
-    List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idKy,String idNganh);
-    List<BangDiemTheoMon> thongKeDiemTatCaMon(String idNganh, String idKy);
+    List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idKy,String idNganh,Float min, Float max);
+    List<BangDiemTheoMon> thongKeDiemTatCaMon(String idNganh, String idKy, Double min, Double max);
     List<BangDiem> getDiem(String idsv,String idmon);
 }

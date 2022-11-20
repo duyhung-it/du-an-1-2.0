@@ -14,7 +14,7 @@ import java.util.List;
  * @author Nguyen Duy Hung
  */
 public interface IDiemService {
-    List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idNganh,String idKy);
-    List<BangDiemTheoMon> thongKeDiemTaCaMon(String idNganh,String idKy);
+    List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idNganh,String idKy,Float min,Float max);
+    List<BangDiemTheoMon> thongKeDiemTaCaMon(String idNganh,String idKy,Double min,Double max);
     List<BangDiem> getDiem(String idsv,String idmon);
 }

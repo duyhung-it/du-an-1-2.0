@@ -84,7 +84,7 @@ public class BangDiemTheoMon {
             "Lớp",
             "Số tín chỉ",
             "Điểm Trung Bình",
-            "Trạng thái",
+           
         };
     }
 }
