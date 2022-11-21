@@ -32,7 +32,7 @@ public class LopRepository implements ILopRepository{
         String sql = "Select * from Lop where Id = ?";
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql, id);
-            while(rs.next()) listResult.add(mapper.mapRow(rs));
+            while(rs.next()) listResult.add(this.maping(rs));
            
         } catch (SQLException ex) {
             Logger.getLogger(LopRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,7 +42,18 @@ public class LopRepository implements ILopRepository{
 
     @Override
     public List<QuanLyLop> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = Select_All_SQL;
+        List<QuanLyLop> list = new ArrayList<>();
+            
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql);
+            while(rs.next() ){
+                list.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LopRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
@@ -64,8 +75,8 @@ public class LopRepository implements ILopRepository{
         DBConnection.ExcuteDungna(sql, idLop);
     }
     final String Select_All_SQL = "select * from Lop";
-    final String Select_All_Ten_SQL = "select * from Lop where TenLop = ?";
-    final String Select_Ten_SQL = "select Id from Lop where TenLop = ?";
+    final String Select_All_Ten_SQL = "select * from Lop where TenLop like ?";
+    final String Select_Ten_SQL = "select Id from Lop where TenLop like '%?%'";
 
 
     public List<Lop> getAllLop() {
@@ -123,5 +134,25 @@ public class LopRepository implements ILopRepository{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public QuanLyLop findByMa(String ma) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<QuanLyLop> findByTen(String ten) {
+        List<QuanLyLop> lops = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(Select_All_Ten_SQL,"%"+ten+"%");
+            while (rs.next()) {
+                QuanLyLop lop = mapper.mapRow(rs);
+                lops.add(lop);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lops;
     }
 }

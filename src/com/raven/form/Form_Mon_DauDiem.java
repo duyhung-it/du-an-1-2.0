@@ -33,6 +33,7 @@ public class Form_Mon_DauDiem extends javax.swing.JPanel {
         
         cbxMon.setLabeText("Môn");
         cbxDauDiem.setLabeText("Đầu điểm");
+        txtHeSo.setLabelText("HeSo");
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

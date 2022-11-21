@@ -18,4 +18,6 @@ public interface ILopRepository {
     void insert(Lop lop);
     void update(Lop lop);
     void delete(String idLop);
+    QuanLyLop findByMa(String ma);
+    List<QuanLyLop> findByTen(String ten);
 }

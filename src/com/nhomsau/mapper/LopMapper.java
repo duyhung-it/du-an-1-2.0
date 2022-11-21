@@ -5,6 +5,7 @@
 package com.nhomsau.mapper;
 
 import com.nhomsau.domainmodel.Lop;
+import com.nhomsau.viewmodel.QuanLyLop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  * @author Nguyen Duy Hung
  */
 public class LopMapper {
-    public Lop mapRow(ResultSet rs){
+    public QuanLyLop mapRow(ResultSet rs){
         if(rs!= null){
             try {
                     String id = rs.getString(1);
@@ -22,7 +23,7 @@ public class LopMapper {
                     String ten = rs.getString("TenLop"); 
                     String idMon = rs.getString("IdMon");
                     String idGv = rs.getString("IdGiaoVien");
-                    return new Lop(id, ma, ten, idGv, idMon);
+                    return new QuanLyLop(id, ma, ten, idMon, idGv);
                 } catch (SQLException ex) {
                 Logger.getLogger(LopMapper.class.getName()).log(Level.SEVERE, null, ex);
             }

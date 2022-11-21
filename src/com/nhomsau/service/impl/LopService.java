@@ -16,7 +16,7 @@ import java.util.List;
  * @author Nguyen Duy Hung
  */
 public class LopService implements ILopService{
-    private final ILopRepository repository;
+    private final LopRepository repository;
 
     public LopService() {
         this.repository = new LopRepository();
@@ -29,21 +29,31 @@ public class LopService implements ILopService{
 
     @Override
     public void insert(Lop lop) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
     public void update(Lop lop) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.repository.update(lop);
     }
 
     @Override
     public List<QuanLyLop> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.repository.findAll();
     }
 
     @Override
     public void delete(String idLop) {
+        this.repository.delete(idLop);
+    }
+
+    @Override
+    public QuanLyLop findByMa(String ma) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<QuanLyLop> findByTen(String ten) {
+        return this.repository.findByTen(ten);
     }
 }

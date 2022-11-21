@@ -32,6 +32,8 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         sinhVien = sv;
         if(sv != null){
             lblSinhVien.setText(sv.getHoTen());
+            lblGioiTinh.setText(sv.isGioiTinh() ? "Nam" : "Nu");
+            lblNgaySinh.setText(sv.getNgaySinh().toString());
             loadTable();
         }
     }
@@ -58,6 +60,10 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         jLabel1 = new javax.swing.JLabel();
         lblSinhVien = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblNgaySinh = new javax.swing.JLabel();
+        lblSinhVien3 = new javax.swing.JLabel();
+        lblGioiTinh = new javax.swing.JLabel();
         panelTransparent2 = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBangDiem = new com.raven.swing.table.Table();
@@ -73,15 +79,33 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         lblSinhVien.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         lblSinhVien.setText("Sinh Viên:");
 
+        jLabel2.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        jLabel2.setText("Ngày sinh:");
+
+        lblNgaySinh.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblNgaySinh.setText("Sinh Viên:");
+
+        lblSinhVien3.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblSinhVien3.setText("Gioi Tính:");
+
+        lblGioiTinh.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblGioiTinh.setText("Sinh Viên:");
+
         javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
         panelTransparent1.setLayout(panelTransparent1Layout);
         panelTransparent1Layout.setHorizontalGroup(
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblSinhVien3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(lblSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTransparent1Layout.setVerticalGroup(
@@ -91,7 +115,15 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblSinhVien))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNgaySinh)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGioiTinh)
+                    .addComponent(lblSinhVien3))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         panelTransparent2.setOpaque(true);
@@ -192,9 +224,13 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGioiTinh;
+    private javax.swing.JLabel lblNgaySinh;
     private javax.swing.JLabel lblSinhVien;
     private javax.swing.JLabel lblSinhVien1;
+    private javax.swing.JLabel lblSinhVien3;
     private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent panelTransparent2;
     private com.raven.swing.table.Table tblBangDiem;
