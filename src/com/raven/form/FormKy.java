@@ -168,7 +168,7 @@ public class FormKy extends javax.swing.JPanel {
         if (selectRow < 0) {
             JOptionPane.showMessageDialog(this, "Bạn cần chọn 1 dòng trên bảng");
         } else {
-            QuanLyKy qlk = validateKy();
+            QuanLyKy qlk = validateKySua();
             if (qlk != null) {
                 qlk.setId(TxtId.getText());
                 this.iKyService.update(qlk);
@@ -228,6 +228,33 @@ public class FormKy extends javax.swing.JPanel {
                 return null;
             }
         }
+        String tenKy = txtTenKy.getText();
+        if (tenKy.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Không được để trống tên kỳ");
+            return null;
+        }
+        String namHocString = txtNamHoc.getText();
+        if (namHocString.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Không được để trống năm học");
+            return null;
+        }
+        int namHoc = 0;
+        try {
+            namHoc = Integer.valueOf(namHocString);
+            if (namHoc <= 0) {
+                JOptionPane.showMessageDialog(this, "Năm học không được âm");
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Nam học phải thuộc kiểu số");
+            return null;
+        }
+        return new QuanLyKy(maKy, id, tenKy, namHoc);
+    }
+    
+    private QuanLyKy validateKySua() {
+        String id = "";
+        String maKy = "";
         String tenKy = txtTenKy.getText();
         if (tenKy.isBlank()) {
             JOptionPane.showMessageDialog(this, "Không được để trống tên kỳ");
