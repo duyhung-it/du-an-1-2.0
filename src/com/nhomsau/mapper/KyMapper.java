@@ -4,6 +4,7 @@
  */
 package com.nhomsau.mapper;
 
+import com.nhomsau.domainmodel.Ky;
 import com.nhomsau.viewmodel.QuanLyKy;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +28,18 @@ public class KyMapper {
                 } catch (SQLException ex) {
                 Logger.getLogger(KyMapper.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        return null;
+    }
+    
+    public Ky toDomainModel(QuanLyKy viewModel){
+        if(viewModel != null){
+            Ky result = new Ky();
+            result.setId(viewModel.getId());
+            result.setMaKy(viewModel.getMa());
+            result.setTenKy(viewModel.getTen());
+            result.setNamHoc(viewModel.getNam());
+            return result;
         }
         return null;
     }

@@ -17,6 +17,7 @@ public class DBConnection {//Lớp này giải quyết kết nối xử lý truy
     private static String hostName = "localhost";
     private static String acc = "sa";
     private static String pass = "duyhung2908";
+
     private static String dbName = "QuanLyDiemSinhVien";
     private static String connectionSql
             = "jdbc:sqlserver://" + hostName + ";databaseName=" + dbName + ";encrypt=true;trustServerCertificate=true";

@@ -48,10 +48,14 @@ public class KyRepository implements IKyRepository{
     }
 
     @Override
-    public void delete(String maKy) {
-        String sql = "Delete from Ky where MaKy = ?";
-        DBConnection.ExcuteDungna(sql, maKy);
+    public void delete(String idKy) {
+        String sql = "Delete from Ky where Id = ?";
+        DBConnection.ExcuteDungna(sql, idKy);
     }
     
-    
+    @Override
+    public void update(Ky ky) {
+        String sql = "Update Ky set TenKy = ? ,NamHoc = ? where Id = ?";
+        DBConnection.ExcuteDungna(sql,ky.getTenKy(),ky.getNamHoc(),ky.getId());
+    }
 }
