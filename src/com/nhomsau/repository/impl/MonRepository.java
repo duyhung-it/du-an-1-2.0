@@ -65,7 +65,7 @@ public class MonRepository implements IMonRepository {
 
     @Override
     public void delete(String idMon) {
-        String sql = "Delete from Mon where IdMon = ?";
+        String sql = "Delete from Mon where Id = ?";
         DBConnection.ExcuteDungna(sql, idMon);
     }
 

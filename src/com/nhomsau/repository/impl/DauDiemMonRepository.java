@@ -8,6 +8,11 @@ import com.nhomsau.domainmodel.DauDiemMon;
 import com.nhomsau.repository.IDauDiemMonRepository;
 import com.nhomsau.util.DBConnection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,5 +50,25 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
             e.printStackTrace();
         }
         return heSo;
+    }
+
+    @Override
+    public List<DauDiemMon> findAll() {
+        String select_sql  = "select * from dauDiem_mon";
+        List<DauDiemMon> dsDauDiemMon = new ArrayList<>();
+        try {
+            ResultSet rs = dBConnection.getDataFromQuery(select_sql);
+            while(rs.next()){
+                String idMon = rs.getString("IdMon");
+                String idDauDiem = rs.getString("IdDauDiem");
+                int heSo = rs.getInt("HeSo");
+                
+                DauDiemMon dauDiemMon = new DauDiemMon(idDauDiem, idMon, heSo);
+                dsDauDiemMon.add(dauDiemMon);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DauDiemMonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsDauDiemMon;
     }
 }

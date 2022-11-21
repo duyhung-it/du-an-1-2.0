@@ -25,7 +25,7 @@ public class DauDiemRepository implements IDauDiemRepository {
 
     @Override
     public List<DauDiem> findAll() {
-        String sql = "SELECT * FROM Mon";
+        String sql = "SELECT * FROM DauDiem";
         List<DauDiem> listResults = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql);

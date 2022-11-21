@@ -2,17 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.nhomsau.repository;
+package com.nhomsau.service;
 
-import com.nhomsau.domainmodel.DauDiemMon;
+import com.nhomsau.domainmodel.DauDiem;
 import java.util.List;
 
 /**
  *
- * @author Nguyen Duy Hung
+ * @author ADMIN
  */
-public interface IDauDiemMonRepository {
-    void insert(DauDiemMon dm);
-    void delete(String idDauDiem);
-    List<DauDiemMon> findAll();
+public interface IDauDiemService {
+    List<DauDiem> findAll();
 }

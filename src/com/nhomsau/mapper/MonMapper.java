@@ -25,7 +25,7 @@ public class MonMapper {
                 String ten = rs.getString("TenMon");
                 int tinChi = rs.getInt("TinChi");
                 int soBuoiHoc = rs.getInt("SoBuoiHoc");
-                QuanLyMon mon = new QuanLyMon(ma, ten,tinChi,soBuoiHoc);
+                QuanLyMon mon = new QuanLyMon(ma, ten,soBuoiHoc,tinChi);
                 mon.setId(id);
                 return mon;
                 } catch (SQLException ex) {

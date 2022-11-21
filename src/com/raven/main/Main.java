@@ -8,6 +8,8 @@ import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
 import com.raven.form.Form_Home;
+import com.raven.form.Form_MonHoc;
+import com.raven.form.Form_Mon_DauDiem;
 import com.raven.form.ListStudentPanel;
 import com.raven.form.MainForm;
 import com.raven.form.ThongKeDiemPanel;
@@ -66,6 +68,10 @@ public class Main extends javax.swing.JFrame {
                 }else if(menuIndex == 5){
                     if(subMenuIndex == 0){
                         main.showForm(new pnKy());
+                    } else if(subMenuIndex == 1){
+                        main.showForm(new Form_MonHoc());
+                    } else if(subMenuIndex == 2){
+                        main.showForm(new Form_Mon_DauDiem());
                     }
                 }
             }
