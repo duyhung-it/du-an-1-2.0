@@ -38,7 +38,8 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         }
     }
     private void loadTable(){
-        list=new LichSuDiemReposiroty().getLichSudiem("");
+        if(sinhVien != null){
+        list=new LichSuDiemReposiroty().getLichSudiem(sinhVien.getId());
         DefaultTableModel model=(DefaultTableModel)tblBangDiem.getModel();
         model.setRowCount(0);
         for(LichSuaBangDiem ls:list){
@@ -46,7 +47,8 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
             tblBangDiem.getRowCount()+1,ls.getTenMon(),ls.getMaMon(),ls.getKy(),ls.getDiem(),ls.getTrangThai()
         };
         tblBangDiem.addRow(obj);
-        }       
+        }   
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.

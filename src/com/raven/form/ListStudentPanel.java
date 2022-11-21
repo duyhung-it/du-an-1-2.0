@@ -343,7 +343,7 @@ public class ListStudentPanel extends javax.swing.JPanel {
 
     private void btnThongTinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongTinActionPerformed
         // TODO add your handling code here:
-        ViewStudentPanel viewStudent = new ViewStudentPanel();
+        
         int selectedRow =tblSinhVien.getSelectedRow();
         if(selectedRow != -1){
             String ma = (String) model.getValueAt(selectedRow, 0);
