@@ -1,5 +1,7 @@
 package com.raven.main;
 
+import com.nhomsau.view.Form_Lecturers;
+import com.nhomsau.view.Form_Statistical;
 import com.nhomsau.view.pnKy;
 import com.raven.component.Header;
 import com.raven.component.Menu;
@@ -57,11 +59,12 @@ public class Main extends javax.swing.JFrame {
                     if (subMenuIndex == 0) {
                         main.showForm(new ListStudentPanel());
                     } else if (subMenuIndex == 1) {
-                        main.showForm(new Form1());
-                    } else if(subMenuIndex == 2){
-                        main.showForm(new Form_Home());
+                        main.showForm(new Form_Statistical());
                     }
-                }else if(menuIndex == 3){
+                }else if(menuIndex == 1){
+                    main.showForm(new Form_Lecturers());
+                }
+                else if(menuIndex == 3){
                     if(subMenuIndex ==0 ){
                         main.showForm(new ThongKeDiemPanel());
                     }
@@ -133,7 +136,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         //  Start with this form
-        main.showForm(new Form1());
+        main.showForm(new Form_Home());
     }
 
     @SuppressWarnings("unchecked")
