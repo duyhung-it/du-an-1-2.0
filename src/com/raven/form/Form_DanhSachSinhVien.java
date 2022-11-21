@@ -27,6 +27,7 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
     SinhVienService sinhVienService;
     DefaultTableModel model;
     DefaultComboBoxModel<String> cbBoxModel;
+
     public Form_DanhSachSinhVien() {
         initComponents();
         tblSinhVien.fixTable(jScrollPane1);
@@ -35,36 +36,37 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
         lopRepository = new LopRepository();
         sinhVienService = new SinhVienService();
         cbxLop.setLabeText("Lớp");
+        txtTimKiem.setLabelText("Tìm kiếm theo maSV");
         fillAllLop();
         loadTable(getSinhViens());
     }
 
-    private void fillAllLop(){
+    private void fillAllLop() {
         List<Lop> lops = lopRepository.getAllLop();
-        for(Lop lop:lops){
+        for (Lop lop : lops) {
             cbBoxModel.addElement(lop.getTenLop());
         }
         cbxLop.setModel(cbBoxModel);
     }
-    
-    private List<SinhVien> getSinhViens(){
+
+    private List<SinhVien> getSinhViens() {
         List<SinhVien> listSinhViens = new ArrayList<>();
-        String tenLop =(String) cbxLop.getSelectedItem();
+        String tenLop = (String) cbxLop.getSelectedItem();
         Lop lop = lopRepository.getLop(tenLop);
         String idLop = lop.getId();
         listSinhViens = sinhVienService.getSinhViens(idLop);
         return listSinhViens;
     }
-    
-    private void loadTable(List<SinhVien> list){
+
+    private void loadTable(List<SinhVien> list) {
         model.setRowCount(0);
-        int i =1;
-        for(SinhVien sv:list){
-            model.addRow(new Object[] {i,sv.getMa(),sv.getHoTen(),sv.getNgaySinh(),sv.getDiaChi(),sv.getEmail(),sv.getSdt()});
+        int i = 1;
+        for (SinhVien sv : list) {
+            model.addRow(new Object[]{i, sv.getMa(), sv.getHoTen(), sv.getNgaySinh(), sv.getDiaChi(), sv.getEmail(), sv.getSdt()});
             i++;
         }
     }
-    
+
 //    private List<SinhVien> fillAllSinhVien(){
 //        String tenLop = cbxLop.getLabeText();
 //    }
@@ -81,6 +83,7 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSinhVien = new com.raven.swing.table.Table();
         cbxLop = new com.raven.swing.combobox.Combobox();
+        txtTimKiem = new com.raven.swing.textfield.TextField();
 
         panelTransparent1.setOpaque(true);
 
@@ -126,6 +129,23 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
             }
         });
 
+        txtTimKiem.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtTimKiemPropertyChange(evt);
+            }
+        });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,15 +155,19 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
                 .addGap(0, 6, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cbxLop, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxLop, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(cbxLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -152,12 +176,54 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
     private void cbxLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLopItemStateChanged
         // TODO add your handling code here:
         List<SinhVien> listSinhViens = new ArrayList<>();
-        String tenLop =(String) cbxLop.getSelectedItem();
+        String tenLop = (String) cbxLop.getSelectedItem();
         Lop lop = lopRepository.getLop(tenLop);
         String idLop = lop.getId();
         listSinhViens = sinhVienService.getSinhViens(idLop);
         loadTable(listSinhViens);
     }//GEN-LAST:event_cbxLopItemStateChanged
+
+    private void txtTimKiemPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtTimKiemPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemPropertyChange
+
+    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
+//         TODO add your handling code here:
+//        String timKiem = txtTimKiem.getText();
+//        List<SinhVien> list = new ArrayList<>();
+//        List<SinhVien> listSinhViens = new ArrayList<>();
+//        String tenLop = (String) cbxLop.getSelectedItem();
+//        Lop lop = lopRepository.getLop(tenLop);
+//        String idLop = lop.getId();
+//        listSinhViens = sinhVienService.getSinhViens(idLop);
+//        for (SinhVien sv : listSinhViens) {
+//            if (sv.getMa().contains(timKiem)) {
+//                list.add(sv);
+//            }
+//        }
+//            loadTable(list);
+    }//GEN-LAST:event_txtTimKiemKeyPressed
+
+    private void txtTimKiemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyTyped
+        // TODO add your handling code here:
+        String timKiem = txtTimKiem.getText();
+        List<SinhVien> list = new ArrayList<>();
+        List<SinhVien> listSinhViens = new ArrayList<>();
+        String tenLop = (String) cbxLop.getSelectedItem();
+        Lop lop = lopRepository.getLop(tenLop);
+        String idLop = lop.getId();
+        listSinhViens = sinhVienService.getSinhViens(idLop);
+        for (SinhVien sv : listSinhViens) {
+            if (sv.getMa().contains(timKiem)) {
+                list.add(sv);
+            }
+        }
+        loadTable(list);
+    }//GEN-LAST:event_txtTimKiemKeyTyped
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -165,5 +231,6 @@ public class Form_DanhSachSinhVien extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.table.Table tblSinhVien;
+    private com.raven.swing.textfield.TextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

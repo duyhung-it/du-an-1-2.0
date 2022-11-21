@@ -379,7 +379,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         txtMin.setLabelText("Min");
     }
     private void initCombobox(){
-        List<QuanLyNganh> listNganhs = this.nganhService.findAll();
+        List<QuanLyNganh> listNganhs = this.nganhService.findAll1();
         cbxNganh.setLabeText("Ngành Học");
         if(!listNganhs.isEmpty()){
             for(QuanLyNganh nganh : listNganhs){

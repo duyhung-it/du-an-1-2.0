@@ -12,6 +12,6 @@ import java.util.List;
  * @author Nguyen Duy Hung
  */
 public interface INganhRepository {
-     List<QuanLyNganh> findAll();
+     List<QuanLyNganh> findAll1();
      QuanLyNganh findOne(String idNganh);
 }

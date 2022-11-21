@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+<<<<<<< HEAD
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/FPt/Kì%204/du_an_1/du_an/src/com/raven/form/Form_Mon_DauDiem.java</file>
@@ -12,4 +13,6 @@
             <file>file:/E:/FPt/Kì%204/du_an_1/du_an/src/com/nhomsau/repository/impl/KyRepository.java</file>
         </group>
     </open-files>
+=======
+>>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573
 </project-private>

@@ -172,4 +172,9 @@ public class SinhVienRepository implements ISinhVienRepository{
         }
         return null;
     }
+
+    @Override
+    public List<SinhVienView> thongKeDanhSachSinhVien(String idKy, String idNganh, String idMon) {
+        return null;
+    }
 }

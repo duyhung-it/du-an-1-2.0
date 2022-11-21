@@ -61,7 +61,7 @@ public class ListStudentPanel extends javax.swing.JPanel {
         txtDate.setLabelText("Ngày Sinh");
     }
     private void initCombobox(){
-        List<QuanLyNganh> list = this.nganhService.findAll();
+        List<QuanLyNganh> list = this.nganhService.findAll1();
         cbxNganh.setLabeText("Ngành Học");
         if(!list.isEmpty()){
             for(QuanLyNganh nganh : list){

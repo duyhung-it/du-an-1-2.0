@@ -4,6 +4,7 @@
  */
 package com.raven.form;
 
+import com.microsoft.schemas.office.excel.STObjectType;
 import com.nhomsau.domainmodel.Lop;
 import com.nhomsau.service.IMonService;
 import com.nhomsau.service.impl.LopService;
@@ -118,6 +119,11 @@ public class LopHocPanel extends javax.swing.JPanel {
         });
 
         btnSua.setText("Sua");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
         panelTransparent1.setLayout(panelTransparent1Layout);
@@ -253,7 +259,7 @@ public class LopHocPanel extends javax.swing.JPanel {
         // TODO add your  code here:
         Lop lop = this.validateLop();
         this.lopService.insert(lop);
-        
+        loadTable();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
@@ -266,6 +272,15 @@ public class LopHocPanel extends javax.swing.JPanel {
         }
         loadTable();
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        if(tblLop.getSelectedRow() != -1){
+        Lop lop = this.validateLop();
+        this.lopService.update(lop);
+        loadTable();
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

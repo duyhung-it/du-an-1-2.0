@@ -107,6 +107,12 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Sua"/>
           </Properties>
+<<<<<<< HEAD
+=======
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
+          </Events>
+>>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573
         </Component>
         <Component class="com.raven.swing.combobox.Combobox" name="cbxMon">
         </Component>
