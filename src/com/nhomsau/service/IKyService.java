@@ -13,5 +13,12 @@ import java.util.List;
  * @author Nguyen Duy Hung
  */
 public interface IKyService {
+
     List<QuanLyKy> findAll();
+
+    void insert(QuanLyKy ky);
+
+    void delete(String idKy);
+
+    void update(QuanLyKy ky);
 }
