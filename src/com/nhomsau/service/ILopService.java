@@ -18,4 +18,6 @@ public interface ILopService {
     void update(Lop lop);
     List<QuanLyLop> findAll();
     void delete(String idLop);
+    QuanLyLop findByMa(String ma);
+    List<QuanLyLop> findByTen(String ten);
 }
