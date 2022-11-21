@@ -58,7 +58,8 @@ public class LecturerConvert {
             viewModel.setRole(domainModel.getRole());
             viewModel.setMajor(_majorConvert.toViewModel(domainModel.getMajor()));
             viewModel.setManager(_managerConvert.toViewModel(domainModel.getManager()));
+            return viewModel;
         }
-        return viewModel;
+        return null;
     }
 }

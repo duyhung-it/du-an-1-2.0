@@ -10,6 +10,7 @@ import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
 import com.raven.form.FormKy;
+import com.raven.form.FormNganh;
 import com.raven.form.Form_Home;
 import com.raven.form.Form_MonHoc;
 import com.raven.form.Form_Mon_DauDiem;
@@ -80,6 +81,8 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new Form_MonHoc());
                     } else if(subMenuIndex == 2){
                         main.showForm(new Form_Mon_DauDiem());
+                    }else if(subMenuIndex == 3){
+                        main.showForm(new FormNganh());
                     }
                 }
             }
