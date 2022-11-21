@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface IDauDiemMonRepository {
     void insert(DauDiemMon dm);
-    void delete(String idDauDiem);
+    void delete(String idDauDiem, String idMOn);
     List<DauDiemMon> findAll();
 }

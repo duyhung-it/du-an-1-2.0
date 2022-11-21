@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface IDauDiemRepository {
     List<DauDiem> findAll();
+    List<DauDiem> findAllDauDiem(String id);
+    String getTenDauDiem(String id);
     void insert(DauDiem dd);
     void delete(DauDiem dd);
 }

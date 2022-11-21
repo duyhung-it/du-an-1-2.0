@@ -26,5 +26,14 @@ public class DauDiemService implements IDauDiemService{
     public List<DauDiem> findAll() {
         return IDauDiemRepository.findAll();
     }
+
+    @Override
+    public List<DauDiem> findDauDiemByIdMon(String id) {
+        return IDauDiemRepository.findAllDauDiem(id);
+    }
     
+    @Override
+    public String getTenDauDiem(String id){
+        return IDauDiemRepository.getTenDauDiem(id);
+    }
 }

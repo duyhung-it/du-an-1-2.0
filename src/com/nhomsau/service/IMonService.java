@@ -19,4 +19,5 @@ public interface IMonService {
     void insert(QuanLyMon mon);
     void update (QuanLyMon mon);
     void delete(String idMon);
+    String getTenMon(String id);
 }

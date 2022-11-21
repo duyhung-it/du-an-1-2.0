@@ -12,5 +12,7 @@ import java.util.List;
  * @author ADMIN
  */
 public interface IDauDiem_MonService {
+    void insert(DauDiemMon dm);
+    void delete(String idDauDiem, String idMon);
     List<DauDiemMon> findAll();
 }

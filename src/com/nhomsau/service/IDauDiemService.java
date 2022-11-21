@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface IDauDiemService {
     List<DauDiem> findAll();
+    List<DauDiem> findDauDiemByIdMon(String id);
+    String getTenDauDiem(String id);
 }

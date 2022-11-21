@@ -22,14 +22,13 @@ import java.util.logging.Logger;
  */
 public class DauDiemRepository implements IDauDiemRepository {
 
-
     @Override
     public List<DauDiem> findAll() {
         String sql = "SELECT * FROM DauDiem";
         List<DauDiem> listResults = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 String id = rs.getString(1);
                 String ma = rs.getString(2);
                 String ten = rs.getString(3);
@@ -44,7 +43,7 @@ public class DauDiemRepository implements IDauDiemRepository {
     @Override
     public void insert(DauDiem dd) {
         String sql = "Insert into DauDiem (MaDauDiem,TenDauDiem) values(?,?)";
-        DBConnection.ExcuteDungna(sql, dd.getMaDauDiem(),dd.getTenDauDiem());
+        DBConnection.ExcuteDungna(sql, dd.getMaDauDiem(), dd.getTenDauDiem());
     }
 
     @Override
@@ -56,16 +55,17 @@ public class DauDiemRepository implements IDauDiemRepository {
             + "where IdMon = ?";
     final String Select_IdDauDiem = "select Id from DauDiem where TenDauDiem = ?";
     DBConnection dBConnection;
+
     public DauDiemRepository() {
         dBConnection = new DBConnection();
-        
+
     }
-    
-    public List<DauDiem> getDauDiems(String idMon){
+
+    public List<DauDiem> getDauDiems(String idMon) {
         List<DauDiem> listDauDiems = new ArrayList<>();
         try {
             ResultSet rs = dBConnection.getDataFromQuery(Select_DauDiem, idMon);
-            while (rs.next()) {                
+            while (rs.next()) {
                 DauDiem dauDiem = mapingDauDiem(rs);
                 listDauDiems.add(dauDiem);
             }
@@ -74,12 +74,12 @@ public class DauDiemRepository implements IDauDiemRepository {
         }
         return listDauDiems;
     }
-    
-    public String getIdDauDiem(String tenDauDiem){
+
+    public String getIdDauDiem(String tenDauDiem) {
         String idDauDiem = "";
         try {
             ResultSet rs = dBConnection.getDataFromQuery(Select_IdDauDiem, tenDauDiem);
-            while (rs.next()) {    
+            while (rs.next()) {
                 idDauDiem = rs.getString("Id");
             }
         } catch (Exception e) {
@@ -88,9 +88,26 @@ public class DauDiemRepository implements IDauDiemRepository {
         return idDauDiem;
     }
     
-    private DauDiem mapingDauDiem(ResultSet rs){
+    @Override
+    public String getTenDauDiem(String idDauDiem) {
+        String ten = "";
+        String Select_TenDauDiem = "select dauDiem.tenDauDiem "
+                + "from dauDiem join DauDiem_Mon on dauDiem.id = DauDiem_Mon.idDauDiem"
+                + " where dauDiem_Mon.idDauDiem = ?";
         try {
-            if(rs != null){
+            ResultSet rs = dBConnection.getDataFromQuery(Select_TenDauDiem, idDauDiem);
+            while (rs.next()) {
+                ten = rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ten;
+    }
+
+    private DauDiem mapingDauDiem(ResultSet rs) {
+        try {
+            if (rs != null) {
                 String id = rs.getString("Id");
                 String maDauDiem = rs.getNString("MaDauDiem");
                 String tenDauDiem = rs.getNString("TenDauDiem");
@@ -100,5 +117,30 @@ public class DauDiemRepository implements IDauDiemRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<DauDiem> findAllDauDiem(String idMon) {
+        String sql = "select distinct daudiem.id, daudiem.madaudiem ,DauDiem.TenDauDiem\n"
+                + "from mon join DauDiem_Mon on mon.Id = DauDiem_Mon.IdMon\n"
+                + "		join DauDiem on DauDiem_Mon.IdDauDiem = DauDiem.Id\n"
+                + "except  \n"
+                + "select daudiem.id, daudiem.madaudiem, DauDiem.TenDauDiem\n"
+                + "from mon join DauDiem_Mon on mon.Id = DauDiem_Mon.IdMon\n"
+                + "		join DauDiem on DauDiem_Mon.IdDauDiem = DauDiem.Id\n"
+                + "where IdMon = ?";
+        List<DauDiem> listResults = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idMon);
+            while (rs.next()) {
+                String id = rs.getString(1);
+                String ma = rs.getString(2);
+                String ten = rs.getString(3);
+                listResults.add(new DauDiem(id, ma, ten));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResults;
     }
 }

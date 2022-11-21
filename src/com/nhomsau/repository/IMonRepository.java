@@ -20,4 +20,5 @@ public interface IMonRepository {
     void delete(String idMon);
     void update(Mon mon);
     List<QuanLyMon> findMon(String idky);
+    String getTenMon(String id);
 }

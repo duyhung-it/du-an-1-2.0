@@ -27,9 +27,11 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
     }
 
     @Override
-    public void delete(String idDauDiem) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void delete(String idDauDiem, String idMon) {
+        String delete_sql = "delete from DauDiem_Mon where idDauDiem = ? and idMon = ?";
+        dBConnection.ExcuteDungna(delete_sql, idDauDiem, idMon);
     }
+    
     DBConnection dBConnection;
     final String Select_Heso_SQL = "select HeSo\n"
             + "from DauDiem_Mon\n"
@@ -54,7 +56,7 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
 
     @Override
     public List<DauDiemMon> findAll() {
-        String select_sql  = "select * from dauDiem_mon";
+        String select_sql  = "select * from DauDiem_Mon join mon on DauDiem_Mon.IdMon = Mon.id";
         List<DauDiemMon> dsDauDiemMon = new ArrayList<>();
         try {
             ResultSet rs = dBConnection.getDataFromQuery(select_sql);

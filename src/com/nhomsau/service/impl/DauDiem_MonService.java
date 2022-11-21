@@ -26,5 +26,15 @@ public class DauDiem_MonService implements IDauDiem_MonService{
     public List<DauDiemMon> findAll() {
         return iDauDiemMonRepository.findAll();
     }
+
+    @Override
+    public void insert(DauDiemMon dm) {
+        iDauDiemMonRepository.insert(dm);
+    }
+
+    @Override
+    public void delete(String idDauDiem, String idMon) {
+        iDauDiemMonRepository.delete(idDauDiem, idMon);
+    }
     
 }

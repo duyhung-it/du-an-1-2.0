@@ -60,5 +60,10 @@ public class MonService implements IMonService {
     public void delete(String idMon) {
         this.repository.delete(idMon);
     }
+
+    @Override
+    public String getTenMon(String id) {
+        return repository.getTenMon(id);
+    }
     
 }

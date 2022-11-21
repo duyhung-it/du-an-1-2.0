@@ -16,26 +16,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Nguyen Duy Hung
  */
 public class MonRepository implements IMonRepository {
+
     private final MonMapper mapper;
-    String sql="select * from mon";
+    String sql = "select * from mon";
     String selectAll_find_ten = "select * from mon join ky_mon on mon.id=ky_mon.idmon  where idky=?";
     List<QuanLyMon> list;
+
     public MonRepository() {
         this.mapper = new MonMapper();
     }
-    
+
     @Override
     public List<QuanLyMon> findAll() {
         String sql = "SELECT * FROM Mon";
         List<QuanLyMon> listResults = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 listResults.add(mapper.mapRow(rs));
             }
         } catch (SQLException ex) {
@@ -48,8 +51,10 @@ public class MonRepository implements IMonRepository {
     public QuanLyMon findOne(String idMon) {
         String sql = "SELECT * FROM Mon where Id = ?";
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql,idMon);
-            while(rs.next()) return mapper.mapRow(rs);
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idMon);
+            while (rs.next()) {
+                return mapper.mapRow(rs);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,8 +64,8 @@ public class MonRepository implements IMonRepository {
     @Override
     public void insert(Mon mon) {
         String sql = "Insert into Mon(MaMon,TenMon,TinChi,SoBuoiHoc) values(?,?,?,?)";
-        DBConnection.ExcuteDungna(sql, mon.getMaMon(),mon.getTenMon(),mon.getTinChi(),mon.getSoBuoiHoc());
-        
+        DBConnection.ExcuteDungna(sql, mon.getMaMon(), mon.getTenMon(), mon.getTinChi(), mon.getSoBuoiHoc());
+
     }
 
     @Override
@@ -70,24 +75,28 @@ public class MonRepository implements IMonRepository {
     }
 
     @Override
-    public List<QuanLyMon> getMonTheoNganh(String idNganh,String idKy) {
-        String sql = "select Mon.* from Mon join Mon_Nganh on Mon.Id = Mon_Nganh.Id\n" +
-"                   join Ky_Mon on Mon.Id = Ky_Mon.IdMon "
+    public List<QuanLyMon> getMonTheoNganh(String idNganh, String idKy) {
+        String sql = "select Mon.* from Mon join Mon_Nganh on Mon.Id = Mon_Nganh.Id\n"
+                + "                   join Ky_Mon on Mon.Id = Ky_Mon.IdMon "
                 + "where Mon_Nganh.IdNganh = ? and Ky_Mon.IdKy = ?";
         List<QuanLyMon> listResult = new ArrayList<>();
-        try {    
-            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh,idKy);
-            while(rs.next()) listResult.add(mapper.mapRow(rs));
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh, idKy);
+            while (rs.next()) {
+                listResult.add(mapper.mapRow(rs));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listResult;
     }
+
     @Override
-    public List<QuanLyMon> findMon(String idky){
+    public List<QuanLyMon> findMon(String idky) {
         return getSelectSql(selectAll_find_ten, idky);
     }
-     public List<QuanLyMon> getSelectSql(String sql, Object... args) {
+
+    public List<QuanLyMon> getSelectSql(String sql, Object... args) {
         list = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql, args);
@@ -99,30 +108,47 @@ public class MonRepository implements IMonRepository {
             throw new RuntimeException();
         }
     }
-     
+
     private QuanLyMon mapping(ResultSet rs) {
 
         try {
             if (rs != null) {
-                 String id = rs.getString("Id");
+                String id = rs.getString("Id");
                 String mamon = rs.getString("MaMon");
                 String tenmon = rs.getString("tenmon");
                 int tinChi = rs.getInt("TinChi");
                 int soBuoi = rs.getInt("SoBuoiHoc");
-                QuanLyMon mon = new QuanLyMon( mamon,tenmon,tinChi,soBuoi);
+                QuanLyMon mon = new QuanLyMon(mamon, tenmon, tinChi, soBuoi);
                 mon.setId(id);
                 return mon;
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(KyRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-     return null;
+        return null;
     }
 
     @Override
     public void update(Mon mon) {
         String sql = "UPDATE Mon SET MaMon=?,TenMon=?,TinChi=?,SoBuoiHoc=? WHERE Id=?";
-        DBConnection.ExcuteDungna(sql, mon.getMaMon(),mon.getTenMon(),mon.getTinChi(),mon.getSoBuoiHoc(),mon.getId());   
+        DBConnection.ExcuteDungna(sql, mon.getMaMon(), mon.getTenMon(), mon.getTinChi(), mon.getSoBuoiHoc(), mon.getId());
+    }
+
+    @Override
+    public String getTenMon(String id) {
+        String ten = null;
+        String select_Mon = "select DISTINCT mon.tenMon\n"
+                + "from mon join dauDiem_mon on mon.id = DauDiem_Mon.idMon"
+                + " where dauDiem_Mon.idMon = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(select_Mon, id);
+            while (rs.next()) {
+                ten = rs.getNString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ten;
     }
 }
