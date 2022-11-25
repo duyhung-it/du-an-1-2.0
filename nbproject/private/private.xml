@@ -3,21 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/repository/impl/LecturerRepository.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/converter/LecturerConvert.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/service/impl/ManageLecturerService.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/main/Main.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/component/Menu.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/service/INganhService.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/form/FormNganh.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/component/MenuLecturer.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/converter/MajorConvert.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/repository/impl/LichSuDiemReposiroty.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/repository/impl/NganhRepository.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/form/ListStudentPanel.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/form/ThongTinSinhVien.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/service/impl/NganhService.java</file>
-            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/view/Form_Statistical.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/Du_an_1/src/com/nhomsau/repository/ILopRepository.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/Du_an_1/src/com/raven/form/Form_Diem.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/Du_an_1/src/com/nhomsau/service/IKyService.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/Du_an_1/src/com/nhomsau/repository/IKyRepository.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/Du_an_1/src/com/nhomsau/repository/impl/KyRepository.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/Du_an_1/src/com/nhomsau/repository/impl/LopRepository.java</file>
         </group>
     </open-files>
 </project-private>
