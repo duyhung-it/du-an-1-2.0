@@ -16,7 +16,7 @@ public class DBConnection {//Lớp này giải quyết kết nối xử lý truy
 
     private static String hostName = "localhost";
     private static String acc = "sa";
-    private static String pass = "quyet2103";
+    private static String pass = "123456";
 
     private static String dbName = "QuanLyDiemSinhVien";
     private static String connectionSql

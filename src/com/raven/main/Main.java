@@ -62,28 +62,26 @@ public class Main extends javax.swing.JFrame {
                     } else if (subMenuIndex == 1) {
                         main.showForm(new Form_Statistical());
                     }
-                }else if(menuIndex == 1){
-                    main.showForm(new Form_Lecturers());
-                }
-                else if(menuIndex == 3){
-                    if(subMenuIndex ==0 ){
+                } else if (menuIndex == 1) {
+                    if (subMenuIndex == 0) {
                         main.showForm(new ThongKeDiemPanel());
                     }
-                }else if(menuIndex == 2){
-                    main.showForm(new LopHocPanel());
-                }
-                else if(menuIndex == 6){
-                    System.exit(0);
-                }else if(menuIndex == 5){
-                    if(subMenuIndex == 0){
+                } else if (menuIndex == 2) {
+                    if (subMenuIndex == 0) {
                         main.showForm(new FormKy());
-                    } else if(subMenuIndex == 1){
+                    } else if (subMenuIndex == 1) {
                         main.showForm(new Form_MonHoc());
-                    } else if(subMenuIndex == 2){
+                    } else if (subMenuIndex == 2) {
                         main.showForm(new Form_Mon_DauDiem());
-                    }else if(subMenuIndex == 3){
+                    } else if (subMenuIndex == 3) {
                         main.showForm(new FormNganh());
+                    } else if(subMenuIndex == 4){
+                        main.showForm(new Form_Lecturers());
+                    } else if(subMenuIndex == 5){
+                        main.showForm(new LopHocPanel());
                     }
+                } else if (menuIndex == 4) {
+                    System.exit(0);
                 }
             }
         });

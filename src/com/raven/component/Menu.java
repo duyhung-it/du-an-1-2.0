@@ -57,11 +57,9 @@ public class Menu extends PanelTransparent {
 
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/1.png")), "Sinh Viên", "Danh sách", "Xếp loại"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/1.png")), "Giảng vien"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/2.png")), "Lớp học"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Điểm", "Thống kê điểm", "Xuat bao cao"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Quản lý chung", "Kỳ", "Môn", "Đầu điẻm","Ngành","Giảng Viên","Lớp Học"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Tài khoản", "Thông tin cá nhân", "Đăng xuất"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Quản lý chung", "Kỳ", "Môn", "Đầu điẻm","Ngành"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Thoát"));
     }
 
