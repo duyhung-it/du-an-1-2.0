@@ -151,7 +151,6 @@ public class Form_Lecturers extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtMaGV = new com.raven.swing.textfield.TextField();
         txtHoTenGV = new com.raven.swing.textfield.TextField();
-        dchNgaySinhGV = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         txtDiaChi = new com.raven.swing.textfield.TextField();
         txtEmailGV = new com.raven.swing.textfield.TextField();
@@ -221,8 +220,6 @@ public class Form_Lecturers extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        dchNgaySinhGV.setDateFormatString("dd-MM-yyyy");
 
         jLabel1.setText("Ngày sinh");
 
@@ -308,12 +305,9 @@ public class Form_Lecturers extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMaGV, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHoTenGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dchNgaySinhGV, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1)
                             .addComponent(txtEmailGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSDTGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMatKhauGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,9 +353,8 @@ public class Form_Lecturers extends javax.swing.JPanel {
                                 .addGap(37, 37, 37)
                                 .addComponent(cbbManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dchNgaySinhGV, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel1)
                                 .addGap(12, 12, 12)
                                 .addComponent(txtEmailGV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -516,7 +509,6 @@ public class Form_Lecturers extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private com.raven.swing.combobox.Combobox cbbMajors;
     private com.raven.swing.combobox.Combobox cbbManager;
-    private com.toedter.calendar.JDateChooser dchNgaySinhGV;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

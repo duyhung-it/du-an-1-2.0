@@ -15,7 +15,11 @@ import java.util.logging.Logger;
 public class DBConnection {//Lớp này giải quyết kết nối xử lý truy vấn
 
     private static String hostName = "localhost";
+<<<<<<< HEAD
     private static String acc = "sa";
+=======
+    private static String acc = "duong";
+>>>>>>> ac66ab7208f3ec14103ce5eaee8049df130c1d0c
     private static String pass = "123456";
 
     private static String dbName = "QuanLyDiemSinhVien";
