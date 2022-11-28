@@ -9,6 +9,7 @@ import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
+import com.raven.form.FormDiemTheoLop;
 import com.raven.form.FormKy;
 import com.raven.form.FormNganh;
 import com.raven.form.Form_Home;
@@ -65,6 +66,8 @@ public class Main extends javax.swing.JFrame {
                 } else if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
                         main.showForm(new ThongKeDiemPanel());
+                    }else if(subMenuIndex == 1){
+                        main.showForm(new FormDiemTheoLop());
                     }
                 } else if (menuIndex == 2) {
                     if (subMenuIndex == 0) {

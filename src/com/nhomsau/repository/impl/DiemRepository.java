@@ -9,6 +9,8 @@ import com.nhomsau.domainmodel.Diem;
 import com.nhomsau.repository.IDiemRepository;
 import com.nhomsau.util.DBConnection;
 import com.nhomsau.viewmodel.BangDiemTheoMon;
+import com.nhomsau.viewmodel.QuanLyDiem;
+import java.math.BigDecimal;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -145,5 +147,30 @@ public class DiemRepository implements IDiemRepository {
             Logger.getLogger(DiemRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+
+    @Override
+    public List<QuanLyDiem> getDiemByMon(String idDauDiem, String idMon, String idLop) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select IdSinhVien,Diem from Diem ");
+        sql.append("join Users on USers.Id = Diem.IdSinhVien ");
+        sql.append("join Lop on Lop.IdMon = Diem.IdMonHoc ");
+        sql.append("where IdDauDiem = ? and IdMonHoc = ? and Lop.Id = ? ");
+        sql.append("order by HoTen");
+        
+        List<QuanLyDiem> result = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), idDauDiem,idMon,idLop);
+            while(rs.next()){
+                String idUsers = rs.getString(1);
+                
+                BigDecimal diem = rs.getBigDecimal(2);
+                QuanLyDiem qLDiem = new QuanLyDiem(idUsers, diem);
+               result.add(qLDiem);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiemRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 }

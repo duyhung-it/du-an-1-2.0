@@ -155,4 +155,23 @@ public class LopRepository implements ILopRepository{
         }
         return lops;
     }
+
+    @Override
+    public List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy) {
+        List<QuanLyLop> lops = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("select Lop.* from Lop ");
+        sql.append("join Ky_Mon on Ky_Mon.IdMon = Lop.IdMon ");
+        sql.append("join Mon_Nganh on Mon_Nganh.Id = Lop.IdMon ");
+        sql.append("where Lop.IdMon = ? and Ky_Mon.IdKy = ? and Mon_Nganh.IdNganh = ?");
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(),idMon,idKy,idNganh);
+            while (rs.next()) {
+                QuanLyLop lop = mapper.mapRow(rs);
+                lops.add(lop);
+            }
+        } catch (SQLException e) {
+            System.out.println("Lôi sql lop");
+        }
+        return lops;
+    }
 }

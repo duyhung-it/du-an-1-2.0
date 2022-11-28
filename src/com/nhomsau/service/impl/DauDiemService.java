@@ -16,24 +16,29 @@ import java.util.List;
  */
 public class DauDiemService implements IDauDiemService{
 
-    private final IDauDiemRepository IDauDiemRepository;
+    private final IDauDiemRepository dauDiemRepository;
 
     public DauDiemService() {
-        this.IDauDiemRepository = new DauDiemRepository();
+        this.dauDiemRepository = new DauDiemRepository();
     }
     
     @Override
     public List<DauDiem> findAll() {
-        return IDauDiemRepository.findAll();
+        return dauDiemRepository.findAll();
     }
 
     @Override
     public List<DauDiem> findDauDiemByIdMon(String id) {
-        return IDauDiemRepository.findAllDauDiem(id);
+        return dauDiemRepository.findAllDauDiem(id);
     }
     
     @Override
     public String getTenDauDiem(String id){
-        return IDauDiemRepository.getTenDauDiem(id);
+        return dauDiemRepository.getTenDauDiem(id);
+    }
+
+    @Override
+    public List<DauDiem> findDauDiemByMon(String idMon, String idNganh) {
+        return this.dauDiemRepository.findDauDiemByMon(idMon, idNganh);
     }
 }

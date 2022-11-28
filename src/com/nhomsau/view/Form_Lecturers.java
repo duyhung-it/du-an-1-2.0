@@ -415,7 +415,6 @@ public class Form_Lecturers extends javax.swing.JPanel {
             rdoNu.setSelected(true);
         }
         Date dOB = validatetor.getDateDDStr(dOBstr);
-        dchNgaySinhGV.setDate(dOB);
         txtDiaChi.setText(address);
         txtSDTGV.setText(phone);
         txtEmailGV.setText(email);
@@ -535,7 +534,7 @@ public class Form_Lecturers extends javax.swing.JPanel {
         if (fullname == null) {
             return null;
         }
-        Date dOB = validatetor.getDateYYYY(dchNgaySinhGV.getDate());
+//        Date dOB = validatetor.getDateYYYY(dchNgaySinhGV.getDate());
         String address = validatetor.kiemTraRong(txtDiaChi, "Vui lòng nhập địa chỉ!");
         if (address == null) {
             return null;
@@ -557,7 +556,8 @@ public class Form_Lecturers extends javax.swing.JPanel {
 
         int role = 2;
         int gender = rdoNam.isSelected() ? 0 : 1;
-        return new ManageLecturer(code, fullname, gender, dOB, address, email, phone, password, role, manager, major);
+        return null;
+//        return new ManageLecturer(code, fullname, gender, dOB, address, email, phone, password, role, manager, major);
     }
 
     private void clearForm() {
@@ -567,7 +567,6 @@ public class Form_Lecturers extends javax.swing.JPanel {
         txtDiaChi.setText("");
         txtSDTGV.setText("");
         txtMatKhauGV.setText("");
-        dchNgaySinhGV.setDate(null);
         rdoNam.isSelected();
         cbbMajors.setSelectedIndex(-1);
         cbbManager.setSelectedIndex(-1);

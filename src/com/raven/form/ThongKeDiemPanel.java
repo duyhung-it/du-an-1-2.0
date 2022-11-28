@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -267,6 +269,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 cbxMon.addItem(mon);
             }
         }
+        
     }//GEN-LAST:event_cbxKyItemStateChanged
 
     private void cbxNganhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNganhItemStateChanged

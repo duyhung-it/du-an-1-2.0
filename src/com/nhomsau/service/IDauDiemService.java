@@ -15,4 +15,5 @@ public interface IDauDiemService {
     List<DauDiem> findAll();
     List<DauDiem> findDauDiemByIdMon(String id);
     String getTenDauDiem(String id);
+    List<DauDiem> findDauDiemByMon(String idMon,String idNganh);
 }
