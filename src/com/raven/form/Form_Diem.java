@@ -5,6 +5,8 @@
 package com.raven.form;
 
 import com.nhomsau.domainmodel.DauDiem;
+import com.nhomsau.domainmodel.Diem;
+import com.nhomsau.domainmodel.Lop;
 import com.nhomsau.domainmodel.SinhVien;
 import com.nhomsau.repository.impl.DauDiemRepository;
 import com.nhomsau.repository.impl.DauDiemMonRepository;
@@ -18,9 +20,11 @@ import com.nhomsau.viewmodel.QuanLyDiem;
 import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyLop;
 import com.nhomsau.viewmodel.QuanLyMon;
+import com.nhomsau.viewmodel.QuanLyNganh;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -58,7 +62,7 @@ public class Form_Diem extends javax.swing.JPanel {
 
         model = (DefaultTableModel) tblDiem.getModel();
         fillAllKy();
-        
+
     }
 
     private void fillAllKy() {
@@ -68,7 +72,6 @@ public class Form_Diem extends javax.swing.JPanel {
             cbxKy.addItem(ky);
         }
     }
-
 
     private void loadTable(List<SinhVien> listSinhViens) {
 //        model.setRowCount(0);
@@ -86,8 +89,67 @@ public class Form_Diem extends javax.swing.JPanel {
 //        }
     }
 
+    private String getIdMon() {
+        QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
+        return mon.getId();
+    }
+
+    private String getIdLop(){
+        QuanLyLop lop = (QuanLyLop) cbxLop.getSelectedItem();
+        return lop.getIdLop();
+    }
+    private void save() {
+        int row = tblDiem.getRowCount();
+        int column = tblDiem.getColumnCount();
+
+        QuanLyLop lop = (QuanLyLop) cbxLop.getSelectedItem();
+
+        for (int i = 4; i < column; i++) {
+            String dauDiem = tblDiem.getColumnName(i);
+            String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
+            for (int j = 0; j < row; j++) {
+                System.out.println("row" + j + "col" + i);
+                String maSV = tblDiem.getValueAt(j, 1).toString();
+                String idSV = sinhVienRepository.getIdSV(maSV);
+                String diemString = null;
+                Object diemOb = tblDiem.getValueAt(j, i);
+                if(diemOb == null){
+                    diemString = "0";
+                }else{
+                    diemString = diemOb.toString();
+                }
+                
+                float diemTbl = 0;
+                try {
+                    diemTbl = Float.valueOf(diemString);
+                    if (diemTbl < 0) {
+                        JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm < 0");
+                        continue;
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm ko phải kiếu số");
+                    continue;
+                }
+                float diemCheck = diemRepository.getDiem(idSV, getIdMon(), idDauDiem);
+                if (diemTbl != diemCheck) {
+                    Diem diem = new Diem();
+                    diem.setIdSV(idSV);
+                    diem.setIdMonHoc(getIdMon());
+                    diem.setIdDauDiem(idDauDiem);
+                    diem.setDiem(diemTbl);
+                    
+                    int checkSV = diemRepository.checkSV(idSV, lop.getIdMon(), idDauDiem);
+                    if(checkSV == 1){
+                        diemRepository.updateDiem(diem);
+                    }else{
+                        diemRepository.saveDiem(diem);
+                    }
+                }
+            }
+        }
+        initColumn(getIdMon(), "D6142D6A-3F1A-4537-A680-45CA60029170", getIdLop());
+    }
 //    private void save() {
-//        boolean validate = true;
 //        int rowCount = model.getRowCount();
 //        String tenLop = (String) cbxLop.getSelectedItem();
 //        Lop lop = lopRepository.getLop(tenLop);
@@ -144,87 +206,40 @@ public class Form_Diem extends javax.swing.JPanel {
 //        loadTable(dsSV);
 //    }
 
-//    private void update() {
-//        boolean validate = true;
-//        int rowCount = model.getRowCount();
-//        String tenLop = (String) cbxLop.getSelectedItem();
-//        Lop lop = lopRepository.getLop(tenLop);
-////        String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
-//        List<SinhVien> dsSV = sinhVienRepository.getSinhViens(lop.getId());
-//        for (int i = 0; i < rowCount; i++) {
-//            String maSV = tblDiem.getValueAt(i, 1).toString();
-//            String diemString = tblDiem.getValueAt(i, 5).toString();
-//            float diemTbl = 0;
-//            if (diemString.isBlank()) {
-//                JOptionPane.showMessageDialog(this, "Không Sửa được điểm cho SV có maSV= " + maSV + " do điểm để trống");
-//                continue;
-//            }
-//            try {
-//                diemTbl = Float.valueOf(diemString);
-//                if (diemTbl < 0) {
-//                    JOptionPane.showMessageDialog(this, "Không Sửa được điểm cho SV có maSV= " + maSV + " do điểm < 0");
-//                    continue;
-//                }
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, "Không Sửa được điểm cho SV có maSV= " + maSV + " do điểm ko phải kiếu số");
-//                continue;
-//            }
-//            String idSV = sinhVienRepository.getIdSV(maSV);
-//            float diem = diemRepository.getDiem(idSV, lop.getIdMonHoc(), idDauDiem);
-//            if (diem == diemTbl) {
-//                System.out.println("giong");
-//            } else {
-//                Diem d = new Diem();
-//                d.setIdSV(idSV);
-//                d.setIdMonHoc(lop.getIdMonHoc());
-//                d.setIdDauDiem(idDauDiem);
-//                d.setDiem(diemTbl);
-//
-//                int checkSV = diemRepository.checkSV(idSV, lop.getIdMonHoc(), idDauDiem);
-//                if (checkSV == 1) {
-//                    int update = diemRepository.updateDiem(d);
-//                    if (update == 1) {
-//                        JOptionPane.showMessageDialog(this, "Sửa điểm thành công cho SV có maSV = " + maSV);
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "Sửa điểm thất bại cho SV có maSV = " + maSV);
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Sửa không thành công vì SV có maSV = " + maSV + " chưa có điểm");
-//                }
-//            }
-//        }
-//        loadTable(dsSV);
-//    }
-    private void initColumn(String idMon,String idNganh,String idLop){
+    private void initColumn(String idMon, String idNganh, String idLop) {
         List<DauDiem> listDauDiem = this.dauDiemRepository.findDauDiemByMon(idMon, idNganh);
-        model.setColumnCount(3);
+        model.setColumnCount(4);
         model.setNumRows(0);
-        if(!listDauDiem.isEmpty()){
-            
+        if (!listDauDiem.isEmpty()) {
+
             List<SinhVien> listSinhVien = this.sinhVienRepository.getSinhViens(idLop);
-            for(SinhVien sv : listSinhVien){
+            for (SinhVien sv : listSinhVien) {
                 tblDiem.addRow(new Object[]{
-                    model.getRowCount()+1,sv.getMa(),sv.getHoTen()
+                    model.getRowCount() + 1, sv.getMa(), sv.getHoTen()
                 });
             }
-            for(DauDiem d : listDauDiem){
+            for (DauDiem d : listDauDiem) {
                 Object[] object = new Object[listSinhVien.size()];
                 List<QuanLyDiem> listDiem = this.diemRepository.getDiemByMon(d.getIdDauDiem(), idMon, idLop);
                 int j = 0;
-                if(!listDiem.isEmpty())
-                for(int i = 0 ; i < listSinhVien.size(); i++){
-                    if(listSinhVien.get(i).getId().equals(listDiem.get(j).getIdUser())){
-                        object[i] = listDiem.get(j).getDiem();
-                        j++;
-                        if(j >= listDiem.size()) break;
+                if (!listDiem.isEmpty()) {
+                    for (int i = 0; i < listSinhVien.size(); i++) {
+                        if (listSinhVien.get(i).getId().equals(listDiem.get(j).getIdUser())) {
+                            object[i] = listDiem.get(j).getDiem();
+                            j++;
+                            if (j >= listDiem.size()) {
+                                break;
+                            }
+                        }
                     }
                 }
-               
-               model.addColumn(d,object);
+
+                model.addColumn(d, object);
             }
-            
+
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -237,7 +252,6 @@ public class Form_Diem extends javax.swing.JPanel {
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         panelTransparent2 = new com.raven.swing.PanelTransparent();
         btnSave = new com.raven.swing.button.Button();
-        button1 = new com.raven.swing.button.Button();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDiem = new com.raven.swing.table.Table();
         panelTransparent3 = new com.raven.swing.PanelTransparent();
@@ -249,17 +263,10 @@ public class Form_Diem extends javax.swing.JPanel {
 
         panelTransparent2.setOpaque(true);
 
-        btnSave.setText("Thêm");
+        btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
-            }
-        });
-
-        button1.setText("Sửa");
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
             }
         });
 
@@ -268,7 +275,7 @@ public class Form_Diem extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "MaSV", "HoTen"
+                "STT", "MaSV", "HoTen", "Ghi chú"
             }
         ));
         jScrollPane1.setViewportView(tblDiem);
@@ -277,22 +284,18 @@ public class Form_Diem extends javax.swing.JPanel {
         panelTransparent2.setLayout(panelTransparent2Layout);
         panelTransparent2Layout.setHorizontalGroup(
             panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
-                .addContainerGap(761, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
-            .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         panelTransparent2Layout.setVerticalGroup(
             panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -357,7 +360,8 @@ public class Form_Diem extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(panelTransparent3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -378,34 +382,29 @@ public class Form_Diem extends javax.swing.JPanel {
 
     private void cbxLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLopItemStateChanged
         // TODO add your handling code here:   
-        
+
         QuanLyLop lop = (QuanLyLop) cbxLop.getSelectedItem();
-        QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
+        QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
-        if(lop != null){
+        if (lop != null) {
             initColumn(mon.getId(), "D6142D6A-3F1A-4537-A680-45CA60029170", lop.getIdLop());
-        }else{
-            initColumn(null,null,null);
+        } else {
+            initColumn(null, null, null);
         }
 
     }//GEN-LAST:event_cbxLopItemStateChanged
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-//        save();
+        save();
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-//        update();
-    }//GEN-LAST:event_button1ActionPerformed
 
     private void cbxKyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxKyItemStateChanged
         // TODO add your handling code here:
         QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         List<QuanLyMon> listMon = monService.getMonTheoNganh("D6142D6A-3F1A-4537-A680-45CA60029170", ky.getId());
         cbxMon.removeAllItems();
-        for(QuanLyMon mon : listMon){
+        for (QuanLyMon mon : listMon) {
             cbxMon.addItem(mon);
         }
     }//GEN-LAST:event_cbxKyItemStateChanged
@@ -415,10 +414,10 @@ public class Form_Diem extends javax.swing.JPanel {
         QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
         cbxLop.removeAllItems();
-        if(mon != null){
+        if (mon != null) {
             List<QuanLyLop> listLop = this.lopRepository.findByMon(mon.getId(), "D6142D6A-3F1A-4537-A680-45CA60029170", ky.getId());
-    
-            for(QuanLyLop lop : listLop){
+
+            for (QuanLyLop lop : listLop) {
                 cbxLop.addItem(lop);
             }
         }
@@ -427,7 +426,6 @@ public class Form_Diem extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button btnSave;
-    private com.raven.swing.button.Button button1;
     private com.raven.swing.combobox.Combobox cbxKy;
     private com.raven.swing.combobox.Combobox cbxLop;
     private com.raven.swing.combobox.Combobox cbxMon;
