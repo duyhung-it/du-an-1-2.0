@@ -149,62 +149,6 @@ public class Form_Diem extends javax.swing.JPanel {
         }
         initColumn(getIdMon(), "D6142D6A-3F1A-4537-A680-45CA60029170", getIdLop());
     }
-//    private void save() {
-//        int rowCount = model.getRowCount();
-//        String tenLop = (String) cbxLop.getSelectedItem();
-//        Lop lop = lopRepository.getLop(tenLop);
-////        String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
-//        List<SinhVien> dsSV = sinhVienRepository.getSinhViens(lop.getId());
-//        for (int i = 0; i < rowCount; i++) {
-//            String maSV = tblDiem.getValueAt(i, 1).toString();
-//            String diemString = tblDiem.getValueAt(i, 5).toString();
-//            float diemTbl = 0;
-//            if (diemString.isBlank()) {
-//                JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm để trống");
-//                continue;
-//            }
-//            try {
-//                diemTbl = Float.valueOf(diemString);
-//                if (diemTbl < 0) {
-//                    JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm < 0");
-//                    continue;
-//                }
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm ko phải kiếu số");
-//                continue;
-//            }
-//            String idSV = sinhVienRepository.getIdSV(maSV);
-//            float diem = diemRepository.getDiem(idSV, lop.getIdMonHoc(), idDauDiem);
-//            if (diem == diemTbl) {
-//                System.out.println("giong");
-//            } else {
-//                Diem d = new Diem();
-//                d.setIdSV(idSV);
-//                d.setIdMonHoc(lop.getIdMonHoc());
-//                d.setIdDauDiem(idDauDiem);
-//                d.setDiem(diemTbl);
-//
-//                int checkSV = diemRepository.checkSV(idSV, lop.getIdMonHoc(), idDauDiem);
-//                if (checkSV == 1) {
-////                    int update = diemRepository.updateDiem(d);
-////                    if (update == 1) {
-////                        JOptionPane.showMessageDialog(this, "Tc1");
-////                    } else {
-////                        JOptionPane.showMessageDialog(this, "Tb1");
-////                    }
-//                    JOptionPane.showMessageDialog(this, "không thêm được điểm của SV có maSV = " + maSV + " vì đã tồn tại điểm");
-//                } else {
-//                    int insert = diemRepository.saveDiem(d);
-//                    if (insert == 1) {
-//                        JOptionPane.showMessageDialog(this, "Thêm điểm cho SV có MaSV = " + maSV + "Thành Công");
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "Thêm điểm cho SV có MaSV = " + maSV + "Thất bại");
-//                    }
-//                }
-//            }
-//        }
-//        loadTable(dsSV);
-//    }
 
     private void initColumn(String idMon, String idNganh, String idLop) {
         List<DauDiem> listDauDiem = this.dauDiemRepository.findDauDiemByMon(idMon, idNganh);
