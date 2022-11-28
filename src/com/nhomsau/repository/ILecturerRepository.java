@@ -5,6 +5,8 @@
 package com.nhomsau.repository;
 
 import com.nhomsau.domainmodel.Lecturer;
+import com.nhomsau.viewmodel.ManageLecturer;
+import com.nhomsau.viewmodel.QuanLyGiangVien;
 import java.util.List;
 
 /**
@@ -24,5 +26,6 @@ public interface ILecturerRepository {
     public boolean updateLec(Lecturer lecturerUp);
 
     public boolean deleteLec(String id);
+    QuanLyGiangVien findById(String id);
     
 }

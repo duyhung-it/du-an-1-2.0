@@ -11,16 +11,19 @@ import com.nhomsau.service.IDauDiemService;
 import com.nhomsau.service.IDiemService;
 import com.nhomsau.service.IKyService;
 import com.nhomsau.service.ILopService;
+import com.nhomsau.service.IManageLecturerService;
 import com.nhomsau.service.IMonService;
 import com.nhomsau.service.INganhService;
 import com.nhomsau.service.impl.DauDiemService;
 import com.nhomsau.service.impl.DiemService;
 import com.nhomsau.service.impl.KyService;
 import com.nhomsau.service.impl.LopService;
+import com.nhomsau.service.impl.ManageLecturerService;
 import com.nhomsau.service.impl.MonService;
 import com.nhomsau.service.impl.NganhService;
 import com.nhomsau.service.impl.SinhVienService;
 import com.nhomsau.viewmodel.QuanLyDiem;
+import com.nhomsau.viewmodel.QuanLyGiangVien;
 import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyLop;
 import com.nhomsau.viewmodel.QuanLyMon;
@@ -42,6 +45,7 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
     private IMonService monService;
     private IDiemService diemService;
     private ILopService lopService;
+    private IManageLecturerService lecturerService;
     private IDauDiemService dauDiemService;
     private SinhVienService sinhVienService;
     DefaultTableModel model;
@@ -50,6 +54,7 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         tblDiemTheoLop.fixTable(jScrollPane1);
         nganhService = new NganhService();
         kyService = new KyService();
+        lecturerService = new ManageLecturerService();
         monService = new MonService();
         diemService = new DiemService();
         lopService = new LopService();
@@ -105,8 +110,11 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
                
                model.addColumn(d,object);
             }
-            
+            this.setInfor(listSinhVien.size());
         }
+    }
+    private void setInfor( int quantityStudent){
+        lblSoSinhVien.setText(quantityStudent + "");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +135,14 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         panelTransparent2 = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDiemTheoLop = new com.raven.swing.table.Table();
+        panelTransparent3 = new com.raven.swing.PanelTransparent();
+        panelTransparent4 = new com.raven.swing.PanelTransparent();
+        jLabel1 = new javax.swing.JLabel();
+        lblGiangVien = new javax.swing.JLabel();
+        panelTransparent5 = new com.raven.swing.PanelTransparent();
+        jLabel2 = new javax.swing.JLabel();
+        lblSoSinhVien = new javax.swing.JLabel();
+        panelTransparent6 = new com.raven.swing.PanelTransparent();
 
         cbxNganh.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -207,13 +223,97 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         panelTransparent2.setLayout(panelTransparent2Layout);
         panelTransparent2Layout.setHorizontalGroup(
             panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         panelTransparent2Layout.setVerticalGroup(
             panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jLabel1.setText("Giảng Viên:");
+
+        javax.swing.GroupLayout panelTransparent4Layout = new javax.swing.GroupLayout(panelTransparent4);
+        panelTransparent4.setLayout(panelTransparent4Layout);
+        panelTransparent4Layout.setHorizontalGroup(
+            panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent4Layout.createSequentialGroup()
+                .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(panelTransparent4Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(lblGiangVien, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        panelTransparent4Layout.setVerticalGroup(
+            panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGiangVien, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel2.setText("Số Sinh Viên:");
+
+        javax.swing.GroupLayout panelTransparent5Layout = new javax.swing.GroupLayout(panelTransparent5);
+        panelTransparent5.setLayout(panelTransparent5Layout);
+        panelTransparent5Layout.setHorizontalGroup(
+            panelTransparent5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent5Layout.createSequentialGroup()
+                .addContainerGap(106, Short.MAX_VALUE)
+                .addComponent(lblSoSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93))
+        );
+        panelTransparent5Layout.setVerticalGroup(
+            panelTransparent5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSoSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelTransparent6Layout = new javax.swing.GroupLayout(panelTransparent6);
+        panelTransparent6.setLayout(panelTransparent6Layout);
+        panelTransparent6Layout.setHorizontalGroup(
+            panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 227, Short.MAX_VALUE)
+        );
+        panelTransparent6Layout.setVerticalGroup(
+            panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelTransparent3Layout = new javax.swing.GroupLayout(panelTransparent3);
+        panelTransparent3.setLayout(panelTransparent3Layout);
+        panelTransparent3Layout.setHorizontalGroup(
+            panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(panelTransparent5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(96, 96, 96)
+                .addComponent(panelTransparent6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelTransparent3Layout.setVerticalGroup(
+            panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelTransparent4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTransparent5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTransparent6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -222,13 +322,16 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelTransparent3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTransparent3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -260,7 +363,6 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(),ky.getId());
         cbxMon.removeAllItems();
         if(!listMons.isEmpty()){
-            cbxMon.addItem("Tất Cả");
             for(QuanLyMon mon : listMons){
                 cbxMon.addItem(mon);
             }
@@ -276,6 +378,7 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             System.out.println(ky.getId());
             System.out.println(nganh.getId());
         }
+        cbxLop.removeAllItems();
         if(mon!= null){
             List<QuanLyLop> listLop = this.lopService.findByMon(mon.getId(), nganh.getId(), ky.getId());
             for(QuanLyLop lop : listLop){
@@ -293,7 +396,10 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
         if(lop != null){
             initColumn(mon.getId(), nganh.getId(), lop.getIdLop());
+            QuanLyGiangVien giangVien = this.lecturerService.findById(lop.getIdGiaoVien());
+            lblGiangVien.setText(giangVien.toString());
         }
+        
     }//GEN-LAST:event_cbxLopItemStateChanged
 
 
@@ -304,9 +410,17 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
     private com.raven.swing.combobox.Combobox cbxLop;
     private com.raven.swing.combobox.Combobox cbxMon;
     private com.raven.swing.combobox.Combobox cbxNganh;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGiangVien;
+    private javax.swing.JLabel lblSoSinhVien;
     private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent panelTransparent2;
+    private com.raven.swing.PanelTransparent panelTransparent3;
+    private com.raven.swing.PanelTransparent panelTransparent4;
+    private com.raven.swing.PanelTransparent panelTransparent5;
+    private com.raven.swing.PanelTransparent panelTransparent6;
     private com.raven.swing.table.Table tblDiemTheoLop;
     // End of variables declaration//GEN-END:variables
 }

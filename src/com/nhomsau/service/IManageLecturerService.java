@@ -5,6 +5,7 @@
 package com.nhomsau.service;
 
 import com.nhomsau.viewmodel.ManageLecturer;
+import com.nhomsau.viewmodel.QuanLyGiangVien;
 import java.util.List;
 
 /**
@@ -22,5 +23,5 @@ public interface IManageLecturerService {
     public boolean updateLecturer(ManageLecturer lecturer);
 
     public boolean deleteLec(String code);
-    
+    QuanLyGiangVien findById(String id);
 }
