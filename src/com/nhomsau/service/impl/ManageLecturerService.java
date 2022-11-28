@@ -10,6 +10,7 @@ import com.nhomsau.repository.ILecturerRepository;
 import com.nhomsau.repository.impl.LecturerRepository;
 import com.nhomsau.service.IManageLecturerService;
 import com.nhomsau.viewmodel.ManageLecturer;
+import com.nhomsau.viewmodel.QuanLyGiangVien;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,11 @@ public class ManageLecturerService implements IManageLecturerService {
     public boolean deleteLec(String code) {
         String id = lecturerRepository.findByCode(code).getId();
         return lecturerRepository.deleteLec(id);
+    }
+
+    @Override
+    public QuanLyGiangVien findById(String id) {
+        return this.lecturerRepository.findById(id);
     }
 
 }

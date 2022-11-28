@@ -166,6 +166,7 @@ public class Form_Lecturers extends javax.swing.JPanel {
         btnTaoMoiGV = new com.raven.swing.button.Button();
         btnLuuGV = new com.raven.swing.button.Button();
         btnXoaGV = new com.raven.swing.button.Button();
+        dchNgaySinhGV = new com.toedter.calendar.JDateChooser();
 
         panelTransparent1.setTransparent(0.5F);
 
@@ -305,9 +306,12 @@ public class Form_Lecturers extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMaGV, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtHoTenGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(dchNgaySinhGV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(txtEmailGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSDTGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMatKhauGV, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -353,8 +357,10 @@ public class Form_Lecturers extends javax.swing.JPanel {
                                 .addGap(37, 37, 37)
                                 .addComponent(cbbManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(jLabel1)
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(dchNgaySinhGV, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(12, 12, 12)
                                 .addComponent(txtEmailGV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -423,16 +429,16 @@ public class Form_Lecturers extends javax.swing.JPanel {
         cbbManager.setSelectedIndex(index);
         int indexMajor = findIndexCBBMajor(major.getCode());
         cbbMajors.setSelectedIndex(indexMajor);
-//        cbbManager.setSelectedIndex(1);
-//        cbbManager.setSelectedItem(manager);
-//        for (int i = 0; i < listManagers.size(); i++) {
-//            System.out.println(i + "-" + listManagers.get(i).getCode());
-//            System.out.println(manager.getCode());
-//            if (manager.getCode().equalsIgnoreCase(listManagers.get(i).getCode())) {
-//                cbbManager.setSelectedIndex(i);
-//                break;
-//            }
-//        }
+        cbbManager.setSelectedIndex(1);
+        cbbManager.setSelectedItem(manager);
+        for (int i = 0; i < listManagers.size(); i++) {
+            System.out.println(i + "-" + listManagers.get(i).getCode());
+            System.out.println(manager.getCode());
+            if (manager.getCode().equalsIgnoreCase(listManagers.get(i).getCode())) {
+                cbbManager.setSelectedIndex(i);
+                break;
+            }
+        }
 
     }//GEN-LAST:event_tblLecturersMouseClicked
 
@@ -479,7 +485,7 @@ public class Form_Lecturers extends javax.swing.JPanel {
         }
         int total = listManagers.size();
         for (int i = 0; i < total; i++) {
-//            ManageManager category = (ManageManager) this.cbbManager.getItemAt(i);
+            ManageManager category = (ManageManager) this.cbbManager.getItemAt(i);
             if (code.equalsIgnoreCase(listManagers.get(i).getCode())) {
                 return i;
             }
@@ -493,7 +499,7 @@ public class Form_Lecturers extends javax.swing.JPanel {
         }
         int total = listMajor.size();
         for (int i = 0; i < total; i++) {
-//            ManageManager category = (ManageManager) this.cbbManager.getItemAt(i);
+            ManageManager category = (ManageManager) this.cbbManager.getItemAt(i);
             if (code.equalsIgnoreCase(listMajor.get(i).getCode())) {
                 return i;
             }
@@ -508,6 +514,7 @@ public class Form_Lecturers extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private com.raven.swing.combobox.Combobox cbbMajors;
     private com.raven.swing.combobox.Combobox cbbManager;
+    private com.toedter.calendar.JDateChooser dchNgaySinhGV;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -534,7 +541,7 @@ public class Form_Lecturers extends javax.swing.JPanel {
         if (fullname == null) {
             return null;
         }
-//        Date dOB = validatetor.getDateYYYY(dchNgaySinhGV.getDate());
+        Date dOB = validatetor.getDateYYYY(dchNgaySinhGV.getDate());
         String address = validatetor.kiemTraRong(txtDiaChi, "Vui lòng nhập địa chỉ!");
         if (address == null) {
             return null;
