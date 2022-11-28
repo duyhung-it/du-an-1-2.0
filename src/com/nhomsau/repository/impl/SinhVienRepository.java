@@ -119,7 +119,7 @@ public class SinhVienRepository implements ISinhVienRepository{
     DBConnection dBConnection;
     final String Select_SinhVien_SQl = "select Id,MaUser,HoTen,GioiTinh,NgaySinh,DiaChi,Email,SDT,MatKhau,ChucVu,IdNganh,IdNguoitao\n"
             + "from Users join SinhVien_Lop on Users.Id = SinhVien_Lop.IdSinhVien\n"
-            + "where IdLop = ?";
+            + "where IdLop = ? order by HoTen";
     final String select_idSV = "select Id from Users where MaUser = ?";
     public List<SinhVien> getSinhViens(String idLop){
         List<SinhVien> listSinhViens = new ArrayList<>();

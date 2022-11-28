@@ -143,4 +143,41 @@ public class DauDiemRepository implements IDauDiemRepository {
         }
         return listResults;
     }
+
+    @Override
+    public int countDauDiem(String idMon, String idNganh) {
+        StringBuilder sql = new StringBuilder("select COUNT(*)");
+        sql.append(" from DauDiem_Mon join Mon_Nganh on DauDiem_Mon.IdMon = Mon_Nganh.Id");
+        sql.append(" where IdMon = ? and Mon_Nganh.IdNganh = ?");
+        int result = -1;
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), idMon,idNganh);
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    @Override
+    public List<DauDiem> findDauDiemByMon(String idMon, String idNganh) {
+        String sql = "select DauDiem.* from DauDiem join DauDiem_Mon on DauDiem.Id = DauDiem_Mon.IdDauDiem \n" +
+                    "join Mon_Nganh on DauDiem_Mon.IdMon = Mon_Nganh.Id \n" +
+                    "where IdMon = ? and IdNganh = ? order by HeSo";
+        List<DauDiem> listResults = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idMon,idNganh);
+            while (rs.next()) {
+                String id = rs.getString(1);
+                String ma = rs.getString(2);
+                String ten = rs.getString(3);
+                listResults.add(new DauDiem(id, ma, ten));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResults;
+    }
 }

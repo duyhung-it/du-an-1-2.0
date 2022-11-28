@@ -6,10 +6,13 @@ package com.nhomsau.repository.impl;
 
 import com.nhomsau.domainmodel.Lecturer;
 import com.nhomsau.domainmodel.Major;
+import com.nhomsau.mapper.GiangVienMapper;
 import com.nhomsau.repository.ILecturerRepository;
 import com.nhomsau.repository.IMajorRepository;
 import com.nhomsau.repository.IManagerRepository;
 import com.nhomsau.util.DBConnection;
+import com.nhomsau.viewmodel.ManageLecturer;
+import com.nhomsau.viewmodel.QuanLyGiangVien;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,10 +28,11 @@ public class LecturerRepository implements ILecturerRepository {
 
     private MajorRepository _majorRepository;
     private ManagerRepository _managerRepository;
-
+    private final GiangVienMapper mapper;
     public LecturerRepository() {
         _majorRepository = new MajorRepository();
         _managerRepository = new ManagerRepository();
+        mapper = new GiangVienMapper();
     }
 
     @Override
@@ -153,7 +157,7 @@ public class LecturerRepository implements ILecturerRepository {
     @Override
     public Lecturer findByCode2(String code) {
         try {
-            String sql = "";
+            String sql = "SELECT [Id] ,[MaUser] ,[HoTen] ,GioiTinh,[NgaySinh] ,[DiaChi] ,[Email] ,[SDT] [IdNganh] FROM [dbo].[Users] WHERE [Id] = ?";
             ResultSet rs = DBConnection.getDataFromQuery(sql, code);
             while (rs.next()) {
                 Lecturer result = new Lecturer(rs.getString(1),
@@ -212,6 +216,21 @@ public class LecturerRepository implements ILecturerRepository {
         String sql = "DELETE FROM [dbo].[Users] WHERE [Id] = ?";
         int result = DBConnection.ExcuteDungna(sql, id);
         return result > 0;
+    }
+
+    @Override
+    public QuanLyGiangVien findById(String id) {
+        String sql = "SELECT [Id] ,[MaUser] ,[HoTen] ,GioiTinh,[NgaySinh] ,[DiaChi] ,[Email] ,[SDT], [IdNganh] FROM [dbo].[Users] WHERE [Id] = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, id);
+            while(rs.next()){
+                QuanLyGiangVien giangVien = mapper.mapRow(rs);
+                return giangVien;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LecturerRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

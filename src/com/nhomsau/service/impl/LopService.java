@@ -56,4 +56,9 @@ public class LopService implements ILopService{
     public List<QuanLyLop> findByTen(String ten) {
         return this.repository.findByTen(ten);
     }
+
+    @Override
+    public List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy) {
+        return this.repository.findByMon(idMon, idNganh, idKy);
+    }
 }

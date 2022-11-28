@@ -34,8 +34,8 @@
                           <Component id="txtHoTenGV" alignment="0" min="-2" pref="272" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="dchNgaySinhGV" min="-2" pref="191" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="dchNgaySinhGV" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txtEmailGV" alignment="0" min="-2" pref="272" max="-2" attributes="0"/>
                           <Component id="txtSDTGV" alignment="0" min="-2" pref="272" max="-2" attributes="0"/>
@@ -95,9 +95,10 @@
                               <Component id="cbbManager" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="dchNgaySinhGV" min="-2" pref="48" max="-2" attributes="0"/>
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dchNgaySinhGV" min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Component id="txtEmailGV" min="-2" max="-2" attributes="0"/>
@@ -266,11 +267,6 @@
     </Component>
     <Component class="com.raven.swing.textfield.TextField" name="txtHoTenGV">
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="dchNgaySinhGV">
-      <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ng&#xe0;y sinh"/>
@@ -393,5 +389,7 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="com.toedter.calendar.JDateChooser" name="dchNgaySinhGV">
+    </Component>
   </SubComponents>
 </Form>

@@ -20,4 +20,5 @@ public interface ILopService {
     void delete(String idLop);
     QuanLyLop findByMa(String ma);
     List<QuanLyLop> findByTen(String ten);
+    List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy);
 }

@@ -9,6 +9,7 @@ import com.nhomsau.repository.IDiemRepository;
 import com.nhomsau.repository.impl.DiemRepository;
 import com.nhomsau.service.IDiemService;
 import com.nhomsau.viewmodel.BangDiemTheoMon;
+import com.nhomsau.viewmodel.QuanLyDiem;
 import java.util.List;
 
 /**
@@ -35,6 +36,11 @@ public class DiemService implements IDiemService {
     @Override
     public List<BangDiem> getDiem(String idsv, String idmon) {
         return this.repository.getDiem(idsv, idmon);
+    }
+
+    @Override
+    public List<QuanLyDiem> getDiemByMon(String idDauDiem, String idMon, String idLop) {
+        return this.repository.getDiemByMon(idDauDiem, idMon, idLop);
     }
     
 }
