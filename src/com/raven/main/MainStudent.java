@@ -181,14 +181,11 @@ public class MainStudent extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                SwingAcrylic.prepareSwing();
-                MainStudent frame = new MainStudent();
-                frame.setVisible(true);
-                SwingAcrylic.processFrame(frame);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            SwingAcrylic.prepareSwing();
+            MainStudent frame = new MainStudent();
+            frame.setVisible(true);
+            SwingAcrylic.processFrame(frame);
         });
     }
 

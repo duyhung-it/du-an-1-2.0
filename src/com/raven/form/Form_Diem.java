@@ -16,6 +16,7 @@ import com.nhomsau.repository.impl.LopRepository;
 import com.nhomsau.repository.impl.SinhVienRepository;
 import com.nhomsau.service.IMonService;
 import com.nhomsau.service.impl.MonService;
+import com.nhomsau.util.CheckLogin;
 import com.nhomsau.viewmodel.QuanLyDiem;
 import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyLop;
@@ -46,7 +47,7 @@ public class Form_Diem extends javax.swing.JPanel {
     DauDiemMonRepository dauDiem_MonRepository;
     KyRepository kyRepository;
     IMonService monService;
-
+    
     public Form_Diem() throws ParseException {
         initComponents();
         tblDiem.fixTable(jScrollPane1);
@@ -59,10 +60,9 @@ public class Form_Diem extends javax.swing.JPanel {
         dauDiem_MonRepository = new DauDiemMonRepository();
         sinhVienRepository = new SinhVienRepository();
         kyRepository = new KyRepository();
-
         model = (DefaultTableModel) tblDiem.getModel();
         fillAllKy();
-
+        
     }
 
     private void fillAllKy() {
@@ -370,7 +370,7 @@ public class Form_Diem extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 56, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
