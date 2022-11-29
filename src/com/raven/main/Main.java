@@ -12,6 +12,7 @@ import com.raven.form.FormNganh;
 import com.raven.form.Form_Home;
 import com.raven.form.Form_MonHoc;
 import com.raven.form.Form_Mon_DauDiem;
+import com.raven.form.Frm_ThongKePass;
 import com.raven.form.ListStudentPanel;
 import com.raven.form.LopHocPanel;
 import com.raven.form.MainForm;
@@ -58,7 +59,9 @@ public class Main extends javax.swing.JFrame {
                     if (subMenuIndex == 0) {
                         main.showForm(new ListStudentPanel());
                     } else if (subMenuIndex == 1) {
-                        main.showForm(new Form_Statistical());
+                        main.showForm(new Frm_ThongKePass());
+                    } else if (subMenuIndex == 2) {
+                        main.showForm(new Frm_ThongKePass());
                     }
                 } else if (menuIndex == 1) {
                     if (subMenuIndex == 0) {
