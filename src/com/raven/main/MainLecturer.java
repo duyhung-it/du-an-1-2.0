@@ -190,14 +190,11 @@ public class MainLecturer extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                SwingAcrylic.prepareSwing();
-                MainLecturer frame = new MainLecturer();
-                frame.setVisible(true);
-                SwingAcrylic.processFrame(frame);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            SwingAcrylic.prepareSwing();
+            MainLecturer frame = new MainLecturer();
+            frame.setVisible(true);
+            SwingAcrylic.processFrame(frame);
         });
     }
 

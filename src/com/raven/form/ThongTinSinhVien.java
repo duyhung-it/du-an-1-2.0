@@ -66,6 +66,7 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         lblNgaySinh = new javax.swing.JLabel();
         lblSinhVien3 = new javax.swing.JLabel();
         lblGioiTinh = new javax.swing.JLabel();
+        passwordField1 = new com.raven.swing.textfield.PasswordField();
         panelTransparent2 = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBangDiem = new com.raven.swing.table.Table();
@@ -93,6 +94,8 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         lblGioiTinh.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         lblGioiTinh.setText("Sinh Viên:");
 
+        passwordField1.setText("passwordField1");
+
         javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
         panelTransparent1.setLayout(panelTransparent1Layout);
         panelTransparent1Layout.setHorizontalGroup(
@@ -105,10 +108,13 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(403, Short.MAX_VALUE))
         );
         panelTransparent1Layout.setVerticalGroup(
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,12 +126,13 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNgaySinh)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGioiTinh)
                     .addComponent(lblSinhVien3))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelTransparent2.setOpaque(true);
@@ -181,6 +188,7 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -235,6 +243,7 @@ public class ThongTinSinhVien extends javax.swing.JFrame {
     private javax.swing.JLabel lblSinhVien3;
     private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent panelTransparent2;
+    private com.raven.swing.textfield.PasswordField passwordField1;
     private com.raven.swing.table.Table tblBangDiem;
     // End of variables declaration//GEN-END:variables
 }
