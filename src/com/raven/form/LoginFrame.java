@@ -88,20 +88,19 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelTransparent3.setBackground(new java.awt.Color(25, 118, 211));
-        panelTransparent3.setOpaque(true);
+        panelTransparent3.setBackground(new java.awt.Color(33, 105, 249));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jLabel1.setText("Login");
 
-        txtUser.setBackground(new java.awt.Color(25, 118, 211));
-        txtUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtUser.setBackground(new java.awt.Color(255, 255, 255));
+        txtUser.setForeground(new java.awt.Color(0, 0, 0));
         txtUser.setCaretColor(new java.awt.Color(255, 255, 255));
         txtUser.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtUser.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtPassword.setBackground(new java.awt.Color(25, 118, 211));
-        txtPassword.setForeground(new java.awt.Color(255, 255, 255));
+        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtPassword.setLineColor(new java.awt.Color(255, 255, 255));
 
         btnLogin.setText(" Đăng nhập");
@@ -198,7 +197,7 @@ public class LoginFrame extends javax.swing.JFrame {
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
             switch(loginModel.getChucVu()){
-                case 1:
+                case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
                     SwingAcrylic.prepareSwing();
                     MainStudent frame = new MainStudent();
@@ -206,7 +205,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     SwingAcrylic.processFrame(frame);
                     });
                     break;
-                case 2:
+                case "Giảng Viên":
                     java.awt.EventQueue.invokeLater(() -> {
                     SwingAcrylic.prepareSwing();
                     MainLecturer frame = new MainLecturer();
@@ -214,7 +213,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     SwingAcrylic.processFrame(frame);
                     });
                     break;
-                case 3:
+                case "Giáo Vụ":
                     java.awt.EventQueue.invokeLater(() -> {
                     SwingAcrylic.prepareSwing();
                     Main frame = new Main();

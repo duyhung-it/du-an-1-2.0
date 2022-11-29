@@ -1,5 +1,7 @@
 package com.raven.main;
 
+import com.nhomsau.util.CheckLogin;
+import com.nhomsau.viewmodel.LoginModel;
 import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.component.MenuStudent;
@@ -31,9 +33,12 @@ public class MainStudent extends javax.swing.JFrame {
     private Header header;
     private MainForm main;
     private Animator animator;
-
+    private LoginModel loginModel;
     public MainStudent() {
         initComponents();
+        if(CheckLogin.isLogin()){
+            loginModel = CheckLogin.loginModel; 
+        }
         init();
     }
 
@@ -42,6 +47,10 @@ public class MainStudent extends javax.swing.JFrame {
         bg.setLayout(layout);
         menu = new MenuStudent();
         header = new Header();
+        if(loginModel != null){
+            System.out.println(loginModel.getHoTen());
+            header.setNameUser(loginModel);
+        }
         main = new MainForm();
         //  Init google icon font
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());

@@ -8,7 +8,12 @@ import com.raven.swing.MenuAnimation;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PanelTransparent;
 import com.raven.swing.scrollbar.ScrollBarCustom;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
@@ -91,7 +96,15 @@ public class MenuLecturer extends PanelTransparent {
             }
         }
     }
-
+        @Override
+    protected void paintComponent(Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        GradientPaint gra = new GradientPaint(0, 0, new Color(33, 105, 249), getWidth(), 0, new Color(93, 58, 196));
+        g2.setPaint(gra);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(grphcs);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
