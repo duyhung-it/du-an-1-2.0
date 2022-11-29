@@ -59,9 +59,7 @@ public class Main extends javax.swing.JFrame {
                     if (subMenuIndex == 0) {
                         main.showForm(new ListStudentPanel());
                     } else if (subMenuIndex == 1) {
-                        main.showForm(new Frm_ThongKePass());
-                    } else if (subMenuIndex == 2) {
-                        main.showForm(new Frm_ThongKePass());
+                        main.showForm(new Form_Statistical());
                     }
                 } else if (menuIndex == 1) {
                     if (subMenuIndex == 0) {

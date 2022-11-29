@@ -80,19 +80,312 @@ public class Form_Statistical extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelTransparent1 = new com.raven.swing.PanelTransparent();
+        panelTransparent4 = new com.raven.swing.PanelTransparent();
+        jLabel1 = new javax.swing.JLabel();
+        lblTongSinhVien = new javax.swing.JLabel();
+        panelTransparent8 = new com.raven.swing.PanelTransparent();
+        jLabel2 = new javax.swing.JLabel();
+        lblTongSinhVienDat = new javax.swing.JLabel();
+        panelTransparent9 = new com.raven.swing.PanelTransparent();
+        jLabel3 = new javax.swing.JLabel();
+        lblTongSinhVienTruot = new javax.swing.JLabel();
+        panelTransparent2 = new com.raven.swing.PanelTransparent();
+        rdoFullStudent = new com.raven.swing.radio_button.RadioButtonCustom();
+        cbbMajor = new com.raven.swing.combobox.Combobox();
+        rdoStudenPass = new com.raven.swing.radio_button.RadioButtonCustom();
+        rdoStudentMiss = new com.raven.swing.radio_button.RadioButtonCustom();
+        cbbSubjects = new com.raven.swing.combobox.Combobox();
+        cbbSemester = new com.raven.swing.combobox.Combobox();
+        button1 = new com.raven.swing.button.Button();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblStatistical = new com.raven.swing.table.Table();
+
+        panelTransparent1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        panelTransparent4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setText("Tổng sinh viên");
+
+        lblTongSinhVien.setText("jLabel4");
+
+        javax.swing.GroupLayout panelTransparent4Layout = new javax.swing.GroupLayout(panelTransparent4);
+        panelTransparent4.setLayout(panelTransparent4Layout);
+        panelTransparent4Layout.setHorizontalGroup(
+            panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent4Layout.createSequentialGroup()
+                .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(panelTransparent4Layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(lblTongSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+        panelTransparent4Layout.setVerticalGroup(
+            panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTongSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        panelTransparent8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel2.setText("Tổng sinh viên đạt");
+
+        lblTongSinhVienDat.setText("jLabel4");
+
+        javax.swing.GroupLayout panelTransparent8Layout = new javax.swing.GroupLayout(panelTransparent8);
+        panelTransparent8.setLayout(panelTransparent8Layout);
+        panelTransparent8Layout.setHorizontalGroup(
+            panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent8Layout.createSequentialGroup()
+                .addGroup(panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(panelTransparent8Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(lblTongSinhVienDat, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        panelTransparent8Layout.setVerticalGroup(
+            panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(1, 1, 1)
+                .addComponent(lblTongSinhVienDat, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        panelTransparent9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel3.setText("Tổng sinh viên trượt:");
+
+        lblTongSinhVienTruot.setText("jLabel4");
+
+        javax.swing.GroupLayout panelTransparent9Layout = new javax.swing.GroupLayout(panelTransparent9);
+        panelTransparent9.setLayout(panelTransparent9Layout);
+        panelTransparent9Layout.setHorizontalGroup(
+            panelTransparent9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent9Layout.createSequentialGroup()
+                .addContainerGap(125, Short.MAX_VALUE)
+                .addComponent(lblTongSinhVienTruot, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+        );
+        panelTransparent9Layout.setVerticalGroup(
+            panelTransparent9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTongSinhVienTruot, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
+        panelTransparent1.setLayout(panelTransparent1Layout);
+        panelTransparent1Layout.setHorizontalGroup(
+            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
+        );
+        panelTransparent1Layout.setVerticalGroup(
+            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        panelTransparent2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        rdoFullStudent.setSelected(true);
+        rdoFullStudent.setText("Tất cả");
+
+        cbbMajor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbMajorItemStateChanged(evt);
+            }
+        });
+
+        rdoStudenPass.setText("Đạt");
+
+        rdoStudentMiss.setText("Trượt");
+
+        cbbSubjects.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbSubjectsItemStateChanged(evt);
+            }
+        });
+
+        cbbSemester.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbSemesterItemStateChanged(evt);
+            }
+        });
+
+        button1.setText("Xuất file");
+
+        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
+        panelTransparent2.setLayout(panelTransparent2Layout);
+        panelTransparent2Layout.setHorizontalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rdoFullStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rdoStudentMiss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(158, 158, 158))
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addComponent(rdoStudenPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))))
+        );
+        panelTransparent2Layout.setVerticalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent2Layout.createSequentialGroup()
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(rdoFullStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rdoStudenPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addComponent(rdoStudentMiss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        tblStatistical.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã sinh viên", "Họ tên", "Lớp học", "Trạng thái", "Ghi chú"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblStatistical);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelTransparent2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTransparent1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbbMajorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbMajorItemStateChanged
+        loadTable();
+        //        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
+        //        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
+        //        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
+        //        System.out.println(subject);
+        //        System.out.println(major);
+        //        System.out.println(semester);
+    }//GEN-LAST:event_cbbMajorItemStateChanged
+
+    private void cbbSubjectsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSubjectsItemStateChanged
+        //        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
+        //        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
+        //        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
+        //        System.out.println(subject);
+        //        System.out.println(major);
+        //        System.out.println(semester);
+        loadTable();
+    }//GEN-LAST:event_cbbSubjectsItemStateChanged
+
+    private void cbbSemesterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSemesterItemStateChanged
+        //        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
+        //        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
+        //        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
+        //        System.out.println(subject);
+        //        System.out.println(major);
+        //        System.out.println(semester);
+        loadTable();
+    }//GEN-LAST:event_cbbSemesterItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.swing.button.Button button1;
+    private com.raven.swing.combobox.Combobox cbbMajor;
+    private com.raven.swing.combobox.Combobox cbbSemester;
+    private com.raven.swing.combobox.Combobox cbbSubjects;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTongSinhVien;
+    private javax.swing.JLabel lblTongSinhVienDat;
+    private javax.swing.JLabel lblTongSinhVienTruot;
+    private com.raven.swing.PanelTransparent panelTransparent1;
+    private com.raven.swing.PanelTransparent panelTransparent2;
+    private com.raven.swing.PanelTransparent panelTransparent4;
+    private com.raven.swing.PanelTransparent panelTransparent8;
+    private com.raven.swing.PanelTransparent panelTransparent9;
+    private com.raven.swing.radio_button.RadioButtonCustom rdoFullStudent;
+    private com.raven.swing.radio_button.RadioButtonCustom rdoStudenPass;
+    private com.raven.swing.radio_button.RadioButtonCustom rdoStudentMiss;
+    private com.raven.swing.table.Table tblStatistical;
     // End of variables declaration//GEN-END:variables
 }
