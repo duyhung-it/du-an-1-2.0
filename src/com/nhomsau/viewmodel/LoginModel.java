@@ -111,8 +111,14 @@ public class LoginModel {
         this.idNganh = idNganh;
     }
 
-    public int getChucVu() {
-        return chucVu;
+    public String getChucVu() {
+        switch(this.chucVu){
+            case 1: return "Sinh Viên";
+            case 2: return "Giảng Viên";
+            case 3: return "Giáo Vụ";
+            default:
+                return "Admin";
+        }
     }
 
     public void setChucVu(int chucVu) {

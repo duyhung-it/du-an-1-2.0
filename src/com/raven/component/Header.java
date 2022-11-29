@@ -1,5 +1,6 @@
 package com.raven.component;
 
+import com.nhomsau.viewmodel.LoginModel;
 import com.raven.swing.PanelTransparent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +14,10 @@ public class Header extends PanelTransparent {
     public void addMenuEvent(ActionListener event) {
         cmdMenu.addActionListener(event);
     }
-
+    public void setNameUser(LoginModel login){
+        lbRole.setText(login.getChucVu()+"");
+        lbUserName.setText(login.getHoTen());
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
