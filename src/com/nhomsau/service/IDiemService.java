@@ -19,4 +19,5 @@ public interface IDiemService {
     List<BangDiemTheoMon> thongKeDiemTaCaMon(String idNganh,String idKy,Double min,Double max);
     List<BangDiem> getDiem(String idsv,String idmon);
     List<QuanLyDiem> getDiemByMon(String idDauDiem,String idMon,String idLop);
+    BangDiemTheoMon getDiemTrungBinhTheoId(String idSV,String idKy,String idNganh,String idMon);
 }

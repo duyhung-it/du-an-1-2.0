@@ -1,6 +1,7 @@
 package com.raven.swing.table;
 
 import com.nhomsau.viewmodel.SinhVienView;
+import com.nhomsau.viewmodel.TrangThai;
 import com.raven.swing.scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
@@ -55,7 +56,20 @@ public class Table extends JTable {
 //                        cell.setBackground(Color.WHITE);
 //                    }
 //                    return cell;
-//                } else {
+                 if (o instanceof TrangThai) {
+                    JLabel lblTrangThai = new JLabel(((TrangThai) o).getValue());
+                    if (lblTrangThai.getText().equalsIgnoreCase("Passed")) {
+                        lblTrangThai.setForeground(Color.GREEN);
+                    } else {
+                        lblTrangThai.setForeground(Color.RED);
+                    }
+                     if (selected) {
+                         lblTrangThai.setBackground(new Color(239, 244, 255));
+                     } else {
+                         lblTrangThai.setBackground(Color.WHITE);
+                     }
+                    return lblTrangThai;
+                } else {
                     Component com = super.getTableCellRendererComponent(jtable, o, selected, focus, i, i1);
                     setBorder(noFocusBorder);
                     com.setForeground(new Color(102, 102, 102));
@@ -65,7 +79,7 @@ public class Table extends JTable {
                         com.setBackground(Color.WHITE);
                     }
                     return com;
-//                }
+                }
             }
         });
     }
