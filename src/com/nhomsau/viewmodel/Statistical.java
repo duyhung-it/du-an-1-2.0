@@ -79,11 +79,11 @@ public class Statistical {
         this.classname = classname;
     }
     public String getNote() {
-        if (score > 0 && score < 3) {
+        if (score > 0 && score <= 2.9) {
             return "Yếu";
-        } else if (score < 5) {
+        } else if (score <= 4.9) {
             return "Trung bình";
-        } else if (score < 7) {
+        } else if (score <= 7.9) {
             return "Khá";
         } else {
             return "Giỏi";

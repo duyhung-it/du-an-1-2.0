@@ -31,10 +31,19 @@ import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.Statistical;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import jdk.dynalink.beans.StaticClass;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -57,6 +66,8 @@ public class Form_Statistical extends javax.swing.JPanel {
     private ILopService lopService;
     private ISinhVienService sinhVienService;
     List<Statistical> list;
+    ChartPanel chartPanel;
+    JFreeChart barChart;
 
     public Form_Statistical() {
         initComponents();
@@ -70,6 +81,10 @@ public class Form_Statistical extends javax.swing.JPanel {
         kyService = new KyService();
         nganhService = new NganhService();
         diemService = new DiemService();
+        
+        chartPanel = new ChartPanel(barChart);
+        pnlTrDaTa.setVisible(false);
+        tblStatistical.fixTable(jScrollPane1);
         loadCBB();
         loadTable();
     }
@@ -95,19 +110,43 @@ public class Form_Statistical extends javax.swing.JPanel {
 
     private void loadTable() {
         tblModel = (DefaultTableModel) tblStatistical.getModel();
-
-        QuanLyNganh major = (QuanLyNganh) cbbMajor.getSelectedItem();
-        QuanLyKy semester = (QuanLyKy) cbbSemester.getSelectedItem();
-        QuanLyMon subject = (QuanLyMon) cbbSubjects.getSelectedItem();
-        if (subject != null) {
-            List<Statistical> list = managerService.findListStudent(subject.getMa(), major.getMa(), semester.getMa());
-            tblModel.setRowCount(0);
-            for (Statistical st : list) {
-                tblModel.addRow(new Object[]{st.getCode(),
-                    st.getFullname(),
-                    st.getClasscode() + " - " + st.getClassname(),
-                    st.getScore() >= 5 ? "Đạt" : "Không đạt",
-                    st.getScore()});
+        QuanLyKy ky = (QuanLyKy) cbbSemester.getSelectedItem();
+        QuanLyNganh nganh = (QuanLyNganh) cbbMajor.getSelectedItem();
+        if (cbbSubjects.getSelectedIndex() == 0) {
+            if (ky != null && nganh != null) {
+                List<Statistical> list = managerService.findTotalListStudentToMinMax(nganh.getId(), ky.getId(), 0, 10);
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+                if (!list.isEmpty()) {
+                    loadDataThongKe();
+                } else {
+                    setNull();
+                }
+            }
+        } else {
+            QuanLyMon mon = (QuanLyMon) cbbSubjects.getSelectedItem();
+            if (mon != null) {
+                List<Statistical> list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa(), 0, 10);
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+                initBarChart(nganh, ky, mon);
+                if (!list.isEmpty()) {
+                    loadDataThongKe();
+                } else {
+                    setNull();
+                }
             }
         }
 
@@ -128,10 +167,49 @@ public class Form_Statistical extends javax.swing.JPanel {
             lblTongSinhVienTruot.setText(String.valueOf(tong - dat));
         }
     }
-    private void setNull(){
+
+    private void setNull() {
         lblTongSinhVien.setText("0");
         lblTongSinhVienDat.setText("0");
         lblTongSinhVienTruot.setText("0");
+    }
+
+    private CategoryDataset createDataset(String idNganh, String idKy, String idMon) {
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String score = "Học lực";
+        List<Statistical> listBangDiem = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 0, 2.9);
+        Double soLuong = Double.valueOf(listBangDiem.size() + "");
+        dataset.addValue(soLuong, score, "Yếu");
+        String scoreTB = "TB";
+        List<Statistical> listBangDiemTb = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 3, 4.9);
+        Double soLuongTB = Double.valueOf(listBangDiemTb.size() + "");
+        dataset.addValue(soLuongTB, scoreTB, "Trung bình");
+        String scoreK = "Khá";
+        List<Statistical> listBangDiemK = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 5, 7.9);
+        Double soLuongK = Double.valueOf(listBangDiemK.size() + "");
+        dataset.addValue(soLuongK, scoreK, "Khá");
+        String scoreG = "Giỏi";
+        List<Statistical> listBangDiemG = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 8, 10);
+        Double soLuongG = Double.valueOf(listBangDiemG.size() + "");
+        dataset.addValue(soLuongG, scoreG, "Giỏi");
+        
+        return dataset;
+    }
+
+    private void initBarChart(QuanLyNganh nganh, QuanLyKy ky, QuanLyMon mon) {
+        if (mon != null) {
+            String title = "Biểu đồ xếp loại sinh viên: " + mon.getTen() + " " + ky.getTen();
+            barChart = ChartFactory.createBarChart(
+                    title,
+                    "Học lực",
+                    "Số lượng",
+                    createDataset(nganh.getId(), ky.getId(), mon.getId()),
+                    PlotOrientation.VERTICAL,
+                    true, true, false);
+            chartPanel = new ChartPanel(barChart);
+            chartPanel.setPreferredSize(new Dimension(pnlTrDaTa.getWidth(), pnlTrDaTa.getHeight()));
+        }
     }
 
     /**
@@ -144,6 +222,13 @@ public class Form_Statistical extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        panelTransparent2 = new com.raven.swing.PanelTransparent();
+        cbbMajor = new com.raven.swing.combobox.Combobox();
+        cbbSubjects = new com.raven.swing.combobox.Combobox();
+        cbbSemester = new com.raven.swing.combobox.Combobox();
+        button1 = new com.raven.swing.button.Button();
+        button2 = new com.raven.swing.button.Button();
+        pnlTrDaTa = new com.raven.swing.PanelTransparent();
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         panelTransparent4 = new com.raven.swing.PanelTransparent();
         jLabel1 = new javax.swing.JLabel();
@@ -154,16 +239,80 @@ public class Form_Statistical extends javax.swing.JPanel {
         panelTransparent9 = new com.raven.swing.PanelTransparent();
         jLabel3 = new javax.swing.JLabel();
         lblTongSinhVienTruot = new javax.swing.JLabel();
-        panelTransparent2 = new com.raven.swing.PanelTransparent();
-        rdoFullStudent = new com.raven.swing.radio_button.RadioButtonCustom();
-        cbbMajor = new com.raven.swing.combobox.Combobox();
-        rdoStudenPass = new com.raven.swing.radio_button.RadioButtonCustom();
         rdoStudentMiss = new com.raven.swing.radio_button.RadioButtonCustom();
-        cbbSubjects = new com.raven.swing.combobox.Combobox();
-        cbbSemester = new com.raven.swing.combobox.Combobox();
-        button1 = new com.raven.swing.button.Button();
+        rdoStudenPass = new com.raven.swing.radio_button.RadioButtonCustom();
+        rdoFullStudent = new com.raven.swing.radio_button.RadioButtonCustom();
+        xuatfileExec = new com.raven.swing.button.Button();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStatistical = new com.raven.swing.table.Table();
+        pnlBieuDoPass = new com.raven.swing.PanelTransparent();
+
+        panelTransparent2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        cbbMajor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbMajorItemStateChanged(evt);
+            }
+        });
+
+        cbbSubjects.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbSubjectsItemStateChanged(evt);
+            }
+        });
+
+        cbbSemester.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbSemesterItemStateChanged(evt);
+            }
+        });
+
+        button1.setText("Danh sách");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
+        button2.setText("Biểu đồ");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
+        panelTransparent2.setLayout(panelTransparent2Layout);
+        panelTransparent2Layout.setHorizontalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
+        );
+        panelTransparent2Layout.setVerticalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        pnlTrDaTa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlTrDaTa.setLayout(new java.awt.CardLayout());
 
         panelTransparent1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -185,7 +334,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                     .addGroup(panelTransparent4Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(lblTongSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         panelTransparent4Layout.setVerticalGroup(
             panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +343,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTongSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelTransparent8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -215,7 +364,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                     .addGroup(panelTransparent8Layout.createSequentialGroup()
                         .addGap(109, 109, 109)
                         .addComponent(lblTongSinhVienDat, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTransparent8Layout.setVerticalGroup(
             panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +373,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(1, 1, 1)
                 .addComponent(lblTongSinhVienDat, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelTransparent9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -242,7 +391,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent9Layout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
+                .addContainerGap(81, Short.MAX_VALUE)
                 .addComponent(lblTongSinhVienTruot, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
@@ -252,111 +401,36 @@ public class Form_Statistical extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTongSinhVienTruot, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblTongSinhVienTruot, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
-        panelTransparent1.setLayout(panelTransparent1Layout);
-        panelTransparent1Layout.setHorizontalGroup(
-            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140))
-        );
-        panelTransparent1Layout.setVerticalGroup(
-            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        panelTransparent2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        buttonGroup1.add(rdoFullStudent);
-        rdoFullStudent.setSelected(true);
-        rdoFullStudent.setText("Tất cả");
-
-        cbbMajor.addItemListener(new java.awt.event.ItemListener() {
+        buttonGroup1.add(rdoStudentMiss);
+        rdoStudentMiss.setText("Trượt");
+        rdoStudentMiss.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbMajorItemStateChanged(evt);
+                rdoStudentMissItemStateChanged(evt);
             }
         });
 
         buttonGroup1.add(rdoStudenPass);
         rdoStudenPass.setText("Đạt");
-
-        buttonGroup1.add(rdoStudentMiss);
-        rdoStudentMiss.setText("Trượt");
-
-        cbbSubjects.addItemListener(new java.awt.event.ItemListener() {
+        rdoStudenPass.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbSubjectsItemStateChanged(evt);
+                rdoStudenPassItemStateChanged(evt);
             }
         });
 
-        cbbSemester.addItemListener(new java.awt.event.ItemListener() {
+        buttonGroup1.add(rdoFullStudent);
+        rdoFullStudent.setSelected(true);
+        rdoFullStudent.setText("Tất cả");
+        rdoFullStudent.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbSemesterItemStateChanged(evt);
+                rdoFullStudentItemStateChanged(evt);
             }
         });
 
-        button1.setText("Xuất file");
-
-        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
-        panelTransparent2.setLayout(panelTransparent2Layout);
-        panelTransparent2Layout.setHorizontalGroup(
-            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelTransparent2Layout.createSequentialGroup()
-                        .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rdoFullStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rdoStudentMiss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(158, 158, 158))
-                    .addGroup(panelTransparent2Layout.createSequentialGroup()
-                        .addComponent(rdoStudenPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))))
-        );
-        panelTransparent2Layout.setVerticalGroup(
-            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent2Layout.createSequentialGroup()
-                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTransparent2Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(rdoFullStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rdoStudenPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addComponent(rdoStudentMiss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelTransparent2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
+        xuatfileExec.setText("Xuất file");
 
         tblStatistical.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -379,26 +453,74 @@ public class Form_Statistical extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblStatistical);
 
+        javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
+        panelTransparent1.setLayout(panelTransparent1Layout);
+        panelTransparent1Layout.setHorizontalGroup(
+            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(137, 137, 137)
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addComponent(rdoStudenPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(xuatfileExec, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rdoStudentMiss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rdoFullStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jScrollPane1)
+        );
+        panelTransparent1Layout.setVerticalGroup(
+            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent1Layout.createSequentialGroup()
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(rdoFullStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rdoStudenPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(xuatfileExec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdoStudentMiss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+        );
+
+        pnlTrDaTa.add(panelTransparent1, "card2");
+        pnlTrDaTa.add(pnlBieuDoPass, "card3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelTransparent2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelTransparent1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlTrDaTa, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlTrDaTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -421,7 +543,7 @@ public class Form_Statistical extends javax.swing.JPanel {
 
             if (cbbSubjects.getSelectedIndex() > 0) {
                 QuanLyMon subject = (QuanLyMon) cbbSubjects.getSelectedItem();
-                List<Statistical> list = managerService.findListStudent(subject.getMa(), nganh.getMa(), ky.getMa());
+                List<Statistical> list = managerService.findListStudent(subject.getMa(), nganh.getMa(), ky.getMa(), 0, 10);
                 tblModel.setRowCount(0);
                 for (Statistical st : list) {
                     tblModel.addRow(new Object[]{st.getCode(),
@@ -432,7 +554,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 }
                 if (!list.isEmpty()) {
                     loadDataThongKe();
-                }else{
+                } else {
                     setNull();
                 }
             }
@@ -445,7 +567,7 @@ public class Form_Statistical extends javax.swing.JPanel {
         QuanLyNganh nganh = (QuanLyNganh) cbbMajor.getSelectedItem();
         if (cbbSubjects.getSelectedIndex() == 0) {
             if (ky != null && nganh != null) {
-                List<Statistical> list = managerService.findListStudent(null, nganh.getMa(), ky.getMa());
+                List<Statistical> list = managerService.findTotalListStudentToMinMax(nganh.getId(), ky.getId(), 0, 10);
                 tblModel.setRowCount(0);
                 for (Statistical st : list) {
                     tblModel.addRow(new Object[]{st.getCode(),
@@ -456,14 +578,14 @@ public class Form_Statistical extends javax.swing.JPanel {
                 }
                 if (!list.isEmpty()) {
                     loadDataThongKe();
-                }else{
+                } else {
                     setNull();
                 }
             }
         } else {
             QuanLyMon mon = (QuanLyMon) cbbSubjects.getSelectedItem();
             if (mon != null) {
-                List<Statistical> list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa());
+                List<Statistical> list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa(), 0, 10);
                 tblModel.setRowCount(0);
                 for (Statistical st : list) {
                     tblModel.addRow(new Object[]{st.getCode(),
@@ -472,9 +594,10 @@ public class Form_Statistical extends javax.swing.JPanel {
                         st.getScore() >= 5 ? "Đạt" : "Không đạt",
                         st.getScore() + " - " + st.getNote()});
                 }
+                initBarChart(nganh, ky, mon);
                 if (!list.isEmpty()) {
                     loadDataThongKe();
-                }else{
+                } else {
                     setNull();
                 }
             }
@@ -496,7 +619,7 @@ public class Form_Statistical extends javax.swing.JPanel {
             }
             if (cbbSubjects.getSelectedIndex() > 0) {
                 QuanLyMon subject = (QuanLyMon) cbbSubjects.getSelectedItem();
-                List<Statistical> list = managerService.findListStudent(subject.getMa(), nganh.getMa(), ky.getMa());
+                List<Statistical> list = managerService.findListStudent(subject.getMa(), nganh.getMa(), ky.getMa(), 0, 10);
                 tblModel.setRowCount(0);
                 for (Statistical st : list) {
                     tblModel.addRow(new Object[]{st.getCode(),
@@ -507,7 +630,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 }
                 if (!list.isEmpty()) {
                     loadDataThongKe();
-                }else{
+                } else {
                     setNull();
                 }
             }
@@ -515,9 +638,98 @@ public class Form_Statistical extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbSemesterItemStateChanged
 
+    private void rdoStudenPassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoStudenPassItemStateChanged
+
+        stateChange();
+    }//GEN-LAST:event_rdoStudenPassItemStateChanged
+
+    private void rdoFullStudentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoFullStudentItemStateChanged
+        stateChange();
+    }//GEN-LAST:event_rdoFullStudentItemStateChanged
+
+    private void rdoStudentMissItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoStudentMissItemStateChanged
+        stateChange();
+    }//GEN-LAST:event_rdoStudentMissItemStateChanged
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        pnlTrDaTa.setVisible(false);
+        loadTable();
+        CardLayout layout = (CardLayout) pnlTrDaTa.getLayout();
+        layout.first(pnlTrDaTa);
+        pnlTrDaTa.setVisible(true);
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        pnlTrDaTa.setVisible(false);
+        pnlBieuDoPass.removeAll();
+        pnlBieuDoPass.add(chartPanel);
+        CardLayout layout = (CardLayout) pnlTrDaTa.getLayout();
+        layout.last(pnlTrDaTa);
+        pnlTrDaTa.setVisible(true);
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void stateChange() {
+        QuanLyKy ky = (QuanLyKy) cbbSemester.getSelectedItem();
+        QuanLyNganh nganh = (QuanLyNganh) cbbMajor.getSelectedItem();
+        List<Statistical> list = new ArrayList<>();
+        if (cbbSubjects.getSelectedIndex() == 0) {
+            if (ky != null && nganh != null) {
+                if (rdoStudenPass.isSelected()) {
+                    list = managerService.findTotalListStudentToMinMax(nganh.getId(), ky.getId(), 5.0, 10.0);
+                }
+                if (rdoStudentMiss.isSelected()) {
+                    list = managerService.findTotalListStudentToMinMax(nganh.getId(), ky.getId(), 0, 5);
+                }
+                if (rdoFullStudent.isSelected()) {
+                    list = managerService.findTotalListStudentToMinMax(nganh.getId(), ky.getId(), 0, 10.0);
+                }
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+//                if (!list.isEmpty()) {
+//                    loadDataThongKe();
+//                } else {
+//                    setNull();
+//                }
+            }
+        } else {
+            QuanLyMon mon = (QuanLyMon) cbbSubjects.getSelectedItem();
+            if (mon != null) {
+                if (rdoStudenPass.isSelected()) {
+                    list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa(), 5, 10);
+                }
+                if (rdoStudentMiss.isSelected()) {
+                    list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa(), 0, 5);
+                }
+                if (rdoFullStudent.isSelected()) {
+                    list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa(), 0, 10);
+                }
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+//                if (!list.isEmpty()) {
+//                    loadDataThongKe();
+//                } else {
+//                    setNull();
+//                }
+            }
+
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button button1;
+    private com.raven.swing.button.Button button2;
     private javax.swing.ButtonGroup buttonGroup1;
     private com.raven.swing.combobox.Combobox cbbMajor;
     private com.raven.swing.combobox.Combobox cbbSemester;
@@ -534,9 +746,12 @@ public class Form_Statistical extends javax.swing.JPanel {
     private com.raven.swing.PanelTransparent panelTransparent4;
     private com.raven.swing.PanelTransparent panelTransparent8;
     private com.raven.swing.PanelTransparent panelTransparent9;
+    private com.raven.swing.PanelTransparent pnlBieuDoPass;
+    private com.raven.swing.PanelTransparent pnlTrDaTa;
     private com.raven.swing.radio_button.RadioButtonCustom rdoFullStudent;
     private com.raven.swing.radio_button.RadioButtonCustom rdoStudenPass;
     private com.raven.swing.radio_button.RadioButtonCustom rdoStudentMiss;
     private com.raven.swing.table.Table tblStatistical;
+    private com.raven.swing.button.Button xuatfileExec;
     // End of variables declaration//GEN-END:variables
 }
