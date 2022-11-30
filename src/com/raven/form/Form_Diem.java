@@ -47,7 +47,7 @@ public class Form_Diem extends javax.swing.JPanel {
     DauDiemMonRepository dauDiem_MonRepository;
     KyRepository kyRepository;
     IMonService monService;
-    
+
     public Form_Diem() throws ParseException {
         initComponents();
         tblDiem.fixTable(jScrollPane1);
@@ -62,7 +62,7 @@ public class Form_Diem extends javax.swing.JPanel {
         kyRepository = new KyRepository();
         model = (DefaultTableModel) tblDiem.getModel();
         fillAllKy();
-        
+
     }
 
     private void fillAllKy() {
@@ -73,31 +73,16 @@ public class Form_Diem extends javax.swing.JPanel {
         }
     }
 
-    private void loadTable(List<SinhVien> listSinhViens) {
-//        model.setRowCount(0);
-//        int i = 1;
-////        String dauDiem = (String) cbxDau.getSelectedItem();
-//        String tenLop = (String) cbxLop.getSelectedItem();
-//        Lop lop = lopRepository.getLop(tenLop);
-//        String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
-//        float heSo = dauDiem_MonRepository.getHeSo(idDauDiem, lop.getIdMonHoc());
-//        for (SinhVien sv : listSinhViens) {
-//            String idSV = sinhVienRepository.getIdSV(sv.getMa());
-//            float diem = diemRepository.getDiem(idSV, lop.getIdMonHoc(), idDauDiem);
-//            model.addRow(new Object[]{i, sv.getMa(), sv.getHoTen(), dauDiem, heSo, diem});
-//            i++;
-//        }
-    }
-
     private String getIdMon() {
         QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
         return mon.getId();
     }
 
-    private String getIdLop(){
+    private String getIdLop() {
         QuanLyLop lop = (QuanLyLop) cbxLop.getSelectedItem();
         return lop.getIdLop();
     }
+
     private void save() {
         int row = tblDiem.getRowCount();
         int column = tblDiem.getColumnCount();
@@ -108,17 +93,16 @@ public class Form_Diem extends javax.swing.JPanel {
             String dauDiem = tblDiem.getColumnName(i);
             String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
             for (int j = 0; j < row; j++) {
-                System.out.println("row" + j + "col" + i);
                 String maSV = tblDiem.getValueAt(j, 1).toString();
                 String idSV = sinhVienRepository.getIdSV(maSV);
                 String diemString = null;
                 Object diemOb = tblDiem.getValueAt(j, i);
-                if(diemOb == null){
+                if (diemOb == null) {
                     diemString = "0";
-                }else{
+                } else {
                     diemString = diemOb.toString();
                 }
-                
+
                 float diemTbl = 0;
                 try {
                     diemTbl = Float.valueOf(diemString);
@@ -137,11 +121,11 @@ public class Form_Diem extends javax.swing.JPanel {
                     diem.setIdMonHoc(getIdMon());
                     diem.setIdDauDiem(idDauDiem);
                     diem.setDiem(diemTbl);
-                    
+
                     int checkSV = diemRepository.checkSV(idSV, lop.getIdMon(), idDauDiem);
-                    if(checkSV == 1){
+                    if (checkSV == 1) {
                         diemRepository.updateDiem(diem);
-                    }else{
+                    } else {
                         diemRepository.saveDiem(diem);
                     }
                 }

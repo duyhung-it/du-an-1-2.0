@@ -29,7 +29,8 @@ public class Main {
 //            repository.insert(list.get(i).getId(), "4980206B-664C-451B-83CE-0D7B5FCAD215");
 //        }  
 //        }
-    List<QuanLyMon> list =new MonService().getMonTheoNganh("D6142D6A-3F1A-4537-A680-45CA60029170", "6B0ADA73-E969-484D-8277-026FF70DDBA9");
-        System.out.println(list.size());
+//    List<QuanLyMon> list =new MonService().getMonTheoNganh("D6142D6A-3F1A-4537-A680-45CA60029170", "6B0ADA73-E969-484D-8277-026FF70DDBA9");
+//        System.out.println(list.size());
+        
     }
 }
