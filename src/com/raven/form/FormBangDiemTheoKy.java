@@ -16,6 +16,10 @@ import com.nhomsau.service.IKyService;
 import com.nhomsau.service.IMonService;
 import com.nhomsau.service.impl.KyService;
 import com.nhomsau.service.impl.MonService;
+import com.nhomsau.util.CheckLogin;
+import com.nhomsau.viewmodel.BangDiemTheoMon;
+import com.nhomsau.viewmodel.LoginModel;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -37,16 +41,20 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
     List<QuanLyKy> li;
     DefaultTableModel model;
     List<BangDiem> list;
+    private LoginModel modelLogin;
     public FormBangDiemTheoKy() {
         initComponents();
-        model = (DefaultTableModel) tbDiem.getModel();
-        iKyService = new KyService();
-        iMonService = new MonService();
-        iDiemService=new DiemService();
-        li = new ArrayList<>();
-        cbcKy.setLabeText("Ky");
-        cbxMon.setLabeText("Mon");
-        getAllKy();
+        if(CheckLogin.isLogin()){
+            model = (DefaultTableModel) tbDiem.getModel();
+            iKyService = new KyService();
+            iMonService = new MonService();
+            iDiemService=new DiemService();
+            li = new ArrayList<>();
+            cbcKy.setLabeText("Ky");
+            cbxMon.setLabeText("Mon");
+            getAllKy();
+            modelLogin = CheckLogin.loginModel;
+        }
   //      loadTable();
     }
 
@@ -64,8 +72,12 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDiem = new com.raven.swing.table.Table();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        panelTransparent2 = new com.raven.swing.PanelTransparent();
+        jLabel1 = new javax.swing.JLabel();
+        lblDiemTrungBinh = new javax.swing.JLabel();
+        panelTransparent3 = new com.raven.swing.PanelTransparent();
+        jLabel2 = new javax.swing.JLabel();
+        lblTrangThai = new javax.swing.JLabel();
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         cbxMon = new com.raven.swing.combobox.Combobox();
         cbcKy = new com.raven.swing.combobox.Combobox();
@@ -73,6 +85,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        lblMon.setForeground(new java.awt.Color(0, 0, 0));
         lblMon.setText("1: COM107");
 
         tbDiem.setBackground(new java.awt.Color(255, 255, 255));
@@ -96,28 +109,88 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
 
         jLabel5.setText("1/5");
 
-        jButton1.setText("Prev");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Trung Bình:");
 
-        jButton2.setText("Next");
+        lblDiemTrungBinh.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblDiemTrungBinh.setForeground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
+        panelTransparent2.setLayout(panelTransparent2Layout);
+        panelTransparent2Layout.setHorizontalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent2Layout.createSequentialGroup()
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(lblDiemTrungBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+        panelTransparent2Layout.setVerticalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDiemTrungBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Trạng Thái");
+
+        lblTrangThai.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTrangThai.setForeground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout panelTransparent3Layout = new javax.swing.GroupLayout(panelTransparent3);
+        panelTransparent3.setLayout(panelTransparent3Layout);
+        panelTransparent3Layout.setHorizontalGroup(
+            panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent3Layout.createSequentialGroup()
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+        );
+        panelTransparent3Layout.setVerticalGroup(
+            panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblMon)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblMon))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(294, 294, 294)
+                                .addComponent(panelTransparent3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,18 +199,14 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lblMon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelTransparent3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelTransparent1.setOpaque(true);
@@ -166,7 +235,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbcKy, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addComponent(cbxMon, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -198,7 +267,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -216,18 +285,20 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
     private void loadTable(){
         QuanLyMon mon1 = (QuanLyMon) cbxMon.getSelectedItem();
         model.setNumRows(0);
-        if(mon1!= null){
-        list = new DiemRepository().getDiem("",mon1.getId() );
-        
-        for(BangDiem b : list){
-            Object[] obj = new Object[]{
-                tbDiem.getRowCount()+1,
-                b.getTenDauDiem(),
-                b.getDiem(),
-                b.getGhiCHu()
-            };
-            tbDiem.addRow(obj);
-        }
+        if (mon1 != null) {
+            if (modelLogin != null) {
+                list = new DiemRepository().getDiem(modelLogin.getIdUser(), mon1.getId());
+
+                for (BangDiem b : list) {
+                    Object[] obj = new Object[]{
+                        tbDiem.getRowCount() + 1,
+                        b.getTenDauDiem(),
+                        b.getDiem(),
+                        b.getGhiCHu()
+                    };
+                    tbDiem.addRow(obj);
+                }
+            }
         }
     }
 
@@ -239,10 +310,27 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
     private void cbxMonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMonItemStateChanged
         // TODO add your handling code here:
         QuanLyMon mon1 = (QuanLyMon) cbxMon.getSelectedItem();
+        QuanLyKy ky = (QuanLyKy) cbcKy.getSelectedItem();
         loadTable();
         // TODO add your handling code here:
-        if(mon1!= null)
-        lblMon.setText(mon1.getTen());
+        if(mon1!= null){
+            if(modelLogin != null){
+                BangDiemTheoMon bdtm = iDiemService.getDiemTrungBinhTheoId(modelLogin.getIdUser(), ky.getId(), modelLogin.getIdNganh(), mon1.getId());
+                if(bdtm!= null){
+                    lblDiemTrungBinh.setText(bdtm.getDiemTB() + "");
+                    String trangThai = "";
+                    if(bdtm.getDiemTB() >=5){
+                        trangThai = "Passed";
+                        lblTrangThai.setForeground(Color.GREEN);
+                    }else {
+                        trangThai = "Failed";
+                        lblTrangThai.setForeground(Color.red);
+                    }
+                    lblTrangThai.setText(trangThai);
+                }
+            }
+            lblMon.setText(mon1.getTen());
+        }
     }//GEN-LAST:event_cbxMonItemStateChanged
 
     private void cbcKyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbcKyItemStateChanged
@@ -265,13 +353,17 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.combobox.Combobox cbcKy;
     private com.raven.swing.combobox.Combobox cbxMon;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDiemTrungBinh;
     private javax.swing.JLabel lblMon;
+    private javax.swing.JLabel lblTrangThai;
     private com.raven.swing.PanelTransparent panelTransparent1;
+    private com.raven.swing.PanelTransparent panelTransparent2;
+    private com.raven.swing.PanelTransparent panelTransparent3;
     private com.raven.swing.table.Table tbDiem;
     // End of variables declaration//GEN-END:variables
 }

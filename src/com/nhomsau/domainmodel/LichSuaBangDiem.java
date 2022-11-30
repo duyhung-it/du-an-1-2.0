@@ -4,6 +4,8 @@
  */
 package com.nhomsau.domainmodel;
 
+import com.nhomsau.viewmodel.TrangThai;
+
 /**
  *
  * @author HaTanBinh
@@ -11,6 +13,7 @@ package com.nhomsau.domainmodel;
 public class LichSuaBangDiem {
     private String tenMon,
                 maMon,ky,trangThai;
+    private int namHoc;
     private double diem;
 
     public LichSuaBangDiem() {
@@ -63,7 +66,16 @@ public class LichSuaBangDiem {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
-    private void trangthai(){
-        
+
+    public int getNamHoc() {
+        return namHoc;
+    }
+    
+    public TrangThai trangthai(){
+        if(this.trangThai != null){
+            TrangThai trangThai = new TrangThai(this.trangThai);
+            return trangThai;
+        }
+        return null;
     }
 }

@@ -1,9 +1,11 @@
 package com.raven.main;
 
 
+import com.nhomsau.util.CheckLogin;
 import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.component.MenuLecturer;
+import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
@@ -52,6 +54,7 @@ public class MainLecturer extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
+                if(CheckLogin.isLogin() && CheckLogin.loginModel.getChucVu().trim().equalsIgnoreCase("Giảng Viên")){
                 if (menuIndex == 0) {
                     if (subMenuIndex == 0) {
                         main.showForm(new Form_DanhSachSinhVien());
@@ -68,6 +71,9 @@ public class MainLecturer extends javax.swing.JFrame {
                     } else if (subMenuIndex == 1) {
                         
                     }
+                }
+            }else{
+                    showMessage("Ban chua dang nhap!");
                 }
             }
         });
@@ -126,7 +132,10 @@ public class MainLecturer extends javax.swing.JFrame {
         //  Start with this form
         main.showForm(new Form_Home());
     }
-
+    private void showMessage(String message) {
+        Message obj = new Message(Main.getFrames()[0], true);
+        obj.showMessage(message);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

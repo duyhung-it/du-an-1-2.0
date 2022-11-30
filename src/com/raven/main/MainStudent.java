@@ -5,6 +5,7 @@ import com.nhomsau.viewmodel.LoginModel;
 import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.component.MenuStudent;
+import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
@@ -34,10 +35,11 @@ public class MainStudent extends javax.swing.JFrame {
     private MainForm main;
     private Animator animator;
     private LoginModel loginModel;
+
     public MainStudent() {
         initComponents();
-        if(CheckLogin.isLogin()){
-            loginModel = CheckLogin.loginModel; 
+        if (CheckLogin.isLogin()) {
+            loginModel = CheckLogin.loginModel;
         }
         init();
     }
@@ -47,7 +49,7 @@ public class MainStudent extends javax.swing.JFrame {
         bg.setLayout(layout);
         menu = new MenuStudent();
         header = new Header();
-        if(loginModel != null){
+        if (loginModel != null) {
             System.out.println(loginModel.getHoTen());
             header.setNameUser(loginModel);
         }
@@ -58,17 +60,21 @@ public class MainStudent extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
-                if (menuIndex == 0) {
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormBangDiemTheoKy());
-                    } else if (subMenuIndex == 1) {
-                        main.showForm(new FormLichSuHoc());
+                if (CheckLogin.isLogin() && CheckLogin.loginModel.getChucVu().trim().equalsIgnoreCase("Sinh Viên")) {
+                    if (menuIndex == 0) {
+                        if (subMenuIndex == 0) {
+                            main.showForm(new FormBangDiemTheoKy());
+                        } else if (subMenuIndex == 1) {
+                            main.showForm(new FormLichSuHoc());
+                        }
                     }
-                } 
-                if(menuIndex==1){
-                    if (subMenuIndex == 0) {
-                        main.showForm(new FormThongTinSv());
+                    if (menuIndex == 1) {
+                        if (subMenuIndex == 0) {
+                            main.showForm(new FormThongTinSv());
+                        }
                     }
+                } else {
+                    showMessage("Ban chua dang nhap!");
                 }
             }
         });
@@ -125,6 +131,11 @@ public class MainStudent extends javax.swing.JFrame {
         });
         //  Start with this form
         main.showForm(new Form_Home());
+    }
+
+    private void showMessage(String message) {
+        Message obj = new Message(Main.getFrames()[0], true);
+        obj.showMessage(message);
     }
 
     @SuppressWarnings("unchecked")
