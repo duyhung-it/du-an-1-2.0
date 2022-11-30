@@ -1,9 +1,11 @@
 package com.raven.main;
 
+import com.nhomsau.util.CheckLogin;
 import com.nhomsau.view.Form_Lecturers;
 import com.nhomsau.view.Form_Statistical;
 import com.raven.component.Header;
 import com.raven.component.Menu;
+import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.FormDiemTheoLop;
@@ -13,6 +15,7 @@ import com.raven.form.Form_Home;
 import com.raven.form.Form_MonHoc;
 import com.raven.form.Form_Mon_DauDiem;
 import com.raven.form.ListStudentPanel;
+import com.raven.form.LoginFrame;
 import com.raven.form.LopHocPanel;
 import com.raven.form.MainForm;
 import com.raven.form.ThongKeDiemPanel;
@@ -23,6 +26,7 @@ import com.raven.swing.icon.IconFontSwing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -54,6 +58,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
+//                if(CheckLogin.isLogin() && CheckLogin.loginModel.getChucVu().trim().equalsIgnoreCase("Giáo Vụ")){
                 if (menuIndex == 0) {
                     if (subMenuIndex == 0) {
                         main.showForm(new ListStudentPanel());
@@ -80,9 +85,25 @@ public class Main extends javax.swing.JFrame {
                     } else if(subMenuIndex == 5){
                         main.showForm(new LopHocPanel());
                     }
+                } else if(menuIndex == 3){
+                    if(subMenuIndex == 0){
+                        
+                    }else if(subMenuIndex == 1){
+                        if(CheckLogin.isLogin()){
+                            CheckLogin.loginModel = null;
+                        }
+                        new LoginFrame().setVisible(true);
+                        Main.getFrames()[0].dispose();
+                        
+                    }
                 } else if (menuIndex == 4) {
+                    int confirm = JOptionPane.showConfirmDialog(bg, "Ban co chac chan muon thoat ?");
+                    if(confirm == JOptionPane.YES_OPTION)
                     System.exit(0);
-                }
+                } 
+//                }else{
+//                    showMessage("Ban chua dang nhap!");
+//                }
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
@@ -139,7 +160,10 @@ public class Main extends javax.swing.JFrame {
         //  Start with this form
         main.showForm(new Form_Home());
     }
-
+    private void showMessage(String message) {
+        Message obj = new Message(Main.getFrames()[0], true);
+        obj.showMessage(message);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

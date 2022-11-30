@@ -102,7 +102,7 @@ public class SinhVienRepository implements ISinhVienRepository{
     @Override
     public SinhVienView findByMa(String ma) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select u.MaUser,u.HoTen,u.GioiTinh,u.NgaySinh,u.DiaChi,u.Email,u.SDT,n.TenNganh ");
+        sql.append("select u.Id,u.MaUser,u.HoTen,u.GioiTinh,u.NgaySinh,u.DiaChi,u.Email,u.SDT,n.TenNganh ");
         sql.append("from Users as u,Nganh as n ");
         sql.append("where u.IdNganh = n.Id and u.ChucVu = 1 and u.MaUser = ? ");
         sql.append("order by u.MaUser");

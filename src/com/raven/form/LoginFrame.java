@@ -8,6 +8,7 @@ import com.nhomsau.service.IUserSevice;
 import com.nhomsau.service.impl.UserService;
 import com.nhomsau.util.CheckLogin;
 import com.nhomsau.viewmodel.LoginModel;
+import com.raven.dialog.Message;
 import com.raven.main.Main;
 import com.raven.main.MainLecturer;
 import com.raven.main.MainStudent;
@@ -196,6 +197,7 @@ public class LoginFrame extends javax.swing.JFrame {
         if(loginModel != null){
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
+            this.showMessage("Dang nhap thanh cong!");
             switch(loginModel.getChucVu()){
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
@@ -223,9 +225,14 @@ public class LoginFrame extends javax.swing.JFrame {
                     break;
             }
             this.dispose();
+        }else {
+            this.showMessage("Dang nhap that bai!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
-    
+    private void showMessage(String message) {
+        Message obj = new Message(this, true);
+        obj.showMessage(message);
+    }
     /**
      * @param args the command line arguments
      */
