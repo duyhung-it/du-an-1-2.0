@@ -60,7 +60,7 @@ public class MainStudent extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
-                if (CheckLogin.isLogin() && CheckLogin.loginModel.getChucVu().trim().equalsIgnoreCase("Sinh Viên")) {
+//                if (CheckLogin.isLogin() && CheckLogin.loginModel.getChucVu().trim().equalsIgnoreCase("Sinh Viên")) {
                     if (menuIndex == 0) {
                         if (subMenuIndex == 0) {
                             main.showForm(new FormBangDiemTheoKy());
@@ -73,9 +73,9 @@ public class MainStudent extends javax.swing.JFrame {
                             main.showForm(new FormThongTinSv());
                         }
                     }
-                } else {
-                    showMessage("Ban chua dang nhap!");
-                }
+//                } else {
+//                    showMessage("Ban chua dang nhap!");
+//                }
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
