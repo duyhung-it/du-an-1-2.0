@@ -42,5 +42,10 @@ public class DiemService implements IDiemService {
     public List<QuanLyDiem> getDiemByMon(String idDauDiem, String idMon, String idLop) {
         return this.repository.getDiemByMon(idDauDiem, idMon, idLop);
     }
+
+    @Override
+    public BangDiemTheoMon getDiemTrungBinhTheoId(String idSV, String idKy, String idNganh, String idMon) {
+        return this.repository.getDiemTrungBinhTheoId(idSV, idKy, idNganh, idMon);
+    }
     
 }

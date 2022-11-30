@@ -78,12 +78,12 @@ public class DiemRepository implements IDiemRepository {
         return listResults;
     }
     
-    final String sql="select TenDauDiem, Diem from Diem join DauDiem on Diem.IdDauDiem = DauDiem.Id where IdMonHoc = ? and IdSinhVien = '519f74ea-e199-4da0-aaa6-a2e6e3f49a2f'";
+    final String sql="select TenDauDiem, Diem from Diem join DauDiem on Diem.IdDauDiem = DauDiem.Id where IdMonHoc = ? and IdSinhVien = ?";
     @Override
     public List<BangDiem> getDiem(String idsv,String idMon){
         List<BangDiem> list = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql,idMon);
+            ResultSet rs = DBConnection.getDataFromQuery(sql,idMon,idsv);
             while(rs.next()){
                 String tenDiem = rs.getString(1);
                 double diem = Double.valueOf(rs.getBigDecimal(2)+"");
@@ -172,5 +172,32 @@ public class DiemRepository implements IDiemRepository {
             Logger.getLogger(DiemRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+
+    @Override
+    public BangDiemTheoMon getDiemTrungBinhTheoId(String idSV, String idKy, String idNganh, String idMon) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select Diem.IdSinhVien  ,SinhVien_Lop.IdLop 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh'");
+        sql.append(" from Diem ");
+        sql.append("join DauDiem_Mon on DauDiem_Mon.IdDauDiem = Diem.IdDauDiem and Diem.IdMonHoc = DauDiem_Mon.IdMon ");
+        sql.append("join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
+        sql.append("join Users on users.Id = Diem.IdSinhVien ");
+        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc ");
+        sql.append("where users.IdNganh = ? and Ky_Mon.IdKy = ? and Diem.IdMonHoc = ?, Diem.IdSinhVien = ? ");
+        sql.append("group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc");
+        List<BangDiemTheoMon> listResults = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), idNganh,idKy,idMon,idSV);
+            while(rs.next()){
+                String idSv = rs.getString("IdSinhVien");
+                String idLop = rs.getString("IdLop");
+                double diemTB = rs.getDouble("DiemTrungBinh");
+                BangDiemTheoMon bangDiemTheoMon = new BangDiemTheoMon(idSv, idLop, diemTB);
+                listResults.add(bangDiemTheoMon);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiemRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResults.isEmpty() ? null : listResults.get(0);
     }
 }

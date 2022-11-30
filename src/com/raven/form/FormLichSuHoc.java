@@ -6,6 +6,8 @@ package com.raven.form;
 
 import com.nhomsau.domainmodel.LichSuaBangDiem;
 import com.nhomsau.repository.impl.LichSuDiemReposiroty;
+import com.nhomsau.util.CheckLogin;
+import com.nhomsau.viewmodel.LoginModel;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -20,9 +22,13 @@ public class FormLichSuHoc extends javax.swing.JPanel {
      * Creates new form FormLichSuHoc1
      */
     List<LichSuaBangDiem> list;
+    private LoginModel modelLogin;
     public FormLichSuHoc() {
         initComponents();
         loadTable();
+        if(CheckLogin.isLogin()){
+            modelLogin = CheckLogin.loginModel;
+        }
     }
 
     /**
@@ -79,16 +85,17 @@ public class FormLichSuHoc extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     private void loadTable(){
-        list=new LichSuDiemReposiroty().getLichSudiem("");
-        DefaultTableModel model=(DefaultTableModel)tbLichSu.getModel();
-        model.setRowCount(0);
-        for(LichSuaBangDiem ls:list){
-        Object[] obj=new Object[]{
-            tbLichSu.getRowCount()+1,ls.getTenMon(),ls.getMaMon(),ls.getKy(),ls.getDiem(),ls.getTrangThai()
-        };
-        tbLichSu.addRow(obj);
-        }   
-                
+        if(modelLogin != null){
+            list=new LichSuDiemReposiroty().getLichSudiem(this.modelLogin.getIdUser());
+            DefaultTableModel model=(DefaultTableModel)tbLichSu.getModel();
+            model.setRowCount(0);
+            for(LichSuaBangDiem ls:list){
+            Object[] obj=new Object[]{
+                tbLichSu.getRowCount()+1,ls.getTenMon(),ls.getMaMon(),ls.getKy(),ls.getDiem(),ls.getTrangThai()
+            };
+            tbLichSu.addRow(obj);
+            }   
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
