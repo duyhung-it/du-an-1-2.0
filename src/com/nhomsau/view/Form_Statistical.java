@@ -4,17 +4,32 @@
  */
 package com.nhomsau.view;
 
+import com.nhomsau.service.IDiemService;
+import com.nhomsau.service.IKyService;
+import com.nhomsau.service.ILopService;
 import com.nhomsau.service.IManageMajorService;
 import com.nhomsau.service.IManageManagerService;
 import com.nhomsau.service.IManageSemesterService;
 import com.nhomsau.service.IManageSubjectService;
+import com.nhomsau.service.IMonService;
+import com.nhomsau.service.INganhService;
+import com.nhomsau.service.ISinhVienService;
+import com.nhomsau.service.impl.DiemService;
+import com.nhomsau.service.impl.KyService;
+import com.nhomsau.service.impl.LopService;
 import com.nhomsau.service.impl.ManageMajorService;
 import com.nhomsau.service.impl.ManageManagerService;
 import com.nhomsau.service.impl.ManageSemesterService;
 import com.nhomsau.service.impl.ManageSubjectService;
+import com.nhomsau.service.impl.MonService;
+import com.nhomsau.service.impl.NganhService;
+import com.nhomsau.service.impl.SinhVienService;
 import com.nhomsau.viewmodel.ManageMajor;
 import com.nhomsau.viewmodel.ManageSemester;
 import com.nhomsau.viewmodel.ManageSubject;
+import com.nhomsau.viewmodel.QuanLyKy;
+import com.nhomsau.viewmodel.QuanLyMon;
+import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.Statistical;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -35,40 +50,88 @@ public class Form_Statistical extends javax.swing.JPanel {
     private IManageSemesterService semesterService;
     private IManageManagerService managerService;
     private DefaultTableModel tblModel;
+    private IMonService monService;
+    private IKyService kyService;
+    private INganhService nganhService;
+    private IDiemService diemService;
+    private ILopService lopService;
+    private ISinhVienService sinhVienService;
+    List<Statistical> list;
 
     public Form_Statistical() {
-//        initComponents();
-//        managerService = new ManageManagerService();
-//        subjectService = new ManageSubjectService();
-//        majorService = new ManageMajorService();
-//        semesterService = new ManageSemesterService();
-//        loadCBB();
-//        loadTable();
+        initComponents();
+        managerService = new ManageManagerService();
+        subjectService = new ManageSubjectService();
+        majorService = new ManageMajorService();
+        semesterService = new ManageSemesterService();
+        monService = new MonService();
+        lopService = new LopService();
+        sinhVienService = new SinhVienService();
+        kyService = new KyService();
+        nganhService = new NganhService();
+        diemService = new DiemService();
+        loadCBB();
+        loadTable();
     }
 
     private void loadCBB() {
-//        List<ManageSubject> listSubject = subjectService.findAll();
-//        cbbSubjects.setModel(new DefaultComboBoxModel(listSubject.toArray()));
-//        List<ManageMajor> listManageMajor = majorService.findAll();
-//        cbbMajor.setModel(new DefaultComboBoxModel(listManageMajor.toArray()));
-//        List<ManageSemester> listSemester = semesterService.findAll();
-//        cbbSemester.setModel(new DefaultComboBoxModel(listSemester.toArray()));
+        List<QuanLyNganh> listNganhs = this.nganhService.findAll1();
+        cbbMajor.setLabeText("Ngành Học");
+        if (!listNganhs.isEmpty()) {
+            for (QuanLyNganh nganh : listNganhs) {
+                cbbMajor.addItem(nganh);
+            }
+        }
+        List<QuanLyMon> listMons = this.monService.findAll();
+
+        cbbSubjects.setLabeText("Môn Học");
+
+        List<QuanLyKy> listKys = this.kyService.findAll();
+        cbbSemester.setLabeText("Kỳ Học");
+        for (QuanLyKy ky : listKys) {
+            cbbSemester.addItem(ky);
+        }
     }
 
     private void loadTable() {
-//        tblModel = (DefaultTableModel) tblStatistical.getModel();
-//        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
-//        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
-//        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
-//        List<Statistical> list = managerService.findListStudent(subject.getCode(), major.getCode(), semester.getCode());
-//        tblModel.setRowCount(0);
-//        for (Statistical st : list) {
-//            tblModel.addRow(new Object[]{st.getCode(),
-//                st.getFullname(),
-//                st.getScore(),
-//                st.getScore() >= 5 ? "Đạt" : "Không đạt",
-//                st.getClasscode() + " - " + st.getClassname()});
-//        }
+        tblModel = (DefaultTableModel) tblStatistical.getModel();
+
+        QuanLyNganh major = (QuanLyNganh) cbbMajor.getSelectedItem();
+        QuanLyKy semester = (QuanLyKy) cbbSemester.getSelectedItem();
+        QuanLyMon subject = (QuanLyMon) cbbSubjects.getSelectedItem();
+        if (subject != null) {
+            List<Statistical> list = managerService.findListStudent(subject.getMa(), major.getMa(), semester.getMa());
+            tblModel.setRowCount(0);
+            for (Statistical st : list) {
+                tblModel.addRow(new Object[]{st.getCode(),
+                    st.getFullname(),
+                    st.getClasscode() + " - " + st.getClassname(),
+                    st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                    st.getScore()});
+            }
+        }
+
+    }
+
+    private void loadDataThongKe() {
+
+        int tong = tblModel.getRowCount();
+        if (tong > 0) {
+            int dat = 0;
+            lblTongSinhVien.setText(String.valueOf(tong));
+            for (int i = 0; i < tong; i++) {
+                if (tblModel.getValueAt(i, 3).toString().equalsIgnoreCase("Đạt")) {
+                    dat++;
+                }
+            }
+            lblTongSinhVienDat.setText(String.valueOf(dat));
+            lblTongSinhVienTruot.setText(String.valueOf(tong - dat));
+        }
+    }
+    private void setNull(){
+        lblTongSinhVien.setText("0");
+        lblTongSinhVienDat.setText("0");
+        lblTongSinhVienTruot.setText("0");
     }
 
     /**
@@ -80,6 +143,7 @@ public class Form_Statistical extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         panelTransparent4 = new com.raven.swing.PanelTransparent();
         jLabel1 = new javax.swing.JLabel();
@@ -199,7 +263,7 @@ public class Form_Statistical extends javax.swing.JPanel {
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
+                .addGap(38, 38, 38)
                 .addComponent(panelTransparent8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,6 +282,7 @@ public class Form_Statistical extends javax.swing.JPanel {
 
         panelTransparent2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonGroup1.add(rdoFullStudent);
         rdoFullStudent.setSelected(true);
         rdoFullStudent.setText("Tất cả");
 
@@ -227,8 +292,10 @@ public class Form_Statistical extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(rdoStudenPass);
         rdoStudenPass.setText("Đạt");
 
+        buttonGroup1.add(rdoStudentMiss);
         rdoStudentMiss.setText("Trượt");
 
         cbbSubjects.addItemListener(new java.awt.event.ItemListener() {
@@ -252,9 +319,9 @@ public class Form_Statistical extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(cbbMajor, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(54, 54, 54)
                 .addComponent(cbbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(cbbSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -336,38 +403,122 @@ public class Form_Statistical extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbbMajorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbMajorItemStateChanged
-        loadTable();
-        //        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
-        //        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
-        //        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
-        //        System.out.println(subject);
-        //        System.out.println(major);
-        //        System.out.println(semester);
+
+        QuanLyKy ky = (QuanLyKy) cbbSemester.getSelectedItem();
+        QuanLyNganh nganh = (QuanLyNganh) cbbMajor.getSelectedItem();
+
+        if (ky != null && nganh != null) {
+            System.out.println(ky.getId());
+            System.out.println(nganh.getId());
+            List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(), ky.getId());
+            cbbSubjects.removeAllItems();
+            if (!listMons.isEmpty()) {
+                cbbSubjects.addItem("Tất Cả");
+                for (QuanLyMon mon : listMons) {
+                    cbbSubjects.addItem(mon);
+                }
+            }
+
+            if (cbbSubjects.getSelectedIndex() > 0) {
+                QuanLyMon subject = (QuanLyMon) cbbSubjects.getSelectedItem();
+                List<Statistical> list = managerService.findListStudent(subject.getMa(), nganh.getMa(), ky.getMa());
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+                if (!list.isEmpty()) {
+                    loadDataThongKe();
+                }else{
+                    setNull();
+                }
+            }
+
+        }
     }//GEN-LAST:event_cbbMajorItemStateChanged
 
     private void cbbSubjectsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSubjectsItemStateChanged
-        //        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
-        //        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
-        //        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
-        //        System.out.println(subject);
-        //        System.out.println(major);
-        //        System.out.println(semester);
-        loadTable();
+        QuanLyKy ky = (QuanLyKy) cbbSemester.getSelectedItem();
+        QuanLyNganh nganh = (QuanLyNganh) cbbMajor.getSelectedItem();
+        if (cbbSubjects.getSelectedIndex() == 0) {
+            if (ky != null && nganh != null) {
+                List<Statistical> list = managerService.findListStudent(null, nganh.getMa(), ky.getMa());
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+                if (!list.isEmpty()) {
+                    loadDataThongKe();
+                }else{
+                    setNull();
+                }
+            }
+        } else {
+            QuanLyMon mon = (QuanLyMon) cbbSubjects.getSelectedItem();
+            if (mon != null) {
+                List<Statistical> list = managerService.findListStudent(mon.getMa(), nganh.getMa(), ky.getMa());
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+                if (!list.isEmpty()) {
+                    loadDataThongKe();
+                }else{
+                    setNull();
+                }
+            }
+        }
     }//GEN-LAST:event_cbbSubjectsItemStateChanged
 
     private void cbbSemesterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSemesterItemStateChanged
-        //        ManageSubject subject = (ManageSubject) cbbSubjects.getSelectedItem();
-        //        ManageMajor major = (ManageMajor) cbbMajor.getSelectedItem();
-        //        ManageSemester semester = (ManageSemester) cbbSemester.getSelectedItem();
-        //        System.out.println(subject);
-        //        System.out.println(major);
-        //        System.out.println(semester);
-        loadTable();
+        QuanLyKy ky = (QuanLyKy) cbbSemester.getSelectedItem();
+        QuanLyNganh nganh = (QuanLyNganh) cbbMajor.getSelectedItem();
+
+        if (ky != null && nganh != null) {
+            List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(), ky.getId());
+            cbbSubjects.removeAllItems();
+            if (!listMons.isEmpty()) {
+                cbbSubjects.addItem("Tất Cả");
+                for (QuanLyMon mon : listMons) {
+                    cbbSubjects.addItem(mon);
+                }
+            }
+            if (cbbSubjects.getSelectedIndex() > 0) {
+                QuanLyMon subject = (QuanLyMon) cbbSubjects.getSelectedItem();
+                List<Statistical> list = managerService.findListStudent(subject.getMa(), nganh.getMa(), ky.getMa());
+                tblModel.setRowCount(0);
+                for (Statistical st : list) {
+                    tblModel.addRow(new Object[]{st.getCode(),
+                        st.getFullname(),
+                        st.getClasscode() + " - " + st.getClassname(),
+                        st.getScore() >= 5 ? "Đạt" : "Không đạt",
+                        st.getScore() + " - " + st.getNote()});
+                }
+                if (!list.isEmpty()) {
+                    loadDataThongKe();
+                }else{
+                    setNull();
+                }
+            }
+
+        }
     }//GEN-LAST:event_cbbSemesterItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button button1;
+    private javax.swing.ButtonGroup buttonGroup1;
     private com.raven.swing.combobox.Combobox cbbMajor;
     private com.raven.swing.combobox.Combobox cbbSemester;
     private com.raven.swing.combobox.Combobox cbbSubjects;

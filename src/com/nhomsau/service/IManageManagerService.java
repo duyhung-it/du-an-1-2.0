@@ -17,5 +17,7 @@ public interface IManageManagerService {
     public List<ManageManager> findAll();
 
     public List<Statistical> findListStudent(String code, String code1, String code2);
+
+    public List<Statistical> findTotalListStudent(String idNganh, String idKy);
     
 }

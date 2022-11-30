@@ -78,5 +78,16 @@ public class Statistical {
     public void setClassname(String classname) {
         this.classname = classname;
     }
+    public String getNote() {
+        if (score > 0 && score < 3) {
+            return "Yếu";
+        } else if (score < 5) {
+            return "Trung bình";
+        } else if (score < 7) {
+            return "Khá";
+        } else {
+            return "Giỏi";
+        }
+    }
 
 }
