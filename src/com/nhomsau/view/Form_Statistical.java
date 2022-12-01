@@ -31,13 +31,27 @@ import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.Statistical;
+import com.raven.form.ThongKeDiemPanel;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdk.dynalink.beans.StaticClass;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -177,23 +191,26 @@ public class Form_Statistical extends javax.swing.JPanel {
     private CategoryDataset createDataset(String idNganh, String idKy, String idMon) {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String score = "Học lực";
-        List<Statistical> listBangDiem = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 0, 2.9);
+        String score = "Yếu";
+        List<Statistical> listBangDiem = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 0, 5);
         Double soLuong = Double.valueOf(listBangDiem.size() + "");
         dataset.addValue(soLuong, score, "Yếu");
         String scoreTB = "TB";
-        List<Statistical> listBangDiemTb = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 3, 4.9);
+        List<Statistical> listBangDiemTb = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 5, 6.5);
         Double soLuongTB = Double.valueOf(listBangDiemTb.size() + "");
         dataset.addValue(soLuongTB, scoreTB, "Trung bình");
         String scoreK = "Khá";
-        List<Statistical> listBangDiemK = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 5, 7.9);
+        List<Statistical> listBangDiemK = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 6.5, 8);
         Double soLuongK = Double.valueOf(listBangDiemK.size() + "");
         dataset.addValue(soLuongK, scoreK, "Khá");
         String scoreG = "Giỏi";
-        List<Statistical> listBangDiemG = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 8, 10);
+        List<Statistical> listBangDiemG = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 8, 9);
         Double soLuongG = Double.valueOf(listBangDiemG.size() + "");
         dataset.addValue(soLuongG, scoreG, "Giỏi");
-        
+        String scoreXS = "Xuất sắc";
+        List<Statistical> listBangDiemXS = this.managerService.findTotalListStudent(idMon, idNganh, idKy, 9, 10);
+        Double soLuongXS = Double.valueOf(listBangDiemG.size() + "");
+        dataset.addValue(soLuongXS, scoreXS, "Xuất sắc");
         return dataset;
     }
 
@@ -431,6 +448,11 @@ public class Form_Statistical extends javax.swing.JPanel {
         });
 
         xuatfileExec.setText("Xuất file");
+        xuatfileExec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xuatfileExecActionPerformed(evt);
+            }
+        });
 
         tblStatistical.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -498,10 +520,12 @@ public class Form_Statistical extends javax.swing.JPanel {
                             .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panelTransparent9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE))
         );
 
         pnlTrDaTa.add(panelTransparent1, "card2");
+
+        pnlBieuDoPass.setPreferredSize(new java.awt.Dimension(741, 300));
         pnlTrDaTa.add(pnlBieuDoPass, "card3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -520,7 +544,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTrDaTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -667,6 +691,54 @@ public class Form_Statistical extends javax.swing.JPanel {
         layout.last(pnlTrDaTa);
         pnlTrDaTa.setVisible(true);
     }//GEN-LAST:event_button2ActionPerformed
+
+    private void xuatfileExecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xuatfileExecActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showSaveDialog(this);
+        String duongdan = fileChooser.getSelectedFile().getPath();
+        File saveFile = new File(duongdan);
+        if (saveFile != null) {
+            FileOutputStream fos = null;
+            try {
+                saveFile = new File(saveFile.toString() + ".xlsx");
+                Workbook workbook = new SXSSFWorkbook();
+                Sheet sheet = workbook.createSheet("Bang Diem");
+                Row rowCol = sheet.createRow(0);
+                for (int i = 0; i < tblStatistical.getColumnCount(); i++) {
+                    Cell cell = rowCol.createCell(i);
+                    cell.setCellValue(tblStatistical.getColumnName(i));
+
+                }
+                for (int i = 0; i < tblStatistical.getRowCount(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    for (int j = 0; j < tblStatistical.getColumnCount(); j++) {
+                        Cell cell = row.createCell(j);
+                        if (tblStatistical.getValueAt(i, j) != null) {
+                            cell.setCellValue(tblStatistical.getValueAt(i, j).toString());
+                        }
+                    }
+                }
+                fos = new FileOutputStream(new File(saveFile.toString()));
+                workbook.write(fos);
+                workbook.close();
+            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(Form_Statistical.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+//                Logger.getLogger(Form_Statistical.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if (fos != null) {
+                        fos.close();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Form_Statistical.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "That Bai");
+        }
+    }//GEN-LAST:event_xuatfileExecActionPerformed
 
     private void stateChange() {
         QuanLyKy ky = (QuanLyKy) cbbSemester.getSelectedItem();
