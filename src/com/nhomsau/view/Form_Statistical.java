@@ -33,6 +33,7 @@ import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.Statistical;
 import com.raven.form.ThongKeDiemPanel;
 import java.awt.CardLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -466,13 +467,6 @@ public class Form_Statistical extends javax.swing.JPanel {
         });
 
         jLabel3.setText("Kỳ học");
-
-        xuatfileExec.setText("Xuất file");
-        xuatfileExec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xuatfileExecActionPerformed(evt);
-            }
-        });
 
         tblStatistical.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
