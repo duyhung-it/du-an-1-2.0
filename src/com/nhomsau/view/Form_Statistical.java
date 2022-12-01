@@ -467,7 +467,16 @@ public class Form_Statistical extends javax.swing.JPanel {
 
         jLabel3.setText("Kỳ học");
 
+<<<<<<< HEAD
 
+=======
+        xuatfileExec.setText("Xuất file");
+        xuatfileExec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xuatfileExecActionPerformed(evt);
+            }
+        });
+>>>>>>> 42fbdb458251de44112392ef288c0b642c16723a
 
         tblStatistical.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
