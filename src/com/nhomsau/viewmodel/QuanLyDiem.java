@@ -14,13 +14,15 @@ public class QuanLyDiem {
     
     private String idUser;
     private BigDecimal diem;
+    private String ghiChu;
 
     public QuanLyDiem() {
     }
 
-    public QuanLyDiem(String idUser, BigDecimal diem) {
+    public QuanLyDiem(String idUser, BigDecimal diem, String ghiChu) {
         this.idUser = idUser;
         this.diem = diem;
+        this.ghiChu = ghiChu;
     }
 
     public String getIdUser() {
@@ -39,6 +41,11 @@ public class QuanLyDiem {
         this.diem = diem;
     }
 
-    
-    
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
 }

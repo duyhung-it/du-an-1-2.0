@@ -3,9 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/form/DialogThemSinhVienVaoLop.java</file>
             <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/nhomsau/repository/impl/SinhVienRepository.java</file>
             <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/form/LopHocPanel.java</file>
+=======
+            <file>file:/E:/FPt/Kì%204/du_an_1/src/com/nhomsau/repository/impl/DauDiemRepository.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/src/com/raven/main/Main.java</file>
+            <file>file:/E:/FPt/Kì%204/du_an_1/src/com/raven/form/Form_Diem.java</file>
+            <file>file:/D:/FPT%20Polytechnic/DuAn1/Project-Nhom-6/src/com/raven/form/FormBangDiemTheoKy.java</file>
+>>>>>>> b8093babf25444911a655cc2e7ce0ad6911f8b68
         </group>
     </open-files>
 </project-private>

@@ -97,4 +97,5 @@ public class Diem {
     public void setNgaySua(Date ngaySua) {
         this.ngaySua = ngaySua;
     }
+
 }

@@ -152,7 +152,7 @@ public class DiemRepository implements IDiemRepository {
     @Override
     public List<QuanLyDiem> getDiemByMon(String idDauDiem, String idMon, String idLop) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select IdSinhVien,Diem from Diem ");
+        sql.append("select IdSinhVien,Diem,ghichu from Diem ");
         sql.append("join Users on USers.Id = Diem.IdSinhVien ");
         sql.append("join Lop on Lop.IdMon = Diem.IdMonHoc ");
         sql.append("where IdDauDiem = ? and IdMonHoc = ? and Lop.Id = ? ");
@@ -165,7 +165,10 @@ public class DiemRepository implements IDiemRepository {
                 String idUsers = rs.getString(1);
                 
                 BigDecimal diem = rs.getBigDecimal(2);
-                QuanLyDiem qLDiem = new QuanLyDiem(idUsers, diem);
+                
+                String ghiChu = rs.getNString("GhiChu");
+                
+                QuanLyDiem qLDiem = new QuanLyDiem(idUsers, diem, ghiChu);
                result.add(qLDiem);
             }
         } catch (SQLException ex) {
