@@ -64,6 +64,10 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelTransparent2 = new com.raven.swing.PanelTransparent();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblSinhVien = new com.raven.swing.table.Table();
+        button1 = new com.raven.swing.button.Button();
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         button3 = new com.raven.swing.button.Button();
         button2 = new com.raven.swing.button.Button();
@@ -71,13 +75,47 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
         txtMaSinhVien = new com.raven.swing.textfield.TextField();
         txtMaLop = new com.raven.swing.textfield.TextField();
         button4 = new com.raven.swing.button.Button();
-        panelTransparent2 = new com.raven.swing.PanelTransparent();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblSinhVien = new com.raven.swing.table.Table();
-        button1 = new com.raven.swing.button.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
+
+        tblSinhVien.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "MaSV", "TenSV", "NgaySinh", "TenLop", "TenNganh"
+            }
+        ));
+        jScrollPane1.setViewportView(tblSinhVien);
+
+        button1.setText("< TroLai");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
+        panelTransparent2.setLayout(panelTransparent2Layout);
+        panelTransparent2Layout.setHorizontalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+            .addGroup(panelTransparent2Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelTransparent2Layout.setVerticalGroup(
+            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        getContentPane().add(panelTransparent2, "card3");
 
         button3.setText("Xóa");
 
@@ -132,48 +170,10 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelTransparent1, "card2");
-
-        tblSinhVien.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "MaSV", "TenSV", "NgaySinh", "TenLop", "TenNganh"
-            }
-        ));
-        jScrollPane1.setViewportView(tblSinhVien);
-
-        button1.setText("< TroLai");
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
-        panelTransparent2.setLayout(panelTransparent2Layout);
-        panelTransparent2Layout.setHorizontalGroup(
-            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
-            .addGroup(panelTransparent2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelTransparent2Layout.setVerticalGroup(
-            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
-                .addGap(0, 7, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        getContentPane().add(panelTransparent2, "card3");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
