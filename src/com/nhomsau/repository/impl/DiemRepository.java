@@ -186,7 +186,7 @@ public class DiemRepository implements IDiemRepository {
         sql.append("join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
         sql.append("join Users on users.Id = Diem.IdSinhVien ");
         sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc ");
-        sql.append("where users.IdNganh = ? and Ky_Mon.IdKy = ? and Diem.IdMonHoc = ?, Diem.IdSinhVien = ? ");
+        sql.append("where users.IdNganh = ? and Ky_Mon.IdKy = ? and Diem.IdMonHoc = ? and Diem.IdSinhVien = ? ");
         sql.append("group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc");
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {

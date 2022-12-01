@@ -177,4 +177,25 @@ public class SinhVienRepository implements ISinhVienRepository{
     public List<SinhVienView> thongKeDanhSachSinhVien(String idKy, String idNganh, String idMon) {
         return null;
     }
+
+    @Override
+    public List<SinhVienView> findSinhVienTheoLop(String idLop) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select u.Id,u.MaUser,u.HoTen,u.GioiTinh,u.NgaySinh,u.DiaChi,u.Email,u.SDT,n.TenNganh ");
+        sql.append("from Users as u,Nganh as n,SinhVien_Lop as l ");
+        sql.append("where u.IdNganh = n.Id and u.ChucVu = 1 and l.IdLop = ? and l.IdSinhVien = u.Id ");
+        sql.append("order by u.MaUser");
+        List<SinhVienView> listSinhViens = new ArrayList<>();
+        try {
+            ResultSet rs = dBConnection.getDataFromQuery(sql.toString(), idLop);
+            while (rs.next()) {                
+                SinhVienView sinhVien = mapper.mapRowView(rs);
+                listSinhViens.add(sinhVien);
+            }
+        } catch (Exception e) {
+            System.out.println("1");
+            e.printStackTrace();
+        }
+        return listSinhViens;
+    }
 }
