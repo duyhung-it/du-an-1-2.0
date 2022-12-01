@@ -197,7 +197,6 @@ public class LoginFrame extends javax.swing.JFrame {
         if(loginModel != null){
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
-            this.showMessage("Dang nhap thanh cong!");
             switch(loginModel.getChucVu()){
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {

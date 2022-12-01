@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -65,13 +66,17 @@ public class MainLecturer extends javax.swing.JFrame {
                             Logger.getLogger(MainLecturer.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                }else{
+                }else if(menuIndex == 1){
                     if (subMenuIndex == 0) {
                         
                     } else if (subMenuIndex == 1) {
                         
                     }
-                }
+                }else if (menuIndex == 2) {
+                    int confirm = JOptionPane.showConfirmDialog(bg, "Ban co chac chan muon thoat ?");
+                    if(confirm == JOptionPane.YES_OPTION)
+                    System.exit(0);
+                } 
 //            }else{
 //                    showMessage("Ban chua dang nhap!");
 //                }

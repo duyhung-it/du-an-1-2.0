@@ -24,10 +24,6 @@ import ru.krlvm.swingacrylic.SwingAcrylic;
  */
 public class Main {
     public static void main(String[] args) {
-//        List<SinhVien> list = new SinhVienRepository().findAll2();
-//        SinhVienLopRepository repository = new SinhVienLopRepository();
-//        System.out.println(list.size());
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

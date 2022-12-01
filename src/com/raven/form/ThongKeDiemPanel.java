@@ -359,7 +359,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser("C:\\Users\\Nguyen Duy Hung\\OneDrive\\Documents\\Export Java File");
+        JFileChooser fileChooser = new JFileChooser("E:\\FPt\\Ki_4\\excel");
         fileChooser.showSaveDialog(this);
         File saveFile = fileChooser.getSelectedFile();
         if(saveFile != null){
