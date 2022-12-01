@@ -103,13 +103,15 @@ public class ManagerRepository implements IManagerRepository {
     }
 
     @Override
-    public List<Statistical> findListStudent(String idSj, String idMj, String idSe) {
+    public List<Statistical> findListStudent(String idSj, String idMj, String idSe, double minScore, double maxScore) {
         try {
             StringBuilder sqlStringBuilder = new StringBuilder();
             sqlStringBuilder.append("exec proc_thong_ke_diem_trung_binh_theo_mon ")
-                    .append("'") .append(idSj).append("'").append(", ")
+                    .append("'").append(idSj).append("'").append(", ")
                     .append("'").append(idSe).append("'").append(", ")
-                    .append("'").append(idMj).append("'");
+                    .append("'").append(idMj).append("'").append(", ")
+                    .append(minScore).append(", ")
+                    .append(maxScore);
             String sql = sqlStringBuilder.toString();
             System.out.println(sql);
             List<Statistical> list = new ArrayList<>();
@@ -130,6 +132,74 @@ public class ManagerRepository implements IManagerRepository {
             return null;
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(ManagerRepository.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Statistical> findTotalListStudent(String idMon, String idNganh, String idKy, double minScore, double maxScore) {
+        try {
+            StringBuilder sqlStringBuilder = new StringBuilder();
+            sqlStringBuilder.append("exec proc_thong_ke_diem_trung_binh_theo_mon ")
+                    .append("'").append(idMon).append("'").append(", ")
+                    .append("'").append(idKy).append("'").append(", ")
+                    .append("'").append(idNganh).append("'").append(", ")
+                    .append(minScore).append(", ")
+                    .append(maxScore);
+            String sql = sqlStringBuilder.toString();
+            System.out.println(sql);
+            List<Statistical> list = new ArrayList<>();
+            ResultSet rs = DBConnection.getDataFromQuery(sql);
+            try {
+                while (rs.next()) {
+                    Statistical st = new Statistical(rs.getString(2),
+                            rs.getString(3),
+                            rs.getDouble(6),
+                            rs.getString(4),
+                            rs.getString(5));
+                    list.add(st);
+                }
+                return list;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Statistical> findTotalListStudent(String idNganh, String idKy, double minScore, double maxScore) {
+        try {
+            StringBuilder sqlStringBuilder = new StringBuilder();
+            sqlStringBuilder.append("exec proc_thong_ke_diem_trung_binh_theo_mon ")
+                    .append("null").append(", ")
+                    .append("'").append(idKy).append("'").append(", ")
+                    .append("'").append(idNganh).append("'").append(", ")
+                    .append(minScore).append(", ")
+                    .append(maxScore);
+            String sql = sqlStringBuilder.toString();
+            System.out.println(sql);
+            List<Statistical> list = new ArrayList<>();
+            ResultSet rs = DBConnection.getDataFromQuery(sql);
+            try {
+                while (rs.next()) {
+                    Statistical st = new Statistical(rs.getString(2),
+                            rs.getString(3),
+                            rs.getDouble(6),
+                            rs.getString(4),
+                            rs.getString(5));
+                    list.add(st);
+                }
+                return list;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return null;
     }

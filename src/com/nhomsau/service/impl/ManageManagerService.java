@@ -54,12 +54,24 @@ public class ManageManagerService implements IManageManagerService {
     }
 
     @Override
-    public List<Statistical> findListStudent(String code, String code1, String code2) {
+    public List<Statistical> findListStudent(String code, String code1, String code2, double minScore, double maxScore) {
         Subject subject = _subjectRepository.findByCode(code);
         Major major = _majorRepository.findByCode(code1);
         Semester semester = _semesterRepository.findByCode(code2);
-        List<Statistical> list = _manageRepository.findListStudent(subject.getId(), major.getId(), semester.getId());
+        List<Statistical> list = _manageRepository.findListStudent(subject.getId(), major.getId(), semester.getId(), minScore, maxScore);
         return list;
+    }
+
+    @Override
+    public List<Statistical> findTotalListStudent(String idMon, String idNganh, String idKy, double minScore, double maxScore) {
+         List<Statistical> list = _manageRepository.findTotalListStudent(idMon, idNganh,idKy, minScore, maxScore);
+         return list;
+    }
+
+    @Override
+    public List<Statistical> findTotalListStudentToMinMax(String idNganh, String idKy, double minScore, double maxScore) {
+        List<Statistical> list = _manageRepository.findTotalListStudent(idNganh,idKy, minScore, maxScore);
+         return list;
     }
 
 }

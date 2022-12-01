@@ -16,6 +16,10 @@ public interface IManageManagerService {
 
     public List<ManageManager> findAll();
 
-    public List<Statistical> findListStudent(String code, String code1, String code2);
+    public List<Statistical> findListStudent(String code, String code1, String code2, double minScore, double maxScore);
+
+    public List<Statistical> findTotalListStudent(String idMon, String idNganh, String idKy, double minScore, double maxScore);
+
+    public List<Statistical> findTotalListStudentToMinMax(String idNganh, String idKy, double minScore, double maxScore);
     
 }
