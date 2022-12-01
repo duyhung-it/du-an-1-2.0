@@ -121,9 +121,8 @@ public class FormKy extends javax.swing.JPanel {
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(TxtId, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                        .addComponent(txtTenKy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(TxtId, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(txtTenKy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNamHoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,10 +203,9 @@ public class FormKy extends javax.swing.JPanel {
     private void tblKyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKyMouseClicked
         // TODO add your handling code here:
         int selectRow = tblKy.getSelectedRow();
-        TxtId.setText(tblKy.getValueAt(selectRow, 0).toString());
-        txtMaKy.setText(tblKy.getValueAt(selectRow, 1).toString());
-        txtTenKy.setText(tblKy.getValueAt(selectRow, 2).toString());
-        txtNamHoc.setText(tblKy.getValueAt(selectRow, 3).toString());
+        txtMaKy.setText(tblKy.getValueAt(selectRow, 0).toString());
+        txtTenKy.setText(tblKy.getValueAt(selectRow, 1).toString());
+        txtNamHoc.setText(tblKy.getValueAt(selectRow, 2).toString());
     }//GEN-LAST:event_tblKyMouseClicked
 
     private void txtNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamHocActionPerformed

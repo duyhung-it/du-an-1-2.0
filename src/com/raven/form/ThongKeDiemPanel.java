@@ -24,6 +24,7 @@ import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.SinhVienView;
 import com.raven.swing.table.Table;
 import java.awt.CardLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -384,8 +385,10 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                     }
                 }   
                 fos = new FileOutputStream(new File(saveFile.toString()));
+ 
                 workbook.write(fos);
                 workbook.close();
+                this.openFile(saveFile);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -403,7 +406,19 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "That Bai");
         }
     }//GEN-LAST:event_btnExportActionPerformed
-
+    private void openFile(File file){
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here:
         QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
