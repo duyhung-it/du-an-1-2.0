@@ -21,4 +21,5 @@ public interface ILopRepository {
     QuanLyLop findByMa(String ma);
     List<QuanLyLop> findByTen(String ten);
     List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy);
+    List<QuanLyLop> findIdGV(String idMon,String idNganh,String idKy,String idGV);
 }
