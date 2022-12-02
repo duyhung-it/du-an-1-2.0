@@ -403,16 +403,16 @@ public class Form_GuiEmail extends javax.swing.JPanel {
             });
             Message m = new MimeMessage(s);
             String subject = txtSubject.getText();
-            if(txtTo.getText().isBlank()){
-                JOptionPane.showMessageDialog(this,"Không được để trống người nhận");
+            if (txtTo.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống người nhận");
                 return;
             }
-            if(txtSubject.getText().isBlank()){
-                JOptionPane.showMessageDialog(this,"Không được để tiêu đề rỗng");
+            if (txtSubject.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Không được để tiêu đề rỗng");
                 return;
             }
-            if(txtAMessage.getText().isBlank()){
-                JOptionPane.showMessageDialog(this,"Không được để nội dung rỗng");
+            if (txtAMessage.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Không được để nội dung rỗng");
                 return;
             }
 
@@ -423,11 +423,11 @@ public class Form_GuiEmail extends javax.swing.JPanel {
                 m.setText(txtAMessage.getText());
 
                 Transport.send(m);
-                listEmail.remove(listEmail);
-                txtTo.setText("");
-                txtSubject.setText("");
-                txtAMessage.setText("");
             }
+            listEmail.remove(listEmail);
+            txtTo.setText("");
+            txtSubject.setText("");
+            txtAMessage.setText("");
             JOptionPane.showMessageDialog(this, "Send Email SuccessFully!");
         } catch (MessagingException ex) {
             ex.printStackTrace();
