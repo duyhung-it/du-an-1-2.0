@@ -1,6 +1,5 @@
 package com.raven.main;
 
-
 import com.nhomsau.util.CheckLogin;
 import com.raven.component.Header;
 import com.raven.component.Menu;
@@ -11,7 +10,9 @@ import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
 import com.raven.form.Form_DanhSachSinhVien;
 import com.raven.form.Form_Diem;
+import com.raven.form.Form_GuiEmail;
 import com.raven.form.Form_Home;
+import com.raven.form.LoginFrame;
 import com.raven.form.MainForm;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
@@ -65,11 +66,13 @@ public class MainLecturer extends javax.swing.JFrame {
                             Logger.getLogger(MainLecturer.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                }else{
+                } else if (menuIndex == 1) {
+                    main.showForm(new Form_GuiEmail());
+                } else {
                     if (subMenuIndex == 0) {
-                        
+
                     } else if (subMenuIndex == 1) {
-                        
+
                     }
                 }
 //            }else{
@@ -88,8 +91,7 @@ public class MainLecturer extends javax.swing.JFrame {
                 popup.setVisible(true);
             }
         });
-        menu.initMenuItem()    
-        ;
+        menu.initMenuItem();
         bg.add(menu, "w 230!, spany 2");    // Span Y 2cell
         bg.add(header, "h 50!, wrap");
         bg.add(main, "w 100%, h 100%");
@@ -135,7 +137,7 @@ public class MainLecturer extends javax.swing.JFrame {
     private void showMessage(String message) {
         Message obj = new Message(Main.getFrames()[0], true);
         obj.showMessage(message);
-    }
+    }   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -21,4 +21,5 @@ public interface ISinhVienRepository {
     void delete(String ma);
     SinhVienView findByMa(String ma);
     List<SinhVienView> thongKeDanhSachSinhVien(String idKy,String idNganh,String idMon);
+    List<SinhVienView> findSinhVienTheoLop(String idLop);
 }

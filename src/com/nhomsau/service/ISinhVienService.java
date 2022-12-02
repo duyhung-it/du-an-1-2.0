@@ -19,4 +19,5 @@ public interface ISinhVienService {
      void update(SinhVienView sinhVien);
      void delete(String ma);
      SinhVienView findByMa(String ma);
+     List<SinhVienView> findSinhVienTheoLop(String idLop);
 }

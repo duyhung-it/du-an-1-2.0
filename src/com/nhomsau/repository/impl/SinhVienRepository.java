@@ -177,4 +177,46 @@ public class SinhVienRepository implements ISinhVienRepository{
     public List<SinhVienView> thongKeDanhSachSinhVien(String idKy, String idNganh, String idMon) {
         return null;
     }
+    
+    final String Select_SinhVienView_SQl = "select Id,MaUser,HoTen,GioiTinh,NgaySinh,DiaChi,Email,SDT\n"
+            + "from Users join SinhVien_Lop on Users.Id = SinhVien_Lop.IdSinhVien\n"
+            + "where IdLop = ? order by HoTen";
+
+    @Override
+    public List<SinhVienView> findSinhVienTheoLop(String idLop) {
+        List<SinhVienView> listSinhViens = new ArrayList<>();
+        try {
+            ResultSet rs = dBConnection.getDataFromQuery(Select_SinhVienView_SQl, idLop);
+            while (rs.next()) {                
+                SinhVienView sinhVien = mapingSinhVienView(rs);
+                listSinhViens.add(sinhVien);
+            }
+        } catch (Exception e) {
+            System.out.println("1");
+            e.printStackTrace();
+        }
+        return listSinhViens;
+    }
+    
+    private SinhVienView mapingSinhVienView(ResultSet rs){
+        try {
+            if(rs != null){
+                String id =rs.getString("Id");
+                String ma = rs.getNString("MaUser");
+                String hoTen = rs.getNString("HoTen");
+                boolean gioiTinh = rs.getBoolean("GioiTinh");
+                Date ngaySinh = rs.getDate("NgaySinh");
+                String diaChi = rs.getNString("DiaChi");
+                String email = rs.getNString("Email");
+                String SDT = rs.getNString("SDT");
+                SinhVienView sinhVienView = new SinhVienView(ma, hoTen, ngaySinh, diaChi, email, SDT, gioiTinh);
+                sinhVienView.setId(id);
+                return sinhVienView;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("1");
+        }
+        return null;
+    }
 }

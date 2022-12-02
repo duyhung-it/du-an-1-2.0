@@ -15,25 +15,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Nguyen Duy Hung
  */
-public class LopRepository implements ILopRepository{
+public class LopRepository implements ILopRepository {
+
     private final LopMapper mapper;
 
     public LopRepository() {
         this.mapper = new LopMapper();
     }
-    
+
     @Override
     public Lop findById(String id) {
         List<Lop> listResult = new ArrayList<>();
         String sql = "Select * from Lop where Id = ?";
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql, id);
-            while(rs.next()) listResult.add(this.maping(rs));
-           
+            while (rs.next()) {
+                listResult.add(this.maping(rs));
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(LopRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -44,10 +48,10 @@ public class LopRepository implements ILopRepository{
     public List<QuanLyLop> findAll() {
         String sql = Select_All_SQL;
         List<QuanLyLop> list = new ArrayList<>();
-            
+
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql);
-            while(rs.next() ){
+            while (rs.next()) {
                 list.add(mapper.mapRow(rs));
             }
         } catch (SQLException ex) {
@@ -59,14 +63,14 @@ public class LopRepository implements ILopRepository{
     @Override
     public void insert(Lop lop) {
         String sql = "INSERT INTO Lop(MaLop,TenLop,IdGiaoVien,IdMon) VALUES (?,?,?,?,?)";
-        DBConnection.ExcuteDungna(sql, lop.getMaLop(),lop.getTenLop(),lop.getIdGiaoVien(),lop.getIdMonHoc());
+        DBConnection.ExcuteDungna(sql, lop.getMaLop(), lop.getTenLop(), lop.getIdGiaoVien(), lop.getIdMonHoc());
     }
 
     @Override
     public void update(Lop lop) {
         StringBuilder sql = new StringBuilder("UPDATE Lop SET ");
         sql.append("MaLop = ?, TenLop = ?, IdGiaoVien = ?,IdMon =? WHERE Id = ?");
-        DBConnection.ExcuteDungna(sql.toString(), lop.getMaLop(),lop.getTenLop(),lop.getIdGiaoVien(),lop.getIdMonHoc());
+        DBConnection.ExcuteDungna(sql.toString(), lop.getMaLop(), lop.getTenLop(), lop.getIdGiaoVien(), lop.getIdMonHoc());
     }
 
     @Override
@@ -77,7 +81,6 @@ public class LopRepository implements ILopRepository{
     final String Select_All_SQL = "select * from Lop";
     final String Select_All_Ten_SQL = "select * from Lop where TenLop like ?";
     final String Select_Ten_SQL = "select Id from Lop where TenLop like '%?%'";
-
 
     public List<Lop> getAllLop() {
         List<Lop> lops = new ArrayList<>();
@@ -106,12 +109,12 @@ public class LopRepository implements ILopRepository{
         }
         return lop;
     }
-    
-    public String getIdLop(String tenLop){
+
+    public String getIdLop(String tenLop) {
         String idLop = "";
         try {
             ResultSet rs = DBConnection.getDataFromQuery(Select_Ten_SQL, tenLop);
-            while (rs.next()) {       
+            while (rs.next()) {
                 idLop = rs.getString("Id");
             }
         } catch (Exception e) {
@@ -145,7 +148,7 @@ public class LopRepository implements ILopRepository{
     public List<QuanLyLop> findByTen(String ten) {
         List<QuanLyLop> lops = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(Select_All_Ten_SQL,"%"+ten+"%");
+            ResultSet rs = DBConnection.getDataFromQuery(Select_All_Ten_SQL, "%" + ten + "%");
             while (rs.next()) {
                 QuanLyLop lop = mapper.mapRow(rs);
                 lops.add(lop);
@@ -157,14 +160,34 @@ public class LopRepository implements ILopRepository{
     }
 
     @Override
-    public List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy) {
+    public List<QuanLyLop> findByMon(String idMon, String idNganh, String idKy) {
         List<QuanLyLop> lops = new ArrayList<>();
         StringBuilder sql = new StringBuilder("select Lop.* from Lop ");
         sql.append("join Ky_Mon on Ky_Mon.IdMon = Lop.IdMon ");
         sql.append("join Mon_Nganh on Mon_Nganh.Id = Lop.IdMon ");
         sql.append("where Lop.IdMon = ? and Ky_Mon.IdKy = ? and Mon_Nganh.IdNganh = ?");
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(),idMon,idKy,idNganh);
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), idMon, idKy, idNganh);
+            while (rs.next()) {
+                QuanLyLop lop = mapper.mapRow(rs);
+                lops.add(lop);
+            }
+        } catch (SQLException e) {
+            System.out.println("Lôi sql lop");
+        }
+        return lops;
+    }
+
+    @Override
+    public List<QuanLyLop> findIdGV(String idMon, String idNganh, String idKy, String idGV) {
+        List<QuanLyLop> lops = new ArrayList<>();
+        String sql = "select Lop.*\n"
+                + " From Users join Lop on Users.Id = Lop.IdGiaoVien"
+                + " join Mon on Lop.IdMon = Mon.Id"
+                + " join Ky_Mon on Mon.Id = Ky_Mon.IdMon"
+                + " where Mon.Id = ? and Users.IdNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idMon, idNganh, idKy, idGV);
             while (rs.next()) {
                 QuanLyLop lop = mapper.mapRow(rs);
                 lops.add(lop);

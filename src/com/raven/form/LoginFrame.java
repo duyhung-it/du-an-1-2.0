@@ -33,15 +33,17 @@ public class LoginFrame extends javax.swing.JFrame {
         initTextField();
         userSevice = new UserService();
     }
-    private void initTextField(){
+
+    private void initTextField() {
         txtUser.setLabelText("Tài khoản");
         txtPassword.setLabelText("Mật khẩu");
         txtPassword.setShowAndHide(true);
     }
-    private void setImageIcon(){
+
+    private void setImageIcon() {
         ImageIcon icon = new ImageIcon(getClass().getResource("/com/raven/icon/bg-login.png"));
         Image image = icon.getImage();
-        Image newImage =image.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
+        Image newImage = image.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
         lblImage.setIcon(new ImageIcon(newImage));
     }
     /**
@@ -194,38 +196,37 @@ public class LoginFrame extends javax.swing.JFrame {
         String password = txtPassword.getText();
         System.out.println(password);
         LoginModel loginModel = this.userSevice.verifyLogin(user, password);
-        if(loginModel != null){
+        if (loginModel != null) {
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
-            this.showMessage("Dang nhap thanh cong!");
-            switch(loginModel.getChucVu()){
+            switch (loginModel.getChucVu()) {
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
-                    SwingAcrylic.prepareSwing();
-                    MainStudent frame = new MainStudent();
-                    frame.setVisible(true);
-                    SwingAcrylic.processFrame(frame);
+                        SwingAcrylic.prepareSwing();
+                        MainStudent frame = new MainStudent();
+                        frame.setVisible(true);
+                        SwingAcrylic.processFrame(frame);
                     });
                     break;
                 case "Giảng Viên":
                     java.awt.EventQueue.invokeLater(() -> {
-                    SwingAcrylic.prepareSwing();
-                    MainLecturer frame = new MainLecturer();
-                    frame.setVisible(true);
-                    SwingAcrylic.processFrame(frame);
+                        SwingAcrylic.prepareSwing();
+                        MainLecturer frame = new MainLecturer();
+                        frame.setVisible(true);
+                        SwingAcrylic.processFrame(frame);
                     });
                     break;
                 case "Giáo Vụ":
                     java.awt.EventQueue.invokeLater(() -> {
-                    SwingAcrylic.prepareSwing();
-                    Main frame = new Main();
-                    frame.setVisible(true);
-                    SwingAcrylic.processFrame(frame);
+                        SwingAcrylic.prepareSwing();
+                        Main frame = new Main();
+                        frame.setVisible(true);
+                        SwingAcrylic.processFrame(frame);
                     });
                     break;
             }
             this.dispose();
-        }else {
+        } else {
             this.showMessage("Dang nhap that bai!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
