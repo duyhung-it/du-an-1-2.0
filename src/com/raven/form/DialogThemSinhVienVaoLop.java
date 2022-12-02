@@ -29,16 +29,18 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
     private LopService lopService;
     DefaultTableModel model;
     private ISinhVienService sinhVienService;
-    
+    private SinhVienView sinhvien;
     List<SinhVienView> listUsers;
     private QuanLyLop lop;
 
     public DialogThemSinhVienVaoLop(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tblSinhVien.fixTable(jScrollPane1);
         sinhVienService = new SinhVienService();
         sinhVienLopService = new SinhVienLopService();
         lopService = new LopService();
+        initTextField();
     }
 
     private void loadTable() {
@@ -48,13 +50,17 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
             model.setNumRows(0);
             for (SinhVienView sv : listUsers) {
                 Object[] object = new Object[]{
-                    sv.getMa(), sv.getHoTen(), sv.getNgaySinh(), lop.getTenLop(), sv.getNganhHoc()
+                    sv.getMa(), sv.getHoTen(), sv.getNgaySinh(),sv.isGioiTinh() ? "Nam" : "Nu", lop.getTenLop(), sv.getNganhHoc()
                 };
                 tblSinhVien.addRow(object);
             }
         }
     }
-
+    private void initTextField(){
+        txtMa.setLabelText("Ma");
+        txtHoTen.setLabelText("Ho Ten");
+        txtNganh.setLabelText("Nganh Hoc");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,17 +70,19 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        button6 = new com.raven.swing.button.Button();
         panelTransparent2 = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSinhVien = new com.raven.swing.table.Table();
-        button1 = new com.raven.swing.button.Button();
-        panelTransparent1 = new com.raven.swing.PanelTransparent();
-        button3 = new com.raven.swing.button.Button();
-        button2 = new com.raven.swing.button.Button();
-        btnThem = new com.raven.swing.button.Button();
-        txtMaSinhVien = new com.raven.swing.textfield.TextField();
-        txtMaLop = new com.raven.swing.textfield.TextField();
-        button4 = new com.raven.swing.button.Button();
+        txtMa = new com.raven.swing.textfield.TextField();
+        btnTimKiem = new com.raven.swing.button.Button();
+        txtHoTen = new com.raven.swing.textfield.TextField();
+        txtNganh = new com.raven.swing.textfield.TextField();
+        btnThemSV = new com.raven.swing.button.Button();
+        btnXoa = new com.raven.swing.button.Button();
+        btnImport = new com.raven.swing.button.Button();
+
+        button6.setText("button6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -84,15 +92,36 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
 
             },
             new String [] {
-                "MaSV", "TenSV", "NgaySinh", "TenLop", "TenNganh"
+                "MaSV", "TenSV", "NgaySinh", "Gioi Tinh", "TenLop", "TenNganh"
             }
         ));
         jScrollPane1.setViewportView(tblSinhVien);
 
-        button1.setText("< TroLai");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnTimKiem.setText("Tìm kiem");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
+        btnThemSV.setText("Thêm");
+        btnThemSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSVActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
+        btnImport.setText("Import ");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
             }
         });
 
@@ -100,80 +129,46 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
         panelTransparent2.setLayout(panelTransparent2Layout);
         panelTransparent2Layout.setHorizontalGroup(
             panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
             .addGroup(panelTransparent2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelTransparent2Layout.createSequentialGroup()
+                        .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtNganh, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                    .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelTransparent2Layout.setVerticalGroup(
             panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(panelTransparent2, "card3");
-
-        button3.setText("Xóa");
-
-        button2.setText("Sua");
-
-        btnThem.setText("Thêm");
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-
-        button4.setText("Danh sách");
-        button4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
-        panelTransparent1.setLayout(panelTransparent1Layout);
-        panelTransparent1Layout.setHorizontalGroup(
-            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent1Layout.createSequentialGroup()
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTransparent1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMaLop, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                            .addComponent(txtMaSinhVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panelTransparent1Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 81, Short.MAX_VALUE))
-        );
-        panelTransparent1Layout.setVerticalGroup(
-            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(txtMaLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtMaSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(186, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(panelTransparent1, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -182,41 +177,59 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
         if(lop!= null)
         loadTable();
     }
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
-        String maSinhVien = txtMaSinhVien.getText();
-        if (maSinhVien.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Mã sinh viên không được bỏ trống!");
-            return;
+        String ma = txtMa.getText();
+        if(!ma.isBlank()){
+            sinhvien = this.sinhVienService.findByMa(ma);
         }
-        if (maSinhVien.length() > 10) {
-            JOptionPane.showMessageDialog(this, "Mã sinh viên không được quá 10 kí tự!");
-            return;
+        if(sinhvien == null){
+            JOptionPane.showMessageDialog(this, "Ma Sinh Vien Khong ton tai!");
+        }else{
+            txtHoTen.setText(sinhvien.getHoTen());
+            txtNganh.setText(sinhvien.getNganhHoc());
         }
-        String idSV = "";
-        SinhVienView sinhVienView = sinhVienService.findByMa(maSinhVien);
-        if (sinhVienView != null) {
-            idSV = sinhVienView.getId();
-        }
-        ModelSinhVienLop c = new ModelSinhVienLop();
-        c.setIdSinhVien(idSV);
-        if (lop != null) {
-            c.setIdLop(lop.getIdLop());
-        }
-        JOptionPane.showMessageDialog(this, sinhVienLopService.themSinhVienLop(c));
-    }//GEN-LAST:event_btnThemActionPerformed
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
-    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+    private void btnThemSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSVActionPerformed
         // TODO add your handling code here:
-        CardLayout layout = (CardLayout) getContentPane().getLayout();
-        layout.last(getContentPane());
-    }//GEN-LAST:event_button4ActionPerformed
+        String result = "";
+        
+        if(sinhvien != null){
+            ModelSinhVienLop modelSVL = new ModelSinhVienLop();
+            modelSVL.setIdLop(this.lop.getIdLop());
+            modelSVL.setIdSinhVien(sinhvien.getId());
+            result = this.sinhVienLopService.themSinhVienLop(modelSVL);
+            JOptionPane.showMessageDialog(this, result);
+            loadTable();
+        }
+    }//GEN-LAST:event_btnThemSVActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        CardLayout layout = (CardLayout) getContentPane().getLayout();
-        layout.first(getContentPane());
-    }//GEN-LAST:event_button1ActionPerformed
+        int selectedRow = tblSinhVien.getSelectedRow();
+        if(selectedRow != -1){
+            String maSV = (String) tblSinhVien.getValueAt(selectedRow, 0);
+            sinhvien = this.sinhVienService.findByMa(maSV);
+            if(sinhvien != null){
+                ModelSinhVienLop modelSVL = new ModelSinhVienLop();
+                modelSVL.setIdLop(this.lop.getIdLop());
+                modelSVL.setIdSinhVien(sinhvien.getId());
+                this.sinhVienLopService.xoaSinhVienLop(modelSVL);
+                loadTable();
+            }else{
+                JOptionPane.showMessageDialog(this, "Xoa that bai");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Ban chua chon sinh vien");
+        }
+        
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnImportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,16 +274,16 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.swing.button.Button btnThem;
-    private com.raven.swing.button.Button button1;
-    private com.raven.swing.button.Button button2;
-    private com.raven.swing.button.Button button3;
-    private com.raven.swing.button.Button button4;
+    private com.raven.swing.button.Button btnImport;
+    private com.raven.swing.button.Button btnThemSV;
+    private com.raven.swing.button.Button btnTimKiem;
+    private com.raven.swing.button.Button btnXoa;
+    private com.raven.swing.button.Button button6;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent panelTransparent2;
     private com.raven.swing.table.Table tblSinhVien;
-    private com.raven.swing.textfield.TextField txtMaLop;
-    private com.raven.swing.textfield.TextField txtMaSinhVien;
+    private com.raven.swing.textfield.TextField txtHoTen;
+    private com.raven.swing.textfield.TextField txtMa;
+    private com.raven.swing.textfield.TextField txtNganh;
     // End of variables declaration//GEN-END:variables
 }

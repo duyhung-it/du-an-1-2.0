@@ -19,9 +19,13 @@ import com.nhomsau.service.impl.MonService;
 import com.nhomsau.util.CheckLogin;
 import com.nhomsau.viewmodel.BangDiemTheoMon;
 import com.nhomsau.viewmodel.LoginModel;
+import com.raven.dialog.Message;
+import com.raven.main.MainStudent;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -56,6 +60,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
             getAllKy();
             
         }
+//        this.showMessage("Bạn cần thêm " + (10- Double.valueOf(lblDiemTrungBinh.getText())) + "để qua môn " + lblMon.getText());
   //      loadTable();
     }
 
@@ -328,12 +333,18 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
                         lblTrangThai.setForeground(Color.red);
                     }
                     lblTrangThai.setText(trangThai);
+                    lblMon.setText(mon1.getTen());
                 }
             }
-            lblMon.setText(mon1.getTen());
+           
+            
         }
     }//GEN-LAST:event_cbxMonItemStateChanged
 
+    private void showMessage(String value){
+        Message message = new Message(MainStudent.getFrames()[0], true);
+        message.showMessage(value);
+    }
     private void cbcKyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbcKyItemStateChanged
         // TODO add your handling code here:
         QuanLyKy k = (QuanLyKy) cbcKy.getSelectedItem();

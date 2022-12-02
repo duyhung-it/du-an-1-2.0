@@ -28,7 +28,12 @@ import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyLop;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
+import java.awt.CardLayout;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -83,6 +88,17 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             cbxKy.addItem(ky);
         }
     }
+    private void initListDauDiem(List<DauDiem> list){
+        DefaultListModel<String> modelList = new DefaultListModel<>();
+        modelList.removeAllElements();
+        if(!list.isEmpty()){
+            
+            for(DauDiem dauDiem : list){
+                modelList.addElement(dauDiem.toString());
+            }
+            listDauDiem.setModel(modelList);
+        }
+    }
     private void initColumn(String idMon,String idNganh,String idLop){
         List<DauDiem> listDauDiem = this.dauDiemService.findDauDiemByMon(idMon, idNganh);
         if(listDauDiem!= null){
@@ -133,6 +149,7 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         button2 = new com.raven.swing.button.Button();
         cbxLop = new com.raven.swing.combobox.Combobox();
         panelTransparent2 = new com.raven.swing.PanelTransparent();
+        panelTransparent7 = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDiemTheoLop = new com.raven.swing.table.Table();
         panelTransparent3 = new com.raven.swing.PanelTransparent();
@@ -142,7 +159,16 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         panelTransparent5 = new com.raven.swing.PanelTransparent();
         jLabel2 = new javax.swing.JLabel();
         lblSoSinhVien = new javax.swing.JLabel();
+        panelTransparent8 = new com.raven.swing.PanelTransparent();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblThongKe = new com.raven.swing.table.Table();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listDauDiem = new javax.swing.JList<>();
         panelTransparent6 = new com.raven.swing.PanelTransparent();
+        radioButtonCustom1 = new com.raven.swing.radio_button.RadioButtonCustom();
+        radioButtonCustom2 = new com.raven.swing.radio_button.RadioButtonCustom();
+        radioButtonCustom3 = new com.raven.swing.radio_button.RadioButtonCustom();
 
         cbxNganh.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -163,8 +189,18 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         });
 
         button1.setText("Lớp học");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         button2.setText("Xem chi tiết");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         cbxLop.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -185,29 +221,32 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbxLop, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addComponent(cbxMon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                    .addComponent(button2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         panelTransparent1Layout.setVerticalGroup(
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbxMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxKy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxKy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbxLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(cbxLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        panelTransparent2.setLayout(new java.awt.CardLayout());
+
+        panelTransparent7.setOpaque(true);
 
         tblDiemTheoLop.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -218,17 +257,6 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             }
         ));
         jScrollPane1.setViewportView(tblDiemTheoLop);
-
-        javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
-        panelTransparent2.setLayout(panelTransparent2Layout);
-        panelTransparent2Layout.setHorizontalGroup(
-            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        panelTransparent2Layout.setVerticalGroup(
-            panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
 
         jLabel1.setText("Giảng Viên:");
 
@@ -242,9 +270,9 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jLabel1))
                     .addGroup(panelTransparent4Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addGap(41, 41, 41)
                         .addComponent(lblGiangVien, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         panelTransparent4Layout.setVerticalGroup(
             panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,29 +309,16 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelTransparent6Layout = new javax.swing.GroupLayout(panelTransparent6);
-        panelTransparent6.setLayout(panelTransparent6Layout);
-        panelTransparent6Layout.setHorizontalGroup(
-            panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 227, Short.MAX_VALUE)
-        );
-        panelTransparent6Layout.setVerticalGroup(
-            panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout panelTransparent3Layout = new javax.swing.GroupLayout(panelTransparent3);
         panelTransparent3.setLayout(panelTransparent3Layout);
         panelTransparent3Layout.setHorizontalGroup(
             panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTransparent3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(46, 46, 46)
                 .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
                 .addComponent(panelTransparent5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(panelTransparent6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(151, 151, 151))
         );
         panelTransparent3Layout.setVerticalGroup(
             panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,10 +326,113 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelTransparent4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelTransparent5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelTransparent6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelTransparent5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        javax.swing.GroupLayout panelTransparent7Layout = new javax.swing.GroupLayout(panelTransparent7);
+        panelTransparent7.setLayout(panelTransparent7Layout);
+        panelTransparent7Layout.setHorizontalGroup(
+            panelTransparent7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelTransparent3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        panelTransparent7Layout.setVerticalGroup(
+            panelTransparent7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent7Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTransparent3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        panelTransparent2.add(panelTransparent7, "card3");
+
+        panelTransparent8.setOpaque(true);
+
+        tblThongKe.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã lớp", "Tên lớp", "Mã GV", "Ngày Cập Nhật", "Dự Kiến", "Đã nhập", "Tình trạng"
+            }
+        ));
+        jScrollPane2.setViewportView(tblThongKe);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        listDauDiem.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(listDauDiem);
+
+        radioButtonCustom1.setText("Tất cả");
+
+        radioButtonCustom2.setText("Hoàn thành");
+
+        radioButtonCustom3.setText("Chưa hoàn thành");
+
+        javax.swing.GroupLayout panelTransparent6Layout = new javax.swing.GroupLayout(panelTransparent6);
+        panelTransparent6.setLayout(panelTransparent6Layout);
+        panelTransparent6Layout.setHorizontalGroup(
+            panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(radioButtonCustom3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelTransparent6Layout.setVerticalGroup(
+            panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent6Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioButtonCustom3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelTransparent8Layout = new javax.swing.GroupLayout(panelTransparent8);
+        panelTransparent8.setLayout(panelTransparent8Layout);
+        panelTransparent8Layout.setHorizontalGroup(
+            panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent8Layout.createSequentialGroup()
+                        .addComponent(panelTransparent6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(panelTransparent8Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        panelTransparent8Layout.setVerticalGroup(
+            panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelTransparent6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelTransparent8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSeparator1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
+        );
+
+        panelTransparent2.add(panelTransparent8, "card3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -322,19 +440,16 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelTransparent3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelTransparent3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void cbxNganhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNganhItemStateChanged
         // TODO add your handling code here:
         QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
@@ -384,7 +499,8 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             for(QuanLyLop lop : listLop){
                 cbxLop.addItem(lop);
             }
-            
+            List<DauDiem> list = this.dauDiemService.findDauDiemByMon(mon.getId(), nganh.getId());
+            initListDauDiem(list);
         }
     }//GEN-LAST:event_cbxMonItemStateChanged
 
@@ -402,6 +518,18 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cbxLopItemStateChanged
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        CardLayout layout = (CardLayout) panelTransparent2.getLayout();
+        layout.last(panelTransparent2);
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        CardLayout layout = (CardLayout) panelTransparent2.getLayout();
+        layout.first(panelTransparent2);
+    }//GEN-LAST:event_button2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button button1;
@@ -413,14 +541,24 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblGiangVien;
     private javax.swing.JLabel lblSoSinhVien;
+    private javax.swing.JList<String> listDauDiem;
     private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent panelTransparent2;
     private com.raven.swing.PanelTransparent panelTransparent3;
     private com.raven.swing.PanelTransparent panelTransparent4;
     private com.raven.swing.PanelTransparent panelTransparent5;
     private com.raven.swing.PanelTransparent panelTransparent6;
+    private com.raven.swing.PanelTransparent panelTransparent7;
+    private com.raven.swing.PanelTransparent panelTransparent8;
+    private com.raven.swing.radio_button.RadioButtonCustom radioButtonCustom1;
+    private com.raven.swing.radio_button.RadioButtonCustom radioButtonCustom2;
+    private com.raven.swing.radio_button.RadioButtonCustom radioButtonCustom3;
     private com.raven.swing.table.Table tblDiemTheoLop;
+    private com.raven.swing.table.Table tblThongKe;
     // End of variables declaration//GEN-END:variables
 }

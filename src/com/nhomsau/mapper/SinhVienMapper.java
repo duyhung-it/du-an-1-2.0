@@ -4,6 +4,7 @@
  */
 package com.nhomsau.mapper;
 
+import com.nhomsau.domainmodel.ModelSinhVienLop;
 import com.nhomsau.domainmodel.SinhVien;
 import com.nhomsau.viewmodel.SinhVienView;
 import java.sql.ResultSet;
@@ -70,6 +71,14 @@ public class SinhVienMapper {
             result.setNgaySinh(viewModel.getNgaySinh());
             result.setSdt(viewModel.getSDT());
             return result;
+        }
+        return null;
+    }
+    public ModelSinhVienLop toModelSinhVienLop(SinhVienView viewModel){
+        if(viewModel != null){
+            ModelSinhVienLop model = new ModelSinhVienLop();
+            model.setIdSinhVien(viewModel.getId());
+            return null;
         }
         return null;
     }
