@@ -423,6 +423,7 @@ public class Form_GuiEmail extends javax.swing.JPanel {
                 m.setText(txtAMessage.getText());
 
                 Transport.send(m);
+                listEmail.remove(listEmail);
                 txtTo.setText("");
                 txtSubject.setText("");
                 txtAMessage.setText("");

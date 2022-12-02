@@ -8,12 +8,14 @@ import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
+import com.raven.form.FormThongTinSv;
 import com.raven.form.Form_DanhSachSinhVien;
 import com.raven.form.Form_Diem;
 import com.raven.form.Form_GuiEmail;
 import com.raven.form.Form_Home;
 import com.raven.form.LoginFrame;
 import com.raven.form.MainForm;
+import com.raven.form.ThongTinSinhVien;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
@@ -67,19 +69,14 @@ public class MainLecturer extends javax.swing.JFrame {
                             Logger.getLogger(MainLecturer.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-<<<<<<< HEAD
                 } else if (menuIndex == 1) {
                     main.showForm(new Form_GuiEmail());
-                } else {
-=======
-                }else if(menuIndex == 1){
->>>>>>> 6c2281d88d499f2951ce10b0537674ee85b021ff
+                }else if(menuIndex == 2){
                     if (subMenuIndex == 0) {
-
+                        main.showForm(new FormThongTinSv());
                     } else if (subMenuIndex == 1) {
-
                     }
-                }else if (menuIndex == 2) {
+                }else if (menuIndex == 3) {
                     int confirm = JOptionPane.showConfirmDialog(bg, "Ban co chac chan muon thoat ?");
                     if(confirm == JOptionPane.YES_OPTION)
                     System.exit(0);

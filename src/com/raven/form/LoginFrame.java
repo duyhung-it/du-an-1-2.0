@@ -199,11 +199,7 @@ public class LoginFrame extends javax.swing.JFrame {
         if (loginModel != null) {
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
-<<<<<<< HEAD
-            switch (loginModel.getChucVu()) {
-=======
             switch(loginModel.getChucVu()){
->>>>>>> 6c2281d88d499f2951ce10b0537674ee85b021ff
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
                         SwingAcrylic.prepareSwing();

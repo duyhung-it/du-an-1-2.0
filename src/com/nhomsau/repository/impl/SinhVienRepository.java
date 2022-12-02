@@ -16,25 +16,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Nguyen Duy Hung
  */
-public class SinhVienRepository implements ISinhVienRepository{
-    private final SinhVienMapper mapper;
+public class SinhVienRepository implements ISinhVienRepository {
 
+    private final SinhVienMapper mapper;
 
     public SinhVienRepository() {
         this.mapper = new SinhVienMapper();
     }
-    
+
     @Override
     public List<SinhVienView> findAll() {
         String sql = "{call proc_danh_sach_sinh_vien(null)}";
         List<SinhVienView> listResults = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromProc(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 listResults.add(mapper.mapRowView(rs));
             }
         } catch (SQLException ex) {
@@ -42,6 +43,7 @@ public class SinhVienRepository implements ISinhVienRepository{
         }
         return listResults;
     }
+
     public static void main(String[] args) {
         System.out.println(new SinhVienRepository().findAll().get(0));
     }
@@ -51,8 +53,8 @@ public class SinhVienRepository implements ISinhVienRepository{
         String sql = "select * from users where ChucVu = ?";
         List<SinhVien> listResults = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql,1);
-            while(rs.next()){
+            ResultSet rs = DBConnection.getDataFromQuery(sql, 1);
+            while (rs.next()) {
                 listResults.add(mapper.mapRowDomain(rs));
             }
         } catch (SQLException ex) {
@@ -66,8 +68,8 @@ public class SinhVienRepository implements ISinhVienRepository{
         String sql = "{call proc_danh_sach_sinh_vien(?)}";
         List<SinhVienView> listResults = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromProc(sql,id);
-            while(rs.next()){
+            ResultSet rs = DBConnection.getDataFromProc(sql, id);
+            while (rs.next()) {
                 listResults.add(mapper.mapRowView(rs));
             }
         } catch (SQLException ex) {
@@ -78,10 +80,10 @@ public class SinhVienRepository implements ISinhVienRepository{
 
     @Override
     public void insert(SinhVien s) {
-        String sql ="INSERT INTO [dbo].[Users]([MaUser],[HoTen],[GioiTinh],[NgaySinh],[DiaChi],[Email],[SDT],[ChucVu],[IdNganh],[MatKhau])" +
-                    " VALUES (?,?,?,?,?,?,?,?,?,?)";
-        DBConnection.ExcuteDungna(sql,s.getMa(),s.getHoTen(),s.isGioiTinh(),s.getNgaySinh(),
-                                    s.getDiaChi(),s.getEmail(),s.getSdt(),1,s.getIdNganh(),"123");
+        String sql = "INSERT INTO [dbo].[Users]([MaUser],[HoTen],[GioiTinh],[NgaySinh],[DiaChi],[Email],[SDT],[ChucVu],[IdNganh],[MatKhau])"
+                + " VALUES (?,?,?,?,?,?,?,?,?,?)";
+        DBConnection.ExcuteDungna(sql, s.getMa(), s.getHoTen(), s.isGioiTinh(), s.getNgaySinh(),
+                s.getDiaChi(), s.getEmail(), s.getSdt(), 1, s.getIdNganh(), "123");
     }
 
     @Override
@@ -89,8 +91,8 @@ public class SinhVienRepository implements ISinhVienRepository{
         StringBuilder sql = new StringBuilder("UPDATE [dbo].[Users] ");
         sql.append("set HoTen = ?, GioiTinh = ?, NgaySinh = ?,");
         sql.append("DiaChi = ?, Email = ?, SDT = ? where MaUser = ?");
-        DBConnection.ExcuteDungna(sql.toString(),s.getHoTen(),s.isGioiTinh(),s.getNgaySinh(),
-                                    s.getDiaChi(),s.getEmail(),s.getSdt(),s.getMa());
+        DBConnection.ExcuteDungna(sql.toString(), s.getHoTen(), s.isGioiTinh(), s.getNgaySinh(),
+                s.getDiaChi(), s.getEmail(), s.getSdt(), s.getMa());
     }
 
     @Override
@@ -107,8 +109,8 @@ public class SinhVienRepository implements ISinhVienRepository{
         sql.append("where u.IdNganh = n.Id and u.ChucVu = 1 and u.MaUser = ? ");
         sql.append("order by u.MaUser");
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(),ma);
-            while(rs.next()){
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), ma);
+            while (rs.next()) {
                 return mapper.mapRowView(rs);
             }
         } catch (SQLException ex) {
@@ -121,11 +123,12 @@ public class SinhVienRepository implements ISinhVienRepository{
             + "from Users join SinhVien_Lop on Users.Id = SinhVien_Lop.IdSinhVien\n"
             + "where IdLop = ? order by HoTen";
     final String select_idSV = "select Id from Users where MaUser = ?";
-    public List<SinhVien> getSinhViens(String idLop){
+
+    public List<SinhVien> getSinhViens(String idLop) {
         List<SinhVien> listSinhViens = new ArrayList<>();
         try {
             ResultSet rs = dBConnection.getDataFromQuery(Select_SinhVien_SQl, idLop);
-            while (rs.next()) {                
+            while (rs.next()) {
                 SinhVien sinhVien = maping(rs);
                 listSinhViens.add(sinhVien);
             }
@@ -135,12 +138,12 @@ public class SinhVienRepository implements ISinhVienRepository{
         }
         return listSinhViens;
     }
-    
-    public String getIdSV(String maSV){
+
+    public String getIdSV(String maSV) {
         String idSV = "";
         try {
             ResultSet rs = dBConnection.getDataFromQuery(select_idSV, maSV);
-            while (rs.next()) {                
+            while (rs.next()) {
                 idSV = rs.getString("Id");
             }
         } catch (Exception e) {
@@ -148,11 +151,11 @@ public class SinhVienRepository implements ISinhVienRepository{
         }
         return idSV;
     }
-    
-    private SinhVien maping(ResultSet rs){
+
+    private SinhVien maping(ResultSet rs) {
         try {
-            if(rs != null){
-                String id =rs.getString("Id");
+            if (rs != null) {
+                String id = rs.getString("Id");
                 String ma = rs.getNString("MaUser");
                 String hoTen = rs.getNString("HoTen");
                 boolean gioiTinh = rs.getBoolean("GioiTinh");
@@ -177,8 +180,7 @@ public class SinhVienRepository implements ISinhVienRepository{
     public List<SinhVienView> thongKeDanhSachSinhVien(String idKy, String idNganh, String idMon) {
         return null;
     }
-<<<<<<< HEAD
-    
+
     final String Select_SinhVienView_SQl = "select Id,MaUser,HoTen,GioiTinh,NgaySinh,DiaChi,Email,SDT\n"
             + "from Users join SinhVien_Lop on Users.Id = SinhVien_Lop.IdSinhVien\n"
             + "where IdLop = ? order by HoTen";
@@ -188,37 +190,41 @@ public class SinhVienRepository implements ISinhVienRepository{
         List<SinhVienView> listSinhViens = new ArrayList<>();
         try {
             ResultSet rs = dBConnection.getDataFromQuery(Select_SinhVienView_SQl, idLop);
-            while (rs.next()) {                
+            while (rs.next()) {
                 SinhVienView sinhVien = mapingSinhVienView(rs);
-=======
-
-    @Override
-    public List<SinhVienView> findSinhVienTheoLop(String idLop) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("select u.Id,u.MaUser,u.HoTen,u.GioiTinh,u.NgaySinh,u.DiaChi,u.Email,u.SDT,n.TenNganh ");
-        sql.append("from Users as u,Nganh as n,SinhVien_Lop as l ");
-        sql.append("where u.IdNganh = n.Id and u.ChucVu = 1 and l.IdLop = ? and l.IdSinhVien = u.Id ");
-        sql.append("order by u.MaUser");
-        List<SinhVienView> listSinhViens = new ArrayList<>();
-        try {
-            ResultSet rs = dBConnection.getDataFromQuery(sql.toString(), idLop);
-            while (rs.next()) {                
-                SinhVienView sinhVien = mapper.mapRowView(rs);
->>>>>>> 6c2281d88d499f2951ce10b0537674ee85b021ff
                 listSinhViens.add(sinhVien);
             }
         } catch (Exception e) {
-            System.out.println("1");
             e.printStackTrace();
         }
         return listSinhViens;
     }
-<<<<<<< HEAD
-    
-    private SinhVienView mapingSinhVienView(ResultSet rs){
+
+//    @Override
+//    public List<SinhVienView> findSinhVienTheoLop(String idLop) {
+//        StringBuilder sql = new StringBuilder();
+//        sql.append("select u.Id,u.MaUser,u.HoTen,u.GioiTinh,u.NgaySinh,u.DiaChi,u.Email,u.SDT,n.TenNganh ");
+//        sql.append("from Users as u,Nganh as n,SinhVien_Lop as l ");
+//        sql.append("where u.IdNganh = n.Id and u.ChucVu = 1 and l.IdLop = ? and l.IdSinhVien = u.Id ");
+//        sql.append("order by u.MaUser");
+//        List<SinhVienView> listSinhViens = new ArrayList<>();
+//        try {
+//            ResultSet rs = dBConnection.getDataFromQuery(sql.toString(), idLop);
+//            while (rs.next()) {
+//                SinhVienView sinhVien = mapper.mapRowView(rs);
+//                listSinhViens.add(sinhVien);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("1");
+//            e.printStackTrace();
+//        }
+//        return listSinhViens;
+//    }
+
+    private SinhVienView mapingSinhVienView(ResultSet rs) {
         try {
-            if(rs != null){
-                String id =rs.getString("Id");
+            if (rs != null) {
+                String id = rs.getString("Id");
                 String ma = rs.getNString("MaUser");
                 String hoTen = rs.getNString("HoTen");
                 boolean gioiTinh = rs.getBoolean("GioiTinh");
@@ -236,6 +242,4 @@ public class SinhVienRepository implements ISinhVienRepository{
         }
         return null;
     }
-=======
->>>>>>> 6c2281d88d499f2951ce10b0537674ee85b021ff
 }
