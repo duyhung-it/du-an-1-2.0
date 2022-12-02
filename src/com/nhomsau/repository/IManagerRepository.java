@@ -20,6 +20,10 @@ public interface IManagerRepository {
 
     public Manager findByCode(String code);
 
-    public List<Statistical> findListStudent(String idSj, String idMj, String idSe);
+    public List<Statistical> findListStudent(String idSj, String idMj, String idSe, double minScore, double maxScore);
+
+    public List<Statistical> findTotalListStudent(String idMon, String idNganh, String idKy, double minScore, double maxScore);
+
+    public List<Statistical> findTotalListStudent(String idNganh, String idKy, double minScore, double maxScore);
 
 }

@@ -141,7 +141,16 @@ public class LopRepository implements ILopRepository {
 
     @Override
     public QuanLyLop findByMa(String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<QuanLyLop> listResult = new ArrayList<>();
+        String sql = "Select * from Lop where MaLop = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, ma);
+            while(rs.next()) listResult.add(this.mapper.mapRow(rs));
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(LopRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResult.isEmpty() ? null : listResult.get(0);
     }
 
     @Override

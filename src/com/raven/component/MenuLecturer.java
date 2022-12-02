@@ -59,7 +59,7 @@ public class MenuLecturer extends PanelTransparent {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/1.png")), "Lớp của tôi", "Danh sách sinh viên", "Danh sách bảng điểm"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/2.png")), "Liên hệ", "Gửi Email"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Tài khoản", "Thông tin cá nhân", "Đăng xuất"));
-   
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Thoát"));
     }
 
     private void addMenu(ModelMenu menu) {

@@ -25,10 +25,10 @@ public class FormLichSuHoc extends javax.swing.JPanel {
     private LoginModel modelLogin;
     public FormLichSuHoc() {
         initComponents();
-        loadTable();
         if(CheckLogin.isLogin()){
             modelLogin = CheckLogin.loginModel;
         }
+        loadTable();
     }
 
     /**
@@ -91,7 +91,7 @@ public class FormLichSuHoc extends javax.swing.JPanel {
             model.setRowCount(0);
             for(LichSuaBangDiem ls:list){
             Object[] obj=new Object[]{
-                tbLichSu.getRowCount()+1,ls.getTenMon(),ls.getMaMon(),ls.getKy(),ls.getDiem(),ls.getTrangThai()
+                tbLichSu.getRowCount()+1,ls.getTenMon(),ls.getMaMon(),ls.getKy(),ls.getDiem(),ls.trangthai()
             };
             tbLichSu.addRow(obj);
             }   

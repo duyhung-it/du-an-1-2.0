@@ -49,7 +49,7 @@ public class LopService implements ILopService{
 
     @Override
     public QuanLyLop findByMa(String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.repository.findByMa(ma);
     }
 
     @Override

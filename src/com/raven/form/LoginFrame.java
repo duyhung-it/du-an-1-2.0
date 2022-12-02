@@ -15,6 +15,7 @@ import com.raven.main.MainStudent;
 import java.awt.Image;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import ru.krlvm.swingacrylic.SwingAcrylic;
 
 /**
@@ -98,7 +99,6 @@ public class LoginFrame extends javax.swing.JFrame {
 
         txtUser.setBackground(new java.awt.Color(255, 255, 255));
         txtUser.setForeground(new java.awt.Color(0, 0, 0));
-        txtUser.setCaretColor(new java.awt.Color(255, 255, 255));
         txtUser.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtUser.setLineColor(new java.awt.Color(255, 255, 255));
 
@@ -199,7 +199,11 @@ public class LoginFrame extends javax.swing.JFrame {
         if (loginModel != null) {
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
+<<<<<<< HEAD
             switch (loginModel.getChucVu()) {
+=======
+            switch(loginModel.getChucVu()){
+>>>>>>> 6c2281d88d499f2951ce10b0537674ee85b021ff
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
                         SwingAcrylic.prepareSwing();
@@ -230,9 +234,8 @@ public class LoginFrame extends javax.swing.JFrame {
             this.showMessage("Dang nhap that bai!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
-    private void showMessage(String message) {
-        Message obj = new Message(this, true);
-        obj.showMessage(message);
+    private void showMessage(String message){
+        JOptionPane.showMessageDialog(this, message);
     }
     /**
      * @param args the command line arguments

@@ -45,6 +45,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
     public FormBangDiemTheoKy() {
         initComponents();
         if(CheckLogin.isLogin()){
+            modelLogin = CheckLogin.loginModel;
             model = (DefaultTableModel) tbDiem.getModel();
             iKyService = new KyService();
             iMonService = new MonService();
@@ -53,7 +54,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
             cbcKy.setLabeText("Ky");
             cbxMon.setLabeText("Mon");
             getAllKy();
-            modelLogin = CheckLogin.loginModel;
+            
         }
   //      loadTable();
     }
@@ -288,7 +289,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
         if (mon1 != null) {
             if (modelLogin != null) {
                 list = new DiemRepository().getDiem(modelLogin.getIdUser(), mon1.getId());
-
+                System.out.println(modelLogin.getIdUser());
                 for (BangDiem b : list) {
                     Object[] obj = new Object[]{
                         tbDiem.getRowCount() + 1,

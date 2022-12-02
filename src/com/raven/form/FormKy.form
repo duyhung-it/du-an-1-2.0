@@ -27,10 +27,8 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnXoa" pref="84" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="TxtId" pref="288" max="32767" attributes="0"/>
-                      <Component id="txtTenKy" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="TxtId" pref="288" max="32767" attributes="0"/>
+                  <Component id="txtTenKy" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="157" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">

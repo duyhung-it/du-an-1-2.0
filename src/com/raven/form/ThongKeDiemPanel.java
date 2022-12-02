@@ -24,6 +24,7 @@ import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.SinhVienView;
 import com.raven.swing.table.Table;
 import java.awt.CardLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,8 +70,9 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
     private List<BangDiemTheoMon> list;
     ChartPanel chartPanel;
     JFreeChart barChart;
+
     public ThongKeDiemPanel() {
-        initComponents(); 
+        initComponents();
         diemService = new DiemService();
         barChart = ChartFactory.createBarChart("", "", "", this.createDataset(null, null, null));
         chartPanel = new ChartPanel(barChart);
@@ -80,21 +82,23 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         sinhVienService = new SinhVienService();
         kyService = new KyService();
         nganhService = new NganhService();
-        
+
         pnTable.setVisible(false);
         table1.fixTable(jScrollPane1);
-        
+
         initData();
     }
-    private void showTable(){
+
+    private void showTable() {
         Object[] obj = new BangDiemTheoMon().toColumn();
-        if(obj != null){
-        DefaultTableModel model = new DefaultTableModel(obj,0);
-        table1.setModel(model);
+        if (obj != null) {
+            DefaultTableModel model = new DefaultTableModel(obj, 0);
+            table1.setModel(model);
             initTable(this.list);
-        }  
-        
+        }
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -263,28 +267,29 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void initBarChart(QuanLyNganh nganh,QuanLyKy ky, QuanLyMon mon){
-        if(mon != null){
-         String title = "Phổ điểm của môn: " + mon.getTen() + " " + ky.getTen();
-         barChart = ChartFactory.createBarChart(
-         title,           
-         "Điểm",            
-         "Số lượng",            
-         createDataset(nganh.getId(),ky.getId(),mon.getId()),          
-         PlotOrientation.VERTICAL,           
-         true, true, false);
-         chartPanel = new ChartPanel(barChart);
-         chartPanel.setPreferredSize(new Dimension(pnTable.getWidth(),pnTable.getHeight()));
+    private void initBarChart(QuanLyNganh nganh, QuanLyKy ky, QuanLyMon mon) {
+        if (mon != null) {
+            String title = "Phổ điểm của môn: " + mon.getTen() + " " + ky.getTen();
+            barChart = ChartFactory.createBarChart(
+                    title,
+                    "Điểm",
+                    "Số lượng",
+                    createDataset(nganh.getId(), ky.getId(), mon.getId()),
+                    PlotOrientation.VERTICAL,
+                    true, true, false);
+            chartPanel = new ChartPanel(barChart);
+            chartPanel.setPreferredSize(new Dimension(pnTable.getWidth(), pnTable.getHeight()));
         }
     }
-    private CategoryDataset createDataset(String idNganh,String idKy, String idMon){
-        
+
+    private CategoryDataset createDataset(String idNganh, String idKy, String idMon) {
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String score = "Score";
-        for(double i = 0 ; i < 10 ; i+=0.5){
-            List<BangDiemTheoMon> listBangDiem = this.diemService.thongKeDiemTheoMon(idMon, idNganh, idKy, Float.parseFloat(i+""), Float.parseFloat((i+0.5)+""));
-            Double soLuong = Double.valueOf( listBangDiem.size()+"");
-            dataset.addValue(soLuong, score,i+"");
+        for (double i = 0; i < 10; i += 0.5) {
+            List<BangDiemTheoMon> listBangDiem = this.diemService.thongKeDiemTheoMon(idMon, idNganh, idKy, Float.parseFloat(i + ""), Float.parseFloat((i + 0.5) + ""));
+            Double soLuong = Double.valueOf(listBangDiem.size() + "");
+            dataset.addValue(soLuong, score, i + "");
         }
         return dataset;
     }
@@ -297,37 +302,37 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         layout.last(pnTable);
         pnTable.setVisible(true);
     }//GEN-LAST:event_btnPreviewActionPerformed
-    
+
     private void cbxKyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxKyItemStateChanged
         // TODO add your handling code here:
-        QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
+        QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
-        if(ky != null && nganh != null){
+        if (ky != null && nganh != null) {
             System.out.println(ky.getId());
             System.out.println(nganh.getId());
         }
-        List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(),ky.getId());
+        List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(), ky.getId());
         cbxMon.removeAllItems();
-        if(!listMons.isEmpty()){
+        if (!listMons.isEmpty()) {
             cbxMon.addItem("Tất Cả");
-            for(QuanLyMon mon : listMons){
+            for (QuanLyMon mon : listMons) {
                 cbxMon.addItem(mon);
             }
         }
-        
+
     }//GEN-LAST:event_cbxKyItemStateChanged
 
     private void cbxNganhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNganhItemStateChanged
         // TODO add your handling code here:
-        QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
+        QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
-        
-        if(ky != null && nganh != null){
-            List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(),ky.getId());
+
+        if (ky != null && nganh != null) {
+            List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(), ky.getId());
             cbxMon.removeAllItems();
-            if(!listMons.isEmpty()){
+            if (!listMons.isEmpty()) {
                 cbxMon.addItem("Tất Cả");
-                for(QuanLyMon mon : listMons){
+                for (QuanLyMon mon : listMons) {
                     cbxMon.addItem(mon);
                 }
             }
@@ -337,87 +342,102 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
 
     private void cbxMonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMonItemStateChanged
         // TODO add your handling code here:
-        QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
+        QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
-        if(cbxMon.getSelectedIndex() == 0){
-            if(ky != null && nganh != null){
-             list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(),null,null);
+        if (cbxMon.getSelectedIndex() == 0) {
+            if (ky != null && nganh != null) {
+                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(), null, null);
             }
-        } else{
+        } else {
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
-            if(mon!= null){
-            list = this.diemService.thongKeDiemTheoMon(mon.getId(),nganh.getId(),ky.getId(),null,null);
-            this.initBarChart(nganh, ky, mon);
+            if (mon != null) {
+                list = this.diemService.thongKeDiemTheoMon(mon.getId(), nganh.getId(), ky.getId(), null, null);
+                this.initBarChart(nganh, ky, mon);
             }
         }
     }//GEN-LAST:event_cbxMonItemStateChanged
 
     private void cbxMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMonActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cbxMonActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser("C:\\Users\\Nguyen Duy Hung\\OneDrive\\Documents\\Export Java File");
+        JFileChooser fileChooser = new JFileChooser("E:\\FPt\\Ki_4\\excel");
         fileChooser.showSaveDialog(this);
         File saveFile = fileChooser.getSelectedFile();
-        if(saveFile != null){
+        if (saveFile != null) {
             FileOutputStream fos = null;
             try {
                 saveFile = new File(saveFile.toString() + ".xlsx");
                 Workbook workbook = new SXSSFWorkbook();
                 Sheet sheet = workbook.createSheet("Bang Diem");
                 Row rowCol = sheet.createRow(0);
-                for(int i = 0 ; i < table1.getColumnCount(); i++){
+                for (int i = 0; i < table1.getColumnCount(); i++) {
                     Cell cell = rowCol.createCell(i);
                     cell.setCellValue(table1.getColumnName(i));
-                    
-                }   for(int i = 0; i < table1.getRowCount(); i++){
-                    Row row =sheet.createRow(i+1);
-                    for(int j = 0 ; j < table1.getColumnCount(); j++){
+
+                }
+                for (int i = 0; i < table1.getRowCount(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    for (int j = 0; j < table1.getColumnCount(); j++) {
                         Cell cell = row.createCell(j);
-                        if(table1.getValueAt(i, j) != null)
-                        {
+                        if (table1.getValueAt(i, j) != null) {
                             cell.setCellValue(table1.getValueAt(i, j).toString());
                         }
                     }
-                }   
+                }
                 fos = new FileOutputStream(new File(saveFile.toString()));
+ 
                 workbook.write(fos);
                 workbook.close();
+                this.openFile(saveFile);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
-                    if(fos != null)
-                    fos.close();
+                    if (fos != null) {
+                        fos.close();
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(this, "That Bai");
         }
     }//GEN-LAST:event_btnExportActionPerformed
-
+    private void openFile(File file){
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here:
-        QuanLyKy ky =(QuanLyKy) cbxKy.getSelectedItem();
+        QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
         QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
         float min = Float.valueOf(txtMin.getText());
         float max = Float.valueOf(txtMax.getText());
-        if(cbxMon.getSelectedIndex() == 0){
-            if(ky != null && nganh != null){
-             list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(),(double)min,(double)max);
+        if (cbxMon.getSelectedIndex() == 0) {
+            if (ky != null && nganh != null) {
+                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(), (double) min, (double) max);
             }
-        } else{
+        } else {
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
-            if(mon!= null){
-            list = this.diemService.thongKeDiemTheoMon(mon.getId(),nganh.getId(),ky.getId(),min,max);
+            if (mon != null) {
+                list = this.diemService.thongKeDiemTheoMon(mon.getId(), nganh.getId(), ky.getId(), min, max);
             }
         }
         showTable();
@@ -431,50 +451,53 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         layout.first(pnTable);
         pnTable.setVisible(true);
     }//GEN-LAST:event_button1ActionPerformed
-    private void initData(){
+    private void initData() {
         initCombobox();
         txtMax.setLabelText("Max");
         txtMin.setLabelText("Min");
     }
-    private void initCombobox(){
+
+    private void initCombobox() {
         List<QuanLyNganh> listNganhs = this.nganhService.findAll1();
         cbxNganh.setLabeText("Ngành Học");
-        if(!listNganhs.isEmpty()){
-            for(QuanLyNganh nganh : listNganhs){
+        if (!listNganhs.isEmpty()) {
+            for (QuanLyNganh nganh : listNganhs) {
                 cbxNganh.addItem(nganh);
+                System.out.println("oke");
             }
         }
         List<QuanLyMon> listMons = this.monService.findAll();
-        
+
         cbxMon.setLabeText("Môn Học");
 //        if(!listMons.isEmpty()){
 //            for(QuanLyMon mon : listMons){
 //                cbxMon.addItem(mon);
 //            }
 //        }
+
         List<QuanLyKy> listKys = this.kyService.findAll();
         cbxKy.setLabeText("Kỳ Học");
-        for(QuanLyKy ky : listKys){
+        for (QuanLyKy ky : listKys) {
             cbxKy.addItem(ky);
         }
     }
-    private void initTable(List<BangDiemTheoMon> list){
-        if(cbxMon.getSelectedIndex() != 0){
+
+    private void initTable(List<BangDiemTheoMon> list) {
+        if (cbxMon.getSelectedIndex() != 0) {
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
             QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
-            if(mon!= null){
+            if (mon != null) {
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
                 model.setNumRows(0);
-                for(BangDiemTheoMon b : list){
+                for (BangDiemTheoMon b : list) {
                     SinhVienView sinhVienView = this.sinhVienService.findById(b.getIdSv());
                     Lop lop = this.lopService.findById(b.getIdLop());
                     Object[] obj = new Object[]{
-                        table1.getModel().getRowCount()+ 1,
+                        table1.getModel().getRowCount() + 1,
                         mon.getTen(),
                         mon.getMa(),
-                        ky.getTen()+ " " + ky.getNam(),
+                        ky.getTen() + " " + ky.getNam(),
                         sinhVienView.getHoTen(),
-
                         sinhVienView.getMa(),
                         lop.getTenLop(),
                         mon.getTinChi(),
@@ -483,29 +506,28 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                     table1.addRow(obj);
                 }
             }
-        } else{
-                DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                model.setNumRows(0);
-                QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
-                for(BangDiemTheoMon b : list){
-                    SinhVienView sinhVienView = this.sinhVienService.findById(b.getIdSv());
-                    Lop lop = this.lopService.findById(b.getIdLop());
-                    QuanLyMon mon = this.monService.findOne(b.getIdMon());
-                    Object[] obj = new Object[]{
-                        table1.getModel().getRowCount()+ 1,
-                        mon.getTen(),
-                        mon.getMa(),
-                        ky.getTen()+ " " + ky.getNam(),
-                        sinhVienView.getHoTen(),
-
-                        sinhVienView.getMa(),
-                        lop.getTenLop(),
-                        mon.getTinChi(),
-                        b.getDiemTB(),
-                        b.getTrangThai()
-                    };
-                    table1.addRow(obj);
-                }
+        } else {
+            DefaultTableModel model = (DefaultTableModel) table1.getModel();
+            model.setNumRows(0);
+            QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
+            for (BangDiemTheoMon b : list) {
+                SinhVienView sinhVienView = this.sinhVienService.findById(b.getIdSv());
+                Lop lop = this.lopService.findById(b.getIdLop());
+                QuanLyMon mon = this.monService.findOne(b.getIdMon());
+                Object[] obj = new Object[]{
+                    table1.getModel().getRowCount() + 1,
+                    mon.getTen(),
+                    mon.getMa(),
+                    ky.getTen() + " " + ky.getNam(),
+                    sinhVienView.getHoTen(),
+                    sinhVienView.getMa(),
+                    lop.getTenLop(),
+                    mon.getTinChi(),
+                    b.getDiemTB(),
+                    b.getTrangThai()
+                };
+                table1.addRow(obj);
+            }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

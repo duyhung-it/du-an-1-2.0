@@ -7,11 +7,18 @@ package com.raven.form;
 import com.microsoft.schemas.office.excel.STObjectType;
 import com.nhomsau.domainmodel.Lop;
 import com.nhomsau.service.IMonService;
+import com.nhomsau.service.ISinhVienService;
 import com.nhomsau.service.impl.LopService;
 import com.nhomsau.service.impl.MonService;
+import com.nhomsau.service.impl.SinhVienService;
 import com.nhomsau.viewmodel.QuanLyLop;
 import com.nhomsau.viewmodel.QuanLyMon;
+import com.raven.main.Main;
+import java.awt.Point;
 import java.util.List;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,17 +32,21 @@ public class LopHocPanel extends javax.swing.JPanel {
      */
     private LopService lopService;
     private IMonService monService;
+    private ISinhVienService sinhVienService;
     DefaultTableModel model;
     List<QuanLyLop> list;
     public LopHocPanel() {
         initComponents();
         initTextField();
+        sinhVienService = new SinhVienService();
+        tblLop.setComponentPopupMenu(pmMenu);
         model = (DefaultTableModel) tblLop.getModel();
         lopService = new LopService();
         monService = new MonService();
         list = lopService.findAll();
         loadTable();
         initComBoBox();
+        
     }
     private void initTextField(){
         txtID.setLabelText("Id");
@@ -88,6 +99,9 @@ public class LopHocPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pmMenu = new javax.swing.JPopupMenu();
+        DanhSach = new javax.swing.JMenuItem();
+        ThemSinhVien = new javax.swing.JMenuItem();
         panelTransparent1 = new com.raven.swing.PanelTransparent();
         txtID = new com.raven.swing.textfield.TextField();
         txtMa = new com.raven.swing.textfield.TextField();
@@ -102,6 +116,23 @@ public class LopHocPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLop = new com.raven.swing.table.Table();
         button3 = new com.raven.swing.button.Button();
+
+        pmMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pmMenuMouseClicked(evt);
+            }
+        });
+
+        DanhSach.setText("jMenuItem1");
+        DanhSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DanhSachMouseClicked(evt);
+            }
+        });
+        pmMenu.add(DanhSach);
+
+        ThemSinhVien.setText("jMenuItem2");
+        pmMenu.add(ThemSinhVien);
 
         panelTransparent1.setOpaque(true);
 
@@ -190,6 +221,11 @@ public class LopHocPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblLop);
 
         button3.setText("Thêm Sinh Viên");
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelTransparent2Layout = new javax.swing.GroupLayout(panelTransparent2);
         panelTransparent2.setLayout(panelTransparent2Layout);
@@ -242,6 +278,7 @@ public class LopHocPanel extends javax.swing.JPanel {
 
     private void tblLopMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLopMouseClicked
         // TODO add your handling code here:
+        if(SwingUtilities.isLeftMouseButton(evt)){
         int row = tblLop.getSelectedRow();
         if (row < 0) {
             return;
@@ -252,7 +289,12 @@ public class LopHocPanel extends javax.swing.JPanel {
         txtID.setText(id);
         txtMa.setText(ma);
         txtTen.setText(ten);
-        
+        }else {
+            Point p = evt.getPoint();
+            int row = tblLop.rowAtPoint(p);
+            tblLop.setRowSelectionInterval(row, row);
+            
+        }
     }//GEN-LAST:event_tblLopMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -282,8 +324,53 @@ public class LopHocPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
+    private void pmMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pmMenuMouseClicked
+        // TODO add your handling code here:
+        JPopupMenu menu = (JPopupMenu) evt.getSource();
+        DialogThemSinhVienVaoLop dialog = new DialogThemSinhVienVaoLop(Main.getFrames()[0], true);
+        System.out.println(menu.getComponent(0).getName());
+        if(menu.getComponent(0).getName().equalsIgnoreCase("Danhsach")){
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_pmMenuMouseClicked
+
+    private void DanhSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DanhSachMouseClicked
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DialogThemSinhVienVaoLop dialog = new DialogThemSinhVienVaoLop(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_DanhSachMouseClicked
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblLop.getSelectedRow();
+        if(selectedRow != -1){
+            String maLop = (String) model.getValueAt(selectedRow, 1);
+            QuanLyLop lop = this.lopService.findByMa(maLop);
+            
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DialogThemSinhVienVaoLop dialog = new DialogThemSinhVienVaoLop(new javax.swing.JFrame(), true);
+                dialog.setLop(lop);
+                dialog.setVisible(true);
+            }
+        });
+        }
+    }//GEN-LAST:event_button3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem DanhSach;
+    private javax.swing.JMenuItem ThemSinhVien;
     private com.raven.swing.button.Button btnSua;
     private com.raven.swing.button.Button btnThem;
     private com.raven.swing.button.Button btnTimKiem;
@@ -293,6 +380,7 @@ public class LopHocPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent panelTransparent2;
+    private javax.swing.JPopupMenu pmMenu;
     private com.raven.swing.table.Table tblLop;
     private com.raven.swing.textfield.TextField txtID;
     private com.raven.swing.textfield.TextField txtMa;
