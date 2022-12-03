@@ -243,26 +243,37 @@ public class Form_MonHoc extends javax.swing.JPanel {
         int row = tblMon.getSelectedRow();
         if (row >= 0) {
 
-            String ma = tblMon.getValueAt(row, 0).toString();
-            String ten = tblMon.getValueAt(row, 1).toString();
-            String tinChi = tblMon.getValueAt(row, 2).toString();
-            String buoiHoc = tblMon.getValueAt(row, 3).toString();
             String id = dsQlMon.get(row).getId();
+            
+            String tenMon = dsQlMon.get(row).getTen();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    FormHeSo fhs = new FormHeSo();
+                    fhs.setIdMon(id);
+                    fhs.setVisible(true);
+                    fhs.setTitle(tenMon);
+                    
+                }
+            });
+//            String ma = tblMon.getValueAt(row, 0).toString();
+//            String ten = tblMon.getValueAt(row, 1).toString();
+//            String tinChi = tblMon.getValueAt(row, 2).toString();
+//            String buoiHoc = tblMon.getValueAt(row, 3).toString();
 
-            lbId.setText(id);
-            txtMa.setText(ma);
-            txtTen.setText(ten);
-            txtTinChi.setText(tinChi);
-            txtSoBuoi.setText(buoiHoc);
+//            lbId.setText(id);
+//            txtMa.setText(ma);
+//            txtTen.setText(ten);
+//            txtTinChi.setText(tinChi);
+//            txtSoBuoi.setText(buoiHoc);
         }
     }//GEN-LAST:event_tblMonMouseClicked
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         int row = tblMon.getSelectedRow();
-        if(row >=0){
+        if (row >= 0) {
             String id = dsQlMon.get(row).getId();
-            if(JOptionPane.showConfirmDialog(this, "Có muốn xóa không", "Xóa", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
+            if (JOptionPane.showConfirmDialog(this, "Có muốn xóa không", "Xóa", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
                 iMonService.delete(id);
                 loadTable();
             }

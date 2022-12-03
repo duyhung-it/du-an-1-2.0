@@ -2,12 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
         <group>
-            <file>file:/D:/Ki%204/DuAnMot/src/com/raven/main/MainLecturer.java</file>
-            <file>file:/D:/Ki%204/DuAnMot/src/com/raven/form/LoginFrame.java</file>
-            <file>file:/D:/Ki%204/DuAnMot/src/com/nhomsau/repository/impl/SinhVienRepository.java</file>
-            <file>file:/D:/Ki%204/DuAnMot/src/com/nhomsau/view/Form_Statistical.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/form/FormHeSo.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/form/Form_Mon_DauDiem.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/form/Form_MonHoc.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/nhomsau/repository/impl/DauDiemRepository.java</file>
+        </group>
+        <group>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/component/Menu.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/form/FormHeSo.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/main/Main.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/form/Form_Mon_DauDiem.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/model/ModelMenu.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/raven/form/Form_MonHoc.java</file>
+            <file>file:/E:/FPt/Ki_4/du_an_1/src/com/nhomsau/repository/impl/DauDiemRepository.java</file>
         </group>
     </open-files>
 </project-private>
