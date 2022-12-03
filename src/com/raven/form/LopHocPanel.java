@@ -6,11 +6,16 @@ package com.raven.form;
 
 import com.microsoft.schemas.office.excel.STObjectType;
 import com.nhomsau.domainmodel.Lop;
+import com.nhomsau.mapper.GiangVienMapper;
+import com.nhomsau.service.IManageLecturerService;
 import com.nhomsau.service.IMonService;
 import com.nhomsau.service.ISinhVienService;
 import com.nhomsau.service.impl.LopService;
+import com.nhomsau.service.impl.ManageLecturerService;
 import com.nhomsau.service.impl.MonService;
 import com.nhomsau.service.impl.SinhVienService;
+import com.nhomsau.viewmodel.ManageLecturer;
+import com.nhomsau.viewmodel.QuanLyGiangVien;
 import com.nhomsau.viewmodel.QuanLyLop;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.raven.main.Main;
@@ -33,11 +38,13 @@ public class LopHocPanel extends javax.swing.JPanel {
     private LopService lopService;
     private IMonService monService;
     private ISinhVienService sinhVienService;
+    private IManageLecturerService lecturerService;
     DefaultTableModel model;
     List<QuanLyLop> list;
     public LopHocPanel() {
         initComponents();
         initTextField();
+        lecturerService = new ManageLecturerService();
         sinhVienService = new SinhVienService();
         tblLop.setComponentPopupMenu(pmMenu);
         model = (DefaultTableModel) tblLop.getModel();
@@ -66,28 +73,36 @@ public class LopHocPanel extends javax.swing.JPanel {
                 cbxMon.addItem(mon);
             }
         }
+        List<QuanLyGiangVien> manageLecturers = lecturerService.getAll();
+        if(!manageLecturers.isEmpty()){
+            for(QuanLyGiangVien lecturer : manageLecturers){
+                cbxGiangVien.addItem(lecturer);
+            }
+        }
     }
     private void loadTable(){
         model.setNumRows(0);
+        list = this.lopService.findAll();
         for(QuanLyLop lop : list){
             QuanLyMon mon = monService.findOne(lop.getIdMon());
             System.out.println(lop.getIdMon());
+            QuanLyGiangVien manager = this.lecturerService.findById(lop.getIdGiaoVien());
             Object[] obj = new Object[]{
-                lop.getIdLop(),lop.getMaLop(),lop.getTenLop(),mon,lop.getIdGiaoVien()
+                lop.getMaLop(),lop.getTenLop(),mon,manager.getHoTen()
             };
             tblLop.addRow(obj);
         }
     }
     private Lop validateLop(){
         String ma = txtMa.getText();
-        String ten = txtTen.getText();
-        String id = txtID.getText();
+        String ten = txtTen.getText();      
         QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
+        QuanLyGiangVien manageLecturer = (QuanLyGiangVien) cbxGiangVien.getSelectedItem();
         Lop lop = new Lop();
-        lop.setId(id);
         lop.setIdMonHoc(mon.getId());
         lop.setMaLop(ma);
         lop.setTenLop(ten);
+        lop.setIdGiaoVien(manageLecturer.getId());
         return lop;
     }
     /**
@@ -210,7 +225,7 @@ public class LopHocPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Id", "Ma Lop", "Ten Lop", "Mon", "GiangVien"
+                "Ma Lop", "Ten Lop", "Mon", "GiangVien"
             }
         ));
         tblLop.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -283,10 +298,8 @@ public class LopHocPanel extends javax.swing.JPanel {
         if (row < 0) {
             return;
         }
-        String id = model.getValueAt(row, 0).toString();
-        String ma = model.getValueAt(row, 1).toString();
-        String ten = model.getValueAt(row, 2).toString();
-        txtID.setText(id);
+        String ma = model.getValueAt(row, 0).toString();
+        String ten = model.getValueAt(row, 1).toString();
         txtMa.setText(ma);
         txtTen.setText(ten);
         }else {
@@ -319,6 +332,7 @@ public class LopHocPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(tblLop.getSelectedRow() != -1){
         Lop lop = this.validateLop();
+        
         this.lopService.update(lop);
         loadTable();
         }
@@ -354,9 +368,9 @@ public class LopHocPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = tblLop.getSelectedRow();
         if(selectedRow != -1){
-            String maLop = (String) model.getValueAt(selectedRow, 1);
+            String maLop = (String) model.getValueAt(selectedRow, 0);
             QuanLyLop lop = this.lopService.findByMa(maLop);
-            
+           if(lop != null) 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 DialogThemSinhVienVaoLop dialog = new DialogThemSinhVienVaoLop(new javax.swing.JFrame(), true);

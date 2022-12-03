@@ -204,13 +204,9 @@ public class Form_Lecturers extends javax.swing.JPanel {
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTransparent1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(panelTransparent1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(69, 759, Short.MAX_VALUE))))
+                .addComponent(jLabel5)
+                .addGap(69, 759, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
         );
         panelTransparent1Layout.setVerticalGroup(
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,21 +420,22 @@ public class Form_Lecturers extends javax.swing.JPanel {
         txtDiaChi.setText(address);
         txtSDTGV.setText(phone);
         txtEmailGV.setText(email);
+        dchNgaySinhGV.setDate(dOB);
         txtMatKhauGV.setText(password);
         int index = findIndexCBBManager(manager.getCode());
         cbbManager.setSelectedIndex(index);
         int indexMajor = findIndexCBBMajor(major.getCode());
         cbbMajors.setSelectedIndex(indexMajor);
-        cbbManager.setSelectedIndex(1);
-        cbbManager.setSelectedItem(manager);
-        for (int i = 0; i < listManagers.size(); i++) {
-            System.out.println(i + "-" + listManagers.get(i).getCode());
-            System.out.println(manager.getCode());
-            if (manager.getCode().equalsIgnoreCase(listManagers.get(i).getCode())) {
-                cbbManager.setSelectedIndex(i);
-                break;
-            }
-        }
+//        cbbManager.setSelectedIndex(1);
+//        cbbManager.setSelectedItem(manager);
+//        for (int i = 0; i < listManagers.size(); i++) {
+//            System.out.println(i + "-" + listManagers.get(i).getCode());
+//            System.out.println(manager.getCode());
+//            if (manager.getCode().equalsIgnoreCase(listManagers.get(i).getCode())) {
+//                cbbManager.setSelectedIndex(i);
+//                break;
+//            }
+//        }
 
     }//GEN-LAST:event_tblLecturersMouseClicked
 
@@ -563,8 +560,8 @@ public class Form_Lecturers extends javax.swing.JPanel {
 
         int role = 2;
         int gender = rdoNam.isSelected() ? 0 : 1;
-        return null;
-//        return new ManageLecturer(code, fullname, gender, dOB, address, email, phone, password, role, manager, major);
+//        return null;
+        return new ManageLecturer(code, fullname, gender, dOB, address, email, phone, password, role, manager, major);
     }
 
     private void clearForm() {

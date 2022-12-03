@@ -69,4 +69,9 @@ public class ManageLecturerService implements IManageLecturerService {
         return this.lecturerRepository.findById(id);
     }
 
+    @Override
+    public List<QuanLyGiangVien> getAll() {
+        return this.lecturerRepository.getAll();
+    }
+
 }

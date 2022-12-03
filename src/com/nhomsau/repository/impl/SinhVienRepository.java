@@ -181,7 +181,7 @@ public class SinhVienRepository implements ISinhVienRepository {
         return null;
     }
 
-    final String Select_SinhVienView_SQl = "select Id,MaUser,HoTen,GioiTinh,NgaySinh,DiaChi,Email,SDT\n"
+    final String Select_SinhVienView_SQl = "select Id,MaUser,HoTen,GioiTinh,NgaySinh,DiaChi,Email,SDT,IdNganh\n"
             + "from Users join SinhVien_Lop on Users.Id = SinhVien_Lop.IdSinhVien\n"
             + "where IdLop = ? order by HoTen";
 
@@ -232,8 +232,10 @@ public class SinhVienRepository implements ISinhVienRepository {
                 String diaChi = rs.getNString("DiaChi");
                 String email = rs.getNString("Email");
                 String SDT = rs.getNString("SDT");
+                String idNganh = rs.getString("IdNganh");
                 SinhVienView sinhVienView = new SinhVienView(ma, hoTen, ngaySinh, diaChi, email, SDT, gioiTinh);
                 sinhVienView.setId(id);
+                sinhVienView.setIdNganh(idNganh);
                 return sinhVienView;
             }
         } catch (Exception e) {
