@@ -16,80 +16,70 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="btnThem" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnSua" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnXoa" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Component id="button4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
+        <Group type="102" alignment="0" attributes="0">
+          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+          <Component id="btnThem" min="-2" max="-2" attributes="0"/>
+          <EmptySpace type="separate" max="-2" attributes="0"/>
+          <Component id="btnSua" min="-2" max="-2" attributes="0"/>
+          <EmptySpace type="separate" max="-2" attributes="0"/>
+          <Component id="btnXoa" min="-2" max="-2" attributes="0"/>
+          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+          <Component id="button4" min="-2" max="-2" attributes="0"/>
+          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+        </Group>
+        <Group type="102" alignment="0" attributes="0">
+          <EmptySpace max="-2" attributes="0"/>
+          <Group type="103" groupAlignment="0" attributes="0">
+            <Group type="102" attributes="0">
+              <Component id="jScrollPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="txtMa" min="-2" pref="310" max="-2" attributes="0"/>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
-                      <Component id="txtTen" min="-2" pref="293" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-<<<<<<< HEAD:build/classes/com/raven/form/Form_Mon_DauDiem.form
-              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnThem" max="32767" attributes="0"/>
-                  <Component id="btnXoa" alignment="0" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace pref="115" max="32767" attributes="0"/>
-=======
->>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573:src/com/raven/form/FormNganh.form
+            </Group>
+            <Group type="102" attributes="0">
+              <Component id="txtMa" min="-2" pref="310" max="-2" attributes="0"/>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <Component id="txtTen" min="-2" pref="293" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+            </Group>
           </Group>
+          <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+            <Component id="btnThem" max="32767" attributes="0"/>
+            <Component id="btnXoa" alignment="0" max="32767" attributes="0"/>
+          </Group>
+          <EmptySpace pref="115" max="32767" attributes="0"/>
+        </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtMa" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtTen" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="button4" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-<<<<<<< HEAD:build/classes/com/raven/form/Form_Mon_DauDiem.form
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cbxDauDiem" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="txtHeSo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="258" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-=======
-              <EmptySpace pref="53" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="357" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
->>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573:src/com/raven/form/FormNganh.form
+        <Group type="102" alignment="0" attributes="0">
+          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+          <Group type="103" groupAlignment="3" attributes="0">
+            <Component id="txtMa" alignment="3" min="-2" max="-2" attributes="0"/>
+            <Component id="txtTen" alignment="3" min="-2" max="-2" attributes="0"/>
           </Group>
+          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+          <Group type="103" groupAlignment="3" attributes="0">
+            <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
+            <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
+            <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
+            <Component id="button4" alignment="3" min="-2" max="-2" attributes="0"/>
+          </Group>
+          <EmptySpace type="separate" max="-2" attributes="0"/>
+          <Group type="103" groupAlignment="3" attributes="0">
+            <Component id="cbxDauDiem" alignment="3" min="-2" max="-2" attributes="0"/>
+            <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
+          </Group>
+          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+          <Component id="txtHeSo" min="-2" max="-2" attributes="0"/>
+          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+          <Component id="jScrollPane1" min="-2" pref="258" max="-2" attributes="0"/>
+          <EmptySpace max="32767" attributes="0"/>
+        </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-<<<<<<< HEAD:build/classes/com/raven/form/Form_Mon_DauDiem.form
     <Component class="com.raven.swing.button.Button" name="btnThem">
       <Properties>
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
@@ -101,26 +91,6 @@
     <Component class="com.raven.swing.combobox.Combobox" name="cbxMon">
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbxMonItemStateChanged"/>
-=======
-    <Component class="com.raven.swing.textfield.TextField" name="txtMa">
-    </Component>
-    <Component class="com.raven.swing.textfield.TextField" name="txtTen">
-    </Component>
-    <Component class="com.raven.swing.Button" name="btnSua">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="SUA"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="com.raven.swing.Button" name="btnThem">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="THEM"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
->>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573:src/com/raven/form/FormNganh.form
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -168,32 +138,16 @@
         </Component>
       </SubComponents>
     </Container>
-<<<<<<< HEAD:build/classes/com/raven/form/Form_Mon_DauDiem.form
     <Component class="com.raven.swing.combobox.Combobox" name="cbxDauDiem">
     </Component>
     <Component class="com.raven.swing.textfield.TextField" name="txtHeSo">
     </Component>
     <Component class="com.raven.swing.button.Button" name="btnXoa">
-=======
-    <Component class="com.raven.swing.Button" name="btnXoa">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="XOA"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="com.raven.swing.Button" name="button4">
->>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573:src/com/raven/form/FormNganh.form
       <Properties>
         <Property name="text" type="java.lang.String" value="CLear"/>
       </Properties>
       <Events>
-<<<<<<< HEAD:build/classes/com/raven/form/Form_Mon_DauDiem.form
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
-=======
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button4ActionPerformed"/>
->>>>>>> 3f6b71e416ce27a14973e94ebd94c1536774e573:src/com/raven/form/FormNganh.form
       </Events>
     </Component>
   </SubComponents>
