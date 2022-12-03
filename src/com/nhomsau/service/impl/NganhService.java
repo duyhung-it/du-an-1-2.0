@@ -55,5 +55,10 @@ public class NganhService implements INganhService {
             return "update khong thanh cong";
         }
     }
+
+    @Override
+    public QuanLyNganh findOne(String idNganh) {
+        return this.repository.findOne(idNganh);
+    }
     
 }

@@ -27,5 +27,6 @@ public interface ILecturerRepository {
 
     public boolean deleteLec(String id);
     QuanLyGiangVien findById(String id);
+    List<QuanLyGiangVien> getAll();
     
 }

@@ -233,4 +233,19 @@ public class LecturerRepository implements ILecturerRepository {
         return null;
     }
 
+    @Override
+    public List<QuanLyGiangVien> getAll() {
+        String sql = "SELECT [Id] ,[MaUser] ,[HoTen] ,[NgaySinh] ,[DiaChi] ,[Email] ,[SDT] ,[MatKhau] ,[ChucVu] ,[IdNganh] ,[IdNguoiTao] ,[GioiTinh] FROM [dbo].[Users] WHERE [ChucVu] = 2";
+        List<QuanLyGiangVien> listResult = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql);
+            while(rs.next()){
+                listResult.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LecturerRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResult;
+    }
+
 }

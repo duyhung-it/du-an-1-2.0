@@ -62,15 +62,15 @@ public class LopRepository implements ILopRepository {
 
     @Override
     public void insert(Lop lop) {
-        String sql = "INSERT INTO Lop(MaLop,TenLop,IdGiaoVien,IdMon) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Lop(MaLop,TenLop,IdGiaoVien,IdMon) VALUES (?,?,?,?)";
         DBConnection.ExcuteDungna(sql, lop.getMaLop(), lop.getTenLop(), lop.getIdGiaoVien(), lop.getIdMonHoc());
     }
 
     @Override
     public void update(Lop lop) {
         StringBuilder sql = new StringBuilder("UPDATE Lop SET ");
-        sql.append("MaLop = ?, TenLop = ?, IdGiaoVien = ?,IdMon =? WHERE Id = ?");
-        DBConnection.ExcuteDungna(sql.toString(), lop.getMaLop(), lop.getTenLop(), lop.getIdGiaoVien(), lop.getIdMonHoc());
+        sql.append("TenLop = ?, IdGiaoVien = ?,IdMon =? WHERE MaLop = ?");
+        DBConnection.ExcuteDungna(sql.toString(), lop.getTenLop(), lop.getIdGiaoVien(), lop.getIdMonHoc(),lop.getMaLop());
     }
 
     @Override
