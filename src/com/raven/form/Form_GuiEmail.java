@@ -229,7 +229,6 @@ public class Form_GuiEmail extends javax.swing.JPanel {
             }
         });
 
-        txtTo.setEditable(false);
         txtTo.setColumns(20);
         txtTo.setRows(5);
         jScrollPane3.setViewportView(txtTo);
