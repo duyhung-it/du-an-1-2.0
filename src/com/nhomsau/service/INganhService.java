@@ -12,5 +12,6 @@ import java.util.List;
  * @author Nguyen Duy Hung
  */
 public interface INganhService {
-    public List<QuanLyNganh> findAll1();
+    List<QuanLyNganh> findAll1();
+    QuanLyNganh findOne(String idNganh);
 }

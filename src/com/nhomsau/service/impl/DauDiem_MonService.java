@@ -14,14 +14,14 @@ import java.util.List;
  *
  * @author ADMIN
  */
-public class DauDiem_MonService implements IDauDiem_MonService{
+public class DauDiem_MonService implements IDauDiem_MonService {
 
     private final IDauDiemMonRepository iDauDiemMonRepository;
 
     public DauDiem_MonService() {
         this.iDauDiemMonRepository = new DauDiemMonRepository();
     }
-    
+
     @Override
     public List<DauDiemMon> findAll() {
         return iDauDiemMonRepository.findAll();
@@ -36,5 +36,15 @@ public class DauDiem_MonService implements IDauDiem_MonService{
     public void delete(String idDauDiem, String idMon) {
         iDauDiemMonRepository.delete(idDauDiem, idMon);
     }
-    
+
+    @Override
+    public List<DauDiemMon> getAllDauDiem(String id) {
+        return iDauDiemMonRepository.getAllDauDiem(id);
+    }
+
+    @Override
+    public String getIdDauDiem(String ten) {
+        return iDauDiemMonRepository.getIdDauDiem(ten);
+    }
+
 }

@@ -114,23 +114,15 @@ public class Form_Diem extends javax.swing.JPanel {
 
         QuanLyLop lop = (QuanLyLop) cbxLop.getSelectedItem();
 
-        for (int i = 4; i < column - 1; i++) {
+        for (int i = 3; i < column - 1; i++) {
             String dauDiem = tblDiem.getColumnName(i);
             String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
             for (int j = 0; j < row; j++) {
                 String maSV = tblDiem.getValueAt(j, 1).toString();
                 String idSV = sinhVienRepository.getIdSV(maSV);
 
-                Object ghiChu = tblDiem.getValueAt(j, 3);
-                String ghiChuString = null;
-                if (ghiChu != null) {
-                    ghiChuString = ghiChu.toString();
-                } else {
-                    ghiChuString = "";
-                }
-
                 Object diemOb = tblDiem.getValueAt(j, i);
-
+                System.out.println(tblDiem.getValueAt(j, 4));
                 String diemString = null;
                 if (diemOb == null) {
                     diemString = "0";

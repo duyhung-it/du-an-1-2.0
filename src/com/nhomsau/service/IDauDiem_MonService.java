@@ -15,4 +15,6 @@ public interface IDauDiem_MonService {
     void insert(DauDiemMon dm);
     void delete(String idDauDiem, String idMon);
     List<DauDiemMon> findAll();
+    List<DauDiemMon> getAllDauDiem(String id);
+    String getIdDauDiem(String ten);
 }

@@ -27,7 +27,7 @@ public class GiangVienMapper {
                 String email = rs.getString("Email");
                 String sdt = rs.getString("SDT");
                 String idNganh = rs.getString("IdNganh");
-                return new QuanLyGiangVien(id, idNganh, hoTen, gioiTinh, ngaySinh, diaChi, email, sdt, idNganh);
+                return new QuanLyGiangVien(id, ma, hoTen, gioiTinh, ngaySinh, diaChi, email, sdt, idNganh);
             } catch (SQLException ex) {
                 Logger.getLogger(GiangVienMapper.class.getName()).log(Level.SEVERE, null, ex);
             }

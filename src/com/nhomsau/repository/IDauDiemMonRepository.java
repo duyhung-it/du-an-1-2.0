@@ -15,4 +15,6 @@ public interface IDauDiemMonRepository {
     void insert(DauDiemMon dm);
     void delete(String idDauDiem, String idMOn);
     List<DauDiemMon> findAll();
+    List<DauDiemMon> getAllDauDiem(String id);
+    String getIdDauDiem(String ten);
 }

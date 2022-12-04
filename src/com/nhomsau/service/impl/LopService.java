@@ -29,7 +29,7 @@ public class LopService implements ILopService{
 
     @Override
     public void insert(Lop lop) {
-        
+        this.repository.insert(lop);
     }
 
     @Override

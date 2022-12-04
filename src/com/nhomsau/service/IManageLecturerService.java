@@ -24,4 +24,5 @@ public interface IManageLecturerService {
 
     public boolean deleteLec(String code);
     QuanLyGiangVien findById(String id);
+    List<QuanLyGiangVien> getAll();
 }

@@ -5,16 +5,31 @@
 package com.raven.form;
 
 import com.nhomsau.domainmodel.ModelSinhVienLop;
+import com.nhomsau.service.INganhService;
 import com.nhomsau.service.ISinhVienService;
 import com.nhomsau.service.impl.LopService;
+import com.nhomsau.service.impl.NganhService;
 import com.nhomsau.service.impl.SinhVienLopService;
 import com.nhomsau.service.impl.SinhVienService;
 import com.nhomsau.viewmodel.QuanLyLop;
+import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.SinhVienView;
 import java.awt.CardLayout;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -29,6 +44,7 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
     private LopService lopService;
     DefaultTableModel model;
     private ISinhVienService sinhVienService;
+    private INganhService nganhService;
     private SinhVienView sinhvien;
     List<SinhVienView> listUsers;
     private QuanLyLop lop;
@@ -37,6 +53,7 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         tblSinhVien.fixTable(jScrollPane1);
+        nganhService= new NganhService();
         sinhVienService = new SinhVienService();
         sinhVienLopService = new SinhVienLopService();
         lopService = new LopService();
@@ -49,8 +66,11 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
             DefaultTableModel model = (DefaultTableModel) this.tblSinhVien.getModel();
             model.setNumRows(0);
             for (SinhVienView sv : listUsers) {
+                QuanLyNganh nganh = this.nganhService.findOne(sv.getIdNganh());
+                String tenNganh = "";
+                if(nganh != null) tenNganh = nganh.getTen();
                 Object[] object = new Object[]{
-                    sv.getMa(), sv.getHoTen(), sv.getNgaySinh(),sv.isGioiTinh() ? "Nam" : "Nu", lop.getTenLop(), sv.getNganhHoc()
+                    sv.getMa(), sv.getHoTen(), sv.getNgaySinh(),sv.isGioiTinh() ? "Nam" : "Nu", lop.getTenLop(),tenNganh
                 };
                 tblSinhVien.addRow(object);
             }
@@ -228,7 +248,44 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         // TODO add your handling code here:
-        
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelJtableImport = null;
+
+//        String duongDan = "E:\\FPt\\Ki_4\\excel";
+        JFileChooser excelFileChooser = new JFileChooser();
+        List<SinhVienView> list = new ArrayList<>();
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+
+                excelJtableImport = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelJtableImport.getSheetAt(0);
+
+                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    XSSFCell excelCell =  excelRow.getCell(0);
+                    SinhVienView sv = this.sinhVienService.findByMa(excelCell.toString());
+                    if(sv!= null) list.add(sv);
+                }
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+
+        }
+        for(SinhVienView sv : list){
+            ModelSinhVienLop sinhVienLop = new ModelSinhVienLop();
+            sinhVienLop.setIdLop(lop.getIdLop());
+            sinhVienLop.setIdSinhVien(sv.getId());
+            String hello = this.sinhVienLopService.themSinhVienLop(sinhVienLop);
+        }
+        loadTable();
     }//GEN-LAST:event_btnImportActionPerformed
 
     /**
