@@ -78,12 +78,10 @@ public class Main extends javax.swing.JFrame {
                     } else if (subMenuIndex == 1) {
                         main.showForm(new Form_MonHoc());
                     } else if (subMenuIndex == 2) {
-                        main.showForm(new Form_Mon_DauDiem());
-                    } else if (subMenuIndex == 3) {
                         main.showForm(new FormNganh());
-                    } else if(subMenuIndex == 4){
+                    } else if(subMenuIndex == 3){
                         main.showForm(new Form_Lecturers());
-                    } else if(subMenuIndex == 5){
+                    } else if(subMenuIndex == 4){
                         main.showForm(new LopHocPanel());
                     }
                 } else if(menuIndex == 3){
