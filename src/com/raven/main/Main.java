@@ -88,11 +88,12 @@ public class Main extends javax.swing.JFrame {
                     if(subMenuIndex == 0){
                         
                     }else if(subMenuIndex == 1){
-                        if(CheckLogin.isLogin()){
+                        int confirm = JOptionPane.showConfirmDialog(Main.getFrames()[0], "Ban co muon dang xuat khong?");
+                        if(confirm == JOptionPane.YES_OPTION){
                             CheckLogin.loginModel = null;
+                            new LoginFrame().setVisible(true);
+                            Main.getFrames()[0].dispose();
                         }
-                        new LoginFrame().setVisible(true);
-                        Main.getFrames()[0].dispose();
                         
                     }
                 } else if (menuIndex == 4) {

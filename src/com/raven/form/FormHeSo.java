@@ -12,6 +12,7 @@ import com.nhomsau.service.IMonService;
 import com.nhomsau.service.impl.DauDiemService;
 import com.nhomsau.service.impl.DauDiem_MonService;
 import com.nhomsau.service.impl.MonService;
+import com.nhomsau.util.MessageInfo;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -193,7 +194,9 @@ public class FormHeSo extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        panelTransparent1.setOpaque(true);
 
         tblDaCo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -244,6 +247,9 @@ public class FormHeSo extends javax.swing.JFrame {
                     .addComponent(lbTong))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
+
+        panelTransparent4.setEnabled(false);
+        panelTransparent4.setOpaque(true);
 
         tblChuaCo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -357,6 +363,7 @@ public class FormHeSo extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         int row = tblChuaCo.getSelectedRow();
+        if(row != -1){
         String ten = (String) tblChuaCo.getValueAt(row, 0);
         String id = iDauDiem_MonService.getIdDauDiem(ten);
         int heSo = 0;
@@ -373,6 +380,7 @@ public class FormHeSo extends javax.swing.JFrame {
             iDauDiem_MonService.insert(dd);
         }
         setIdMon(idMon);
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -390,37 +398,6 @@ public class FormHeSo extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormHeSo().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button btnThem;

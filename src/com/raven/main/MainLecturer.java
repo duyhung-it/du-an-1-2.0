@@ -1,6 +1,7 @@
 package com.raven.main;
 
 import com.nhomsau.util.CheckLogin;
+import com.nhomsau.viewmodel.LoginModel;
 import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.component.MenuLecturer;
@@ -75,6 +76,12 @@ public class MainLecturer extends javax.swing.JFrame {
                     if (subMenuIndex == 0) {
                         main.showForm(new FormThongTinSv());
                     } else if (subMenuIndex == 1) {
+                        int confirm = JOptionPane.showConfirmDialog(MainLecturer.getFrames()[0], "Ban co muon dang xuat khong?");
+                        if(confirm == JOptionPane.YES_OPTION){
+                            CheckLogin.loginModel = null;
+                            new LoginFrame().setVisible(true);
+                            MainLecturer.getFrames()[0].dispose();
+                        }
                     }
                 }else if (menuIndex == 3) {
                     int confirm = JOptionPane.showConfirmDialog(bg, "Ban co chac chan muon thoat ?");
