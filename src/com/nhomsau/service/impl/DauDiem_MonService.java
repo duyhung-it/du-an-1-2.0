@@ -47,4 +47,9 @@ public class DauDiem_MonService implements IDauDiem_MonService {
         return iDauDiemMonRepository.getIdDauDiem(ten);
     }
 
+    @Override
+    public void update(DauDiemMon dm) {
+        iDauDiemMonRepository.update(dm);
+    }
+
 }
