@@ -151,4 +151,23 @@ public class MonRepository implements IMonRepository {
         }
         return ten;
     }
+
+    @Override
+    public List<QuanLyMon> getMonTheoGV(String idNganh, String idKy, String idGV) {
+        String sql = "select Mon.*\n"
+                +" From Users join Lop on Users.Id = Lop.IdGiaoVien"
+                +" join Mon on Lop.IdMon = Mon.Id"
+                +" join Ky_Mon on Mon.Id = Ky_Mon.IdMon"
+                +" where Users.IdNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
+        List<QuanLyMon> listResult = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh, idKy,idGV);
+            while (rs.next()) {
+                listResult.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResult;
+    }
 }

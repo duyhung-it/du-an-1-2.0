@@ -24,14 +24,10 @@ import com.nhomsau.service.impl.ManageSubjectService;
 import com.nhomsau.service.impl.MonService;
 import com.nhomsau.service.impl.NganhService;
 import com.nhomsau.service.impl.SinhVienService;
-import com.nhomsau.viewmodel.ManageMajor;
-import com.nhomsau.viewmodel.ManageSemester;
-import com.nhomsau.viewmodel.ManageSubject;
 import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.Statistical;
-import com.raven.form.ThongKeDiemPanel;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.io.File;
@@ -42,11 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import jdk.dynalink.beans.StaticClass;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -266,6 +260,7 @@ public class Form_Statistical extends javax.swing.JPanel {
         pnlBieuDoPass = new com.raven.swing.PanelTransparent();
 
         panelTransparent2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelTransparent2.setOpaque(true);
 
         cbbMajor.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -346,6 +341,7 @@ public class Form_Statistical extends javax.swing.JPanel {
         pnlTrDaTa.setLayout(new java.awt.CardLayout());
 
         panelTransparent1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelTransparent1.setOpaque(true);
 
         panelTransparent4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -465,7 +461,10 @@ public class Form_Statistical extends javax.swing.JPanel {
             }
         });
 
+<<<<<<< HEAD
         jLabel3.setText("Kỳ học");
+=======
+>>>>>>> f44d3ada64fe8928ad415ea8a403167f0d93b237
         xuatfileExec.setText("Xuất file");
         xuatfileExec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -844,6 +843,7 @@ public class Form_Statistical extends javax.swing.JPanel {
                 }
                 tblModel.setRowCount(0);
                 for (Statistical st : list) {
+
                     tblModel.addRow(new Object[] { st.getCode(),
                             st.getFullname(),
                             st.getClasscode() + " - " + st.getClassname(),

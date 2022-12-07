@@ -78,23 +78,22 @@ public class Main extends javax.swing.JFrame {
                     } else if (subMenuIndex == 1) {
                         main.showForm(new Form_MonHoc());
                     } else if (subMenuIndex == 2) {
-                        main.showForm(new Form_Mon_DauDiem());
-                    } else if (subMenuIndex == 3) {
                         main.showForm(new FormNganh());
-                    } else if(subMenuIndex == 4){
+                    } else if(subMenuIndex == 3){
                         main.showForm(new Form_Lecturers());
-                    } else if(subMenuIndex == 5){
+                    } else if(subMenuIndex == 4){
                         main.showForm(new LopHocPanel());
                     }
                 } else if(menuIndex == 3){
                     if(subMenuIndex == 0){
                         
                     }else if(subMenuIndex == 1){
-                        if(CheckLogin.isLogin()){
+                        int confirm = JOptionPane.showConfirmDialog(Main.getFrames()[0], "Ban co muon dang xuat khong?");
+                        if(confirm == JOptionPane.YES_OPTION){
                             CheckLogin.loginModel = null;
+                            new LoginFrame().setVisible(true);
+                            Main.getFrames()[0].dispose();
                         }
-                        new LoginFrame().setVisible(true);
-                        Main.getFrames()[0].dispose();
                         
                     }
                 } else if (menuIndex == 4) {

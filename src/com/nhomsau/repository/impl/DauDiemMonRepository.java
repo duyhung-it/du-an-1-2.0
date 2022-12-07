@@ -23,7 +23,7 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
     @Override
     public void insert(DauDiemMon dm) {
         String sql = "Insert into DauDiem_Mon values (?,?,?)";
-        DBConnection.ExcuteDungna(sql, dm.getIdDauDiem(),dm.getIdMon(),dm.getHeSo());
+        DBConnection.ExcuteDungna(sql, dm.getIdDauDiem(), dm.getIdMon(), dm.getHeSo());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
         String delete_sql = "delete from DauDiem_Mon where idDauDiem = ? and idMon = ?";
         dBConnection.ExcuteDungna(delete_sql, idDauDiem, idMon);
     }
-    
+
     DBConnection dBConnection;
     final String Select_Heso_SQL = "select HeSo\n"
             + "from DauDiem_Mon\n"
@@ -40,12 +40,12 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
     public DauDiemMonRepository() {
         dBConnection = new DBConnection();
     }
-    
-    public float getHeSo(String idDauDiem, String idMon){
+
+    public float getHeSo(String idDauDiem, String idMon) {
         float heSo = 0;
         try {
-            ResultSet rs = dBConnection.getDataFromQuery(Select_Heso_SQL, idDauDiem, idMon);   
-            while (rs.next()) { 
+            ResultSet rs = dBConnection.getDataFromQuery(Select_Heso_SQL, idDauDiem, idMon);
+            while (rs.next()) {
                 heSo = rs.getFloat("HeSo");
             }
         } catch (Exception e) {
@@ -56,15 +56,15 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
 
     @Override
     public List<DauDiemMon> findAll() {
-        String select_sql  = "select * from DauDiem_Mon join mon on DauDiem_Mon.IdMon = Mon.id";
+        String select_sql = "select * from DauDiem_Mon join mon on DauDiem_Mon.IdMon = Mon.id";
         List<DauDiemMon> dsDauDiemMon = new ArrayList<>();
         try {
             ResultSet rs = dBConnection.getDataFromQuery(select_sql);
-            while(rs.next()){
+            while (rs.next()) {
                 String idMon = rs.getString("IdMon");
                 String idDauDiem = rs.getString("IdDauDiem");
                 int heSo = rs.getInt("HeSo");
-                
+
                 DauDiemMon dauDiemMon = new DauDiemMon(idDauDiem, idMon, heSo);
                 dsDauDiemMon.add(dauDiemMon);
             }
@@ -72,5 +72,40 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
             Logger.getLogger(DauDiemMonRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dsDauDiemMon;
+    }
+
+    @Override
+    public List<DauDiemMon> getAllDauDiem(String id) {
+        String sql = "select * from DauDiem_Mon where idMon = ?";
+        List<DauDiemMon> dsDauDiem = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, id);
+            while (rs.next()) {
+                String idDauDiem = rs.getString("IdDauDiem");
+                String idMon = rs.getString("IdMon");
+                int heSo = rs.getInt("HeSo");
+                DauDiemMon dd = new DauDiemMon(idDauDiem, idMon, heSo);
+                dsDauDiem.add(dd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DauDiemMonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsDauDiem;
+    }
+
+    @Override
+    public String getIdDauDiem(String ten) {
+        String sql = "select id from daudiem where tenDauDiem = ?";
+
+        try {
+            ResultSet rs = dBConnection.getDataFromQuery(sql, ten);
+            if (rs.next()) {
+                String idDauDiem = rs.getString("id");
+                return idDauDiem;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DauDiemMonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

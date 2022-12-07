@@ -1,7 +1,7 @@
 package com.raven.main;
 
-
 import com.nhomsau.util.CheckLogin;
+import com.nhomsau.viewmodel.LoginModel;
 import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.component.MenuLecturer;
@@ -9,10 +9,14 @@ import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
+import com.raven.form.FormThongTinSv;
 import com.raven.form.Form_DanhSachSinhVien;
 import com.raven.form.Form_Diem;
+import com.raven.form.Form_GuiEmail;
 import com.raven.form.Form_Home;
+import com.raven.form.LoginFrame;
 import com.raven.form.MainForm;
+import com.raven.form.ThongTinSinhVien;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
@@ -66,13 +70,20 @@ public class MainLecturer extends javax.swing.JFrame {
                             Logger.getLogger(MainLecturer.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                }else if(menuIndex == 1){
+                } else if (menuIndex == 1) {
+                    main.showForm(new Form_GuiEmail());
+                }else if(menuIndex == 2){
                     if (subMenuIndex == 0) {
-                        
+                        main.showForm(new FormThongTinSv());
                     } else if (subMenuIndex == 1) {
-                        
+                        int confirm = JOptionPane.showConfirmDialog(MainLecturer.getFrames()[0], "Ban co muon dang xuat khong?");
+                        if(confirm == JOptionPane.YES_OPTION){
+                            CheckLogin.loginModel = null;
+                            new LoginFrame().setVisible(true);
+                            MainLecturer.getFrames()[0].dispose();
+                        }
                     }
-                }else if (menuIndex == 2) {
+                }else if (menuIndex == 3) {
                     int confirm = JOptionPane.showConfirmDialog(bg, "Ban co chac chan muon thoat ?");
                     if(confirm == JOptionPane.YES_OPTION)
                     System.exit(0);
@@ -93,8 +104,7 @@ public class MainLecturer extends javax.swing.JFrame {
                 popup.setVisible(true);
             }
         });
-        menu.initMenuItem()    
-        ;
+        menu.initMenuItem();
         bg.add(menu, "w 230!, spany 2");    // Span Y 2cell
         bg.add(header, "h 50!, wrap");
         bg.add(main, "w 100%, h 100%");
@@ -140,7 +150,7 @@ public class MainLecturer extends javax.swing.JFrame {
     private void showMessage(String message) {
         Message obj = new Message(Main.getFrames()[0], true);
         obj.showMessage(message);
-    }
+    }   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

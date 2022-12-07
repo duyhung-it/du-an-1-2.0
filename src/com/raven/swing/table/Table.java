@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 
 public class Table extends JTable {
 
@@ -61,7 +62,7 @@ public class Table extends JTable {
 //                    return cell;
                 if (o instanceof TrangThai) {
                     JLabel lblTrangThai = new JLabel(((TrangThai) o).getValue());
-                    if (lblTrangThai.getText().equalsIgnoreCase("Passed")) {
+                    if (lblTrangThai.getText().equalsIgnoreCase("Passed") ) {
                         lblTrangThai.setForeground(Color.GREEN);
                     } else {
                         lblTrangThai.setForeground(Color.RED);
@@ -72,6 +73,13 @@ public class Table extends JTable {
                         lblTrangThai.setBackground(Color.WHITE);
                     }
                     return lblTrangThai;
+                }else if(o instanceof XSSFCell) {
+                    Component com =  super.getTableCellRendererComponent(jtable, o, selected, focus, i, i1);
+                    com.setBackground(Color.YELLOW);
+                    setBorder(noFocusBorder);
+                    com.setForeground(new Color(102, 102, 102));
+                    
+                    return com;
                 } else {
                     if (o instanceof Double) {
                         DecimalFormat formatter = new DecimalFormat("#0.00");

@@ -14,6 +14,7 @@ import java.util.List;
 public interface IMonService {
     List<QuanLyMon> findAll();
     List<QuanLyMon> getMonTheoNganh(String idNganh,String idKy);
+    List<QuanLyMon> getMonTheoGV(String idNganh,String idKy,String idGV); 
     QuanLyMon findOne(String id);
     List<QuanLyMon> findMon(String idky);
     void insert(QuanLyMon mon);

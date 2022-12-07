@@ -23,6 +23,7 @@ import com.nhomsau.viewmodel.QuanLyLop;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Point;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -34,6 +35,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -112,23 +114,15 @@ public class Form_Diem extends javax.swing.JPanel {
 
         QuanLyLop lop = (QuanLyLop) cbxLop.getSelectedItem();
 
-        for (int i = 4; i < column - 1; i++) {
+        for (int i = 3; i < column - 1; i++) {
             String dauDiem = tblDiem.getColumnName(i);
             String idDauDiem = dauDiemRepository.getIdDauDiem(dauDiem);
             for (int j = 0; j < row; j++) {
                 String maSV = tblDiem.getValueAt(j, 1).toString();
                 String idSV = sinhVienRepository.getIdSV(maSV);
 
-                Object ghiChu = tblDiem.getValueAt(j, 3);
-                String ghiChuString = null;
-                if (ghiChu != null) {
-                    ghiChuString = ghiChu.toString();
-                } else {
-                    ghiChuString = "";
-                }
-
                 Object diemOb = tblDiem.getValueAt(j, i);
-
+                System.out.println(tblDiem.getValueAt(j, 4));
                 String diemString = null;
                 if (diemOb == null) {
                     diemString = "0";
@@ -453,20 +447,30 @@ public class Form_Diem extends javax.swing.JPanel {
 
                 for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
                     XSSFRow excelRow = excelSheet.getRow(row);
-                    for (int column = 3; column < excelRow.getLastCellNum(); column++) {
+                    for (int column = 3; column < excelRow.getLastCellNum() - 1; column++) {
                         XSSFCell excelCell = excelRow.getCell(column);
 
                         Object diemOb = tblDiem.getValueAt(row - 1, column);
+                        
 //                        String diemString = null;
 //                        if (diemOb == null) {
 //                            diemString = "0";
 //                        } else {
 //                            diemString = diemOb.toString();
 //                        }
-
-                        if (excelCell != diemOb) {
-                            tblDiem.setValueAt(excelCell, row - 1, column);
+                        
+                        if(excelCell != null){
+                            System.out.println(diemOb);
+                            System.out.println(excelCell.toString());
+                            if(diemOb != null){
+                            if(!Objects.equals(Double.valueOf(diemOb + ""), Double.valueOf(excelCell.toString()))){
+                                tblDiem.setValueAt(excelCell, row - 1, column);
+                            }
+                            }else{
+                                tblDiem.setValueAt(excelCell, row - 1, column);
+                            }
                         }
+                        
                     }
                 }
             } catch (FileNotFoundException ex) {
@@ -490,7 +494,7 @@ public class Form_Diem extends javax.swing.JPanel {
                 Workbook workbook = new SXSSFWorkbook();
                 Sheet sheet = workbook.createSheet("Bang Diem");
                 Row rowCol = sheet.createRow(0);
-                for (int i = 0; i < tblDiem.getColumnCount(); i++) {
+                for (int i = 0; i < tblDiem.getColumnCount() - 1; i++) {
                     Cell cell = rowCol.createCell(i);
                     cell.setCellValue(tblDiem.getColumnName(i));
 
@@ -507,6 +511,7 @@ public class Form_Diem extends javax.swing.JPanel {
                 fos = new FileOutputStream(new File(saveFile.toString()));
                 workbook.write(fos);
                 workbook.close();
+                this.openFile(saveFile);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -525,7 +530,18 @@ public class Form_Diem extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "That Bai");
         }
     }//GEN-LAST:event_btnExportActionPerformed
-
+    private void openFile(File file){
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(ThongKeDiemPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void tblDiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDiemMouseClicked
         // TODO add your handling code here:
         Point p = evt.getPoint();

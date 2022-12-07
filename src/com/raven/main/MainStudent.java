@@ -13,6 +13,7 @@ import com.raven.form.FormBangDiemTheoKy;
 import com.raven.form.FormLichSuHoc;
 import com.raven.form.FormThongTinSv;
 import com.raven.form.Form_Home;
+import com.raven.form.LoginFrame;
 import com.raven.form.MainForm;
 import com.raven.swing.MenuItem;
 import com.raven.swing.PopupMenu;
@@ -21,6 +22,7 @@ import com.raven.swing.icon.IconFontSwing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -71,6 +73,13 @@ public class MainStudent extends javax.swing.JFrame {
                     if (menuIndex == 1) {
                         if (subMenuIndex == 0) {
                             main.showForm(new FormThongTinSv());
+                        }else if(subMenuIndex == 1){
+                            int confirm = JOptionPane.showConfirmDialog(MainStudent.getFrames()[0], "Ban co muon dang xuat khong?");
+                        if(confirm == JOptionPane.YES_OPTION){
+                            CheckLogin.loginModel = null;
+                            new LoginFrame().setVisible(true);
+                            MainStudent.getFrames()[0].dispose();
+                        }
                         }
                     }
 //                } else {

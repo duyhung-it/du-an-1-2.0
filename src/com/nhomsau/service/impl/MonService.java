@@ -65,5 +65,10 @@ public class MonService implements IMonService {
     public String getTenMon(String id) {
         return repository.getTenMon(id);
     }
+
+    @Override
+    public List<QuanLyMon> getMonTheoGV(String idNganh, String idKy, String idGV) {
+        return this.repository.getMonTheoGV(idNganh, idKy, idGV);
+    }
     
 }
