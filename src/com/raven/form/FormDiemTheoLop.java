@@ -29,6 +29,7 @@ import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.TienDoDiemModel;
 import java.awt.CardLayout;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -51,6 +52,7 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
     private IDauDiemService dauDiemService;
     private SinhVienService sinhVienService;
     DefaultTableModel model;
+    List<TienDoDiemModel> list;
     public FormDiemTheoLop() {
         initComponents();
         tblDiemTheoLop.fixTable(jScrollPane1);
@@ -63,6 +65,7 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         dauDiemService = new DauDiemService();
         sinhVienService = new SinhVienService();
         model = (DefaultTableModel) tblDiemTheoLop.getModel();
+        list = new ArrayList<>();
         initCombox();
         CardLayout layout = (CardLayout) pnLopChiTiet.getLayout();
         layout.last(pnLopChiTiet);
@@ -163,9 +166,9 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         listDauDiem = new javax.swing.JList<>();
         panelTransparent6 = new com.raven.swing.PanelTransparent();
-        radioButtonCustom1 = new com.raven.swing.radio_button.RadioButtonCustom();
-        radioButtonCustom2 = new com.raven.swing.radio_button.RadioButtonCustom();
-        radioButtonCustom3 = new com.raven.swing.radio_button.RadioButtonCustom();
+        rdoAll = new com.raven.swing.radio_button.RadioButtonCustom();
+        rdoHT = new com.raven.swing.radio_button.RadioButtonCustom();
+        rdoCHT = new com.raven.swing.radio_button.RadioButtonCustom();
         button2 = new com.raven.swing.button.Button();
 
         panelTransparent1.setOpaque(true);
@@ -353,14 +356,29 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(listDauDiem);
 
-        buttonGroup1.add(radioButtonCustom1);
-        radioButtonCustom1.setText("Tất cả");
+        buttonGroup1.add(rdoAll);
+        rdoAll.setText("Tất cả");
+        rdoAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdoAllMouseClicked(evt);
+            }
+        });
 
-        buttonGroup1.add(radioButtonCustom2);
-        radioButtonCustom2.setText("Hoàn thành");
+        buttonGroup1.add(rdoHT);
+        rdoHT.setText("Hoàn thành");
+        rdoHT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdoHTMouseClicked(evt);
+            }
+        });
 
-        buttonGroup1.add(radioButtonCustom3);
-        radioButtonCustom3.setText("Chưa hoàn thành");
+        buttonGroup1.add(rdoCHT);
+        rdoCHT.setText("Chưa hoàn thành");
+        rdoCHT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdoCHTMouseClicked(evt);
+            }
+        });
 
         button2.setText("Xem chi tiết");
         button2.addActionListener(new java.awt.event.ActionListener() {
@@ -377,11 +395,11 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
                 .addGap(168, 168, 168)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rdoAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rdoHT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(radioButtonCustom3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rdoCHT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
         );
         panelTransparent6Layout.setVerticalGroup(
@@ -389,9 +407,9 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             .addGroup(panelTransparent6Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(panelTransparent6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radioButtonCustom3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rdoAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rdoHT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rdoCHT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -522,11 +540,32 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
         String idDauDiem = this.dauDiemService.getIdDauDiem(tenDauDiem);
         if(idDauDiem != null){
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
-            List<TienDoDiemModel> list = this.lopService.thongKeTienDoTheoLop(idDauDiem, mon.getId(), null);
-            loadTableTienDo(list);
+            list = this.lopService.thongKeTienDoTheoLop(idDauDiem, mon.getId(), null);
+            loadTableTienDo(list,null);
         }
     }//GEN-LAST:event_listDauDiemMouseClicked
-    private void loadTableTienDo(List<TienDoDiemModel> list){
+
+    private void rdoAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoAllMouseClicked
+        // TODO add your handling code here:
+        if(rdoAll.isSelected()){
+            loadTableTienDo(list, null);
+        }
+    }//GEN-LAST:event_rdoAllMouseClicked
+
+    private void rdoHTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoHTMouseClicked
+        // TODO add your handling code here:
+        if(rdoHT.isSelected() ){
+            loadTableTienDo(list, "HT");
+        }
+    }//GEN-LAST:event_rdoHTMouseClicked
+
+    private void rdoCHTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoCHTMouseClicked
+        // TODO add your handling code here:
+        if(rdoCHT.isSelected()){
+            loadTableTienDo(list, "CHT");
+        }
+    }//GEN-LAST:event_rdoCHTMouseClicked
+    private void loadTableTienDo(List<TienDoDiemModel> list,String trangThai){
         DefaultTableModel model = (DefaultTableModel) tblThongKe.getModel();
         model.setNumRows(0);
         for(TienDoDiemModel m : list){
@@ -536,7 +575,14 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
             Object[] object = new Object[]{
                 m.getMaLop(),m.getTenLop(),m.getGiangVien(),m.getNgayNhap(),"",tienDo,m.getTrangThai(soSinhVien)
             };
-            tblThongKe.addRow(object);
+            if(trangThai != null){
+                if(trangThai.equals(object[6].toString())){
+                    tblThongKe.addRow(object);
+                }
+            }else{
+                tblThongKe.addRow(object);
+            }
+            
         }
     }
 
@@ -564,9 +610,9 @@ public class FormDiemTheoLop extends javax.swing.JPanel {
     private com.raven.swing.PanelTransparent panelTransparent7;
     private com.raven.swing.PanelTransparent panelTransparent8;
     private com.raven.swing.PanelTransparent pnLopChiTiet;
-    private com.raven.swing.radio_button.RadioButtonCustom radioButtonCustom1;
-    private com.raven.swing.radio_button.RadioButtonCustom radioButtonCustom2;
-    private com.raven.swing.radio_button.RadioButtonCustom radioButtonCustom3;
+    private com.raven.swing.radio_button.RadioButtonCustom rdoAll;
+    private com.raven.swing.radio_button.RadioButtonCustom rdoCHT;
+    private com.raven.swing.radio_button.RadioButtonCustom rdoHT;
     private com.raven.swing.table.Table tblDiemTheoLop;
     private com.raven.swing.table.Table tblThongKe;
     // End of variables declaration//GEN-END:variables

@@ -437,11 +437,11 @@
                           <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
                           <Component id="button2" min="-2" pref="106" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
+                          <Component id="rdoAll" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="radioButtonCustom2" min="-2" max="-2" attributes="0"/>
+                          <Component id="rdoHT" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="radioButtonCustom3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rdoCHT" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -451,9 +451,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="radioButtonCustom1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="radioButtonCustom2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="radioButtonCustom3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rdoAll" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rdoHT" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rdoCHT" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="button2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -462,29 +462,38 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="radioButtonCustom1">
+                <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="rdoAll">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="T&#x1ea5;t c&#x1ea3;"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoAllMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="radioButtonCustom2">
+                <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="rdoHT">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ho&#xe0;n th&#xe0;nh"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoHTMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="radioButtonCustom3">
+                <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="rdoCHT">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ch&#x1b0;a ho&#xe0;n th&#xe0;nh"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoCHTMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="com.raven.swing.button.Button" name="button2">
                   <Properties>

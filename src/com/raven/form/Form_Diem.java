@@ -149,9 +149,7 @@ public class Form_Diem extends javax.swing.JPanel {
                     diem.setIdMonHoc(getIdMon());
                     diem.setIdDauDiem(idDauDiem);
                     diem.setDiem(diemTbl);
-                    System.out.println(diem.getDiem());
                     int checkSV = diemRepository.checkSV(idSV, lop.getIdMon(), idDauDiem);
-                    System.out.println(checkSV);
                     if (checkSV == 1) {
                         diemRepository.updateDiem(diem);
                     } else {
