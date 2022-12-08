@@ -54,7 +54,6 @@ public class FormHeSo extends javax.swing.JFrame {
         iMonService = new MonService();
         iDauDiemService = new DauDiemService();
         iDauDiem_MonService = new DauDiem_MonService();
-
         txtHeSo.setLabelText("Hệ số");
     }
 
