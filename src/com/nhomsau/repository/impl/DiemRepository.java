@@ -106,7 +106,7 @@ public class DiemRepository implements IDiemRepository {
     }
 
     public float getDiem(String idSV, String idMonHoc, String idDauDiem) {
-        float diem = 0;
+        float diem = -1;
         try {
             ResultSet rs = dBConnection.getDataFromQuery(Select_Diem, idSV, idMonHoc, idDauDiem);
             while (rs.next()) {

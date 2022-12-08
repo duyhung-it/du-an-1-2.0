@@ -125,7 +125,7 @@ public class Form_Diem extends javax.swing.JPanel {
                 System.out.println(tblDiem.getValueAt(j, 4));
                 String diemString = null;
                 if (diemOb == null) {
-                    diemString = "0";
+                    diemString = Integer.MAX_VALUE + "";
                 } else {
                     diemString = diemOb.toString();
                 }
@@ -133,10 +133,14 @@ public class Form_Diem extends javax.swing.JPanel {
                 float diemTbl = 0;
                 try {
                     diemTbl = Float.valueOf(diemString);
-                    if (diemTbl < 0) {
+                    if(diemTbl == Integer.MAX_VALUE){
+                        continue;
+                    }
+                    if (diemTbl < 0 || diemTbl > 10) {
                         JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm < 0");
                         continue;
                     }
+                    
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm ko phải kiếu số");
                     continue;
