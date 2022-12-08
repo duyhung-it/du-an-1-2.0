@@ -6,6 +6,7 @@ package com.nhomsau.service;
 
 import com.nhomsau.domainmodel.Lop;
 import com.nhomsau.viewmodel.QuanLyLop;
+import com.nhomsau.viewmodel.TienDoDiemModel;
 import java.util.List;
 
 /**
@@ -21,4 +22,5 @@ public interface ILopService {
     QuanLyLop findByMa(String ma);
     List<QuanLyLop> findByTen(String ten);
     List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy);
+    List<TienDoDiemModel> thongKeTienDoTheoLop(String idDauDiem,String idMon,String idLop);
 }

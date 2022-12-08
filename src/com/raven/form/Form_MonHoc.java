@@ -240,6 +240,7 @@ public class Form_MonHoc extends javax.swing.JPanel {
 
     private void tblMonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMonMouseClicked
         // TODO add your handling code here:
+        if(evt.getClickCount() == 2){
         int row = tblMon.getSelectedRow();
         if (row >= 0) {
 
@@ -265,6 +266,7 @@ public class Form_MonHoc extends javax.swing.JPanel {
 //            txtTen.setText(ten);
 //            txtTinChi.setText(tinChi);
 //            txtSoBuoi.setText(buoiHoc);
+        }
         }
     }//GEN-LAST:event_tblMonMouseClicked
 

@@ -244,4 +244,22 @@ public class SinhVienRepository implements ISinhVienRepository {
         }
         return null;
     }
+
+    @Override
+    public int countSinhVienByLop(String maLop) {
+       String sql = "	select count(*) 'SoSinhVien' from Lop\n" +
+                "	join SinhVien_Lop on Lop.Id = SinhVien_Lop.IdLop\n" +
+                "	where MaLop = ? ";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, maLop);
+            int result = -1;
+            while(rs.next()){
+                result = rs.getInt("SoSinhVien");
+            }
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(SinhVienRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return -1;
+    }
 }

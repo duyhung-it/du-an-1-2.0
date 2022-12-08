@@ -9,6 +9,7 @@ import com.nhomsau.repository.ILopRepository;
 import com.nhomsau.repository.impl.LopRepository;
 import com.nhomsau.service.ILopService;
 import com.nhomsau.viewmodel.QuanLyLop;
+import com.nhomsau.viewmodel.TienDoDiemModel;
 import java.util.List;
 
 /**
@@ -60,5 +61,10 @@ public class LopService implements ILopService{
     @Override
     public List<QuanLyLop> findByMon(String idMon,String idNganh,String idKy) {
         return this.repository.findByMon(idMon, idNganh, idKy);
+    }
+
+    @Override
+    public List<TienDoDiemModel> thongKeTienDoTheoLop(String idDauDiem, String idMon, String idLop) {
+        return this.repository.thongKeTienDoTheoLop(idDauDiem, idMon, idLop);
     }
 }
