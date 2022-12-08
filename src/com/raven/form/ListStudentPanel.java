@@ -10,6 +10,7 @@ import com.nhomsau.service.INganhService;
 import com.nhomsau.service.ISinhVienService;
 import com.nhomsau.service.impl.NganhService;
 import com.nhomsau.service.impl.SinhVienService;
+import com.nhomsau.util.Validatetor;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.SinhVienView;
 import com.raven.dialog.Message;
@@ -34,12 +35,13 @@ public class ListStudentPanel extends javax.swing.JPanel {
     DefaultTableModel model;
     private ISinhVienService sinhVienService;
     private INganhService nganhService;
-
+    private Validatetor validate;
     public ListStudentPanel() {
         initComponents();
         model = (DefaultTableModel) tblSinhVien.getModel();
         sinhVienService = new SinhVienService();
         nganhService = new NganhService();
+        validate = new Validatetor();
         initDataTable();
         setOpaque(false);
         tblSinhVien.fixTable(jScrollPane2);
@@ -82,14 +84,29 @@ public class ListStudentPanel extends javax.swing.JPanel {
 
     private SinhVienView validateSinhVien() {
         QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
-        String ma = txtMa.getText();
-        String hoTen = txtTen.getText();
+        String ma = Validatetor.kiemTraRong(txtMa, "Ma khong duoc trong");
+        if(ma == null) return null;
+        
+        String hoTen = Validatetor.kiemTraRong(txtTen, "Ho Ten khong duoc trong");
+        if(hoTen == null) return null;
         String ngaySinh = txtDate.getText();
-        java.sql.Date ngayS = java.sql.Date.valueOf(ngaySinh);
+        java.sql.Date ngayS = null;
+        try{
+         ngayS = java.sql.Date.valueOf(ngaySinh);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ngay Sinh loi du lieu");
+            return null;
+        }
         boolean gioiTinh = cbxGioiTinh.getSelectedItem().toString().equals("Nam") ? true : false;
-        String diaChi = txtDiaChi.getText();
-        String email = txtEmail.getText();
-        String sdt = txtSDT.getText();
+        String diaChi = Validatetor.kiemTraRong(txtDiaChi, "Dia chi khong duoc trong");
+        if(diaChi == null) return null;
+        
+        String email = Validatetor.kiemTraEmail(txtEmail, "Email khong dung dinh dang");
+        if(email == null) return null;
+        
+        String sdt = Validatetor.kiemTraSoDienThoai(txtSDT, "So dien thoai loi du lieu");
+        if(sdt == null) return null;
+        
         SinhVienView sinhVien = new SinhVienView(ma, hoTen, ngayS, diaChi, email, sdt, gioiTinh);
         sinhVien.setIdNganh(nganh.getId());
         return sinhVien;
@@ -283,23 +300,19 @@ public class ListStudentPanel extends javax.swing.JPanel {
         panelTransparent3Layout.setHorizontalGroup(
             panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelTransparent1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelTransparent3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(panelTransparent3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelTransparent2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelTransparent3Layout.setVerticalGroup(
             panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent3Layout.createSequentialGroup()
-                .addContainerGap(301, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelTransparent3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelTransparent2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(287, Short.MAX_VALUE)))
         );
 
         add(panelTransparent3, "card2");
