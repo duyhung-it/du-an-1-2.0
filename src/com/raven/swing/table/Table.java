@@ -62,7 +62,7 @@ public class Table extends JTable {
 //                    return cell;
                 if (o instanceof TrangThai) {
                     JLabel lblTrangThai = new JLabel(((TrangThai) o).getValue());
-                    if (lblTrangThai.getText().equalsIgnoreCase("Passed") ) {
+                    if (lblTrangThai.getText().equalsIgnoreCase("Passed") || lblTrangThai.getText().equalsIgnoreCase("HT")) {
                         lblTrangThai.setForeground(Color.GREEN);
                     } else {
                         lblTrangThai.setForeground(Color.RED);

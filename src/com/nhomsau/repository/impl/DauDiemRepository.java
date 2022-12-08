@@ -74,7 +74,7 @@ public class DauDiemRepository implements IDauDiemRepository {
         }
         return listDauDiems;
     }
-
+    @Override
     public String getIdDauDiem(String tenDauDiem) {
         String idDauDiem = "";
         try {
@@ -180,5 +180,10 @@ public class DauDiemRepository implements IDauDiemRepository {
             Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listResults;
+    }
+
+    @Override
+    public DauDiem findDauDiemByTen(String tenDauDiem) {
+        return null;
     }
 }

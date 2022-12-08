@@ -28,6 +28,7 @@ public class LoginFrame extends javax.swing.JFrame {
      * Creates new form LoginFrame
      */
     private IUserSevice userSevice;
+
     public LoginFrame() {
         initComponents();
         setImageIcon();
@@ -47,6 +48,7 @@ public class LoginFrame extends javax.swing.JFrame {
         Image newImage = image.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
         lblImage.setIcon(new ImageIcon(newImage));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,7 +201,7 @@ public class LoginFrame extends javax.swing.JFrame {
         if (loginModel != null) {
             System.out.println("Oke");
             CheckLogin.loginModel = loginModel;
-            switch(loginModel.getChucVu()){
+            switch (loginModel.getChucVu()) {
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
                         SwingAcrylic.prepareSwing();
@@ -207,21 +209,24 @@ public class LoginFrame extends javax.swing.JFrame {
                         frame.setVisible(true);
                         SwingAcrylic.processFrame(frame);
                     });
+
                     break;
                 case "Giảng Viên":
+
                     java.awt.EventQueue.invokeLater(() -> {
                         SwingAcrylic.prepareSwing();
                         MainLecturer frame = new MainLecturer();
                         frame.setVisible(true);
                         SwingAcrylic.processFrame(frame);
                     });
+
                     break;
                 case "Giáo Vụ":
-                    java.awt.EventQueue.invokeLater(() -> {
-                        SwingAcrylic.prepareSwing();
-                        Main frame = new Main();
-                        frame.setVisible(true);
-                        SwingAcrylic.processFrame(frame);
+                    java.awt.EventQueue.invokeLater(() -> {                   
+                            SwingAcrylic.prepareSwing();
+                            Main frame = new Main();
+                            frame.setVisible(true);
+                            SwingAcrylic.processFrame(frame);
                     });
                     break;
             }
@@ -230,12 +235,9 @@ public class LoginFrame extends javax.swing.JFrame {
             this.showMessage("Dang nhap that bai!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
-    private void showMessage(String message){
+    private void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -250,24 +252,27 @@ public class LoginFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginFrame().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            SwingAcrylic.prepareSwing();
+            LoginFrame frame = new LoginFrame();
+            frame.setVisible(true);
+            SwingAcrylic.processFrame(frame);
         });
     }
-
+    /**
+     * @param args the command line arguments
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button btnCanel;
     private com.raven.swing.button.Button btnLogin;

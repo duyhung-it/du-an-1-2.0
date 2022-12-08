@@ -41,4 +41,9 @@ public class DauDiemService implements IDauDiemService{
     public List<DauDiem> findDauDiemByMon(String idMon, String idNganh) {
         return this.dauDiemRepository.findDauDiemByMon(idMon, idNganh);
     }
+
+    @Override
+    public String getIdDauDiem(String tenDauDiem) {
+        return this.dauDiemRepository.getIdDauDiem(tenDauDiem);
+    }
 }

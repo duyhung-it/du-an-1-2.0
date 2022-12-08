@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+  </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -17,7 +21,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="panelTransparent1" max="32767" attributes="0"/>
-          <Component id="panelTransparent2" min="-2" pref="897" max="-2" attributes="0"/>
+          <Component id="pnLopChiTiet" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -25,13 +29,16 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="panelTransparent1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panelTransparent2" max="32767" attributes="0"/>
+              <Component id="pnLopChiTiet" pref="425" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Container class="com.raven.swing.PanelTransparent" name="panelTransparent1">
+      <Properties>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -43,16 +50,11 @@
                       <Component id="cbxKy" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="cbxLop" pref="275" max="32767" attributes="0"/>
-                      <Component id="cbxMon" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="cbxMon" min="-2" pref="275" max="-2" attributes="0"/>
+                      <Component id="btnLopHoc" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="button2" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
-                      <Component id="button1" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -63,17 +65,13 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cbxNganh" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbxMon" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="button1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cbxKy" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="cbxLop" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="button2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cbxKy" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnLopHoc" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -94,30 +92,17 @@
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbxMonItemStateChanged"/>
           </Events>
         </Component>
-        <Component class="com.raven.swing.button.Button" name="button1">
+        <Component class="com.raven.swing.button.Button" name="btnLopHoc">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#x1edb;p h&#x1ecd;c"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="com.raven.swing.button.Button" name="button2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Xem chi ti&#x1ebf;t"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="com.raven.swing.combobox.Combobox" name="cbxLop">
-          <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbxLopItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLopHocActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="com.raven.swing.PanelTransparent" name="panelTransparent2">
+    <Container class="com.raven.swing.PanelTransparent" name="pnLopChiTiet">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
       <SubComponents>
@@ -141,10 +126,10 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="348" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="323" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="panelTransparent3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -194,7 +179,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                           <Component id="panelTransparent4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="194" max="32767" attributes="0"/>
+                          <EmptySpace pref="263" max="32767" attributes="0"/>
                           <Component id="panelTransparent5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
                       </Group>
@@ -203,12 +188,11 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="panelTransparent4" max="32767" attributes="0"/>
                               <Component id="panelTransparent5" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -280,7 +264,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblSoSinhVien" min="-2" pref="27" max="-2" attributes="0"/>
-                              <EmptySpace pref="27" max="32767" attributes="0"/>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -321,7 +305,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" pref="718" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="787" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -355,10 +339,10 @@
                 <Component class="com.raven.swing.table.Table" name="tblThongKe">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="7" rowCount="4">
+                      <Table columnCount="7" rowCount="0">
                         <Column editable="true" title="M&#xe3; l&#x1edb;p" type="java.lang.Object"/>
                         <Column editable="true" title="T&#xea;n l&#x1edb;p" type="java.lang.Object"/>
-                        <Column editable="true" title="M&#xe3; GV" type="java.lang.Object"/>
+                        <Column editable="true" title="Gi&#xe1;o Vi&#xea;n" type="java.lang.Object"/>
                         <Column editable="true" title="Ng&#xe0;y C&#x1ead;p Nh&#x1ead;t" type="java.lang.Object"/>
                         <Column editable="true" title="D&#x1ef1; Ki&#x1ebf;n" type="java.lang.Object"/>
                         <Column editable="true" title="&#x110;&#xe3; nh&#x1ead;p" type="java.lang.Object"/>
@@ -435,6 +419,9 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listDauDiemMouseClicked"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -447,6 +434,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
+                          <Component id="button2" min="-2" pref="106" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -460,13 +449,14 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="radioButtonCustom1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioButtonCustom2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioButtonCustom3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="button2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="18" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -474,18 +464,35 @@
               <SubComponents>
                 <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="radioButtonCustom1">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="T&#x1ea5;t c&#x1ea3;"/>
                   </Properties>
                 </Component>
                 <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="radioButtonCustom2">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Ho&#xe0;n th&#xe0;nh"/>
                   </Properties>
                 </Component>
                 <Component class="com.raven.swing.radio_button.RadioButtonCustom" name="radioButtonCustom3">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Ch&#x1b0;a ho&#xe0;n th&#xe0;nh"/>
                   </Properties>
+                </Component>
+                <Component class="com.raven.swing.button.Button" name="button2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Xem chi ti&#x1ebf;t"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
