@@ -22,4 +22,5 @@ public interface ISinhVienRepository {
     SinhVienView findByMa(String ma);
     List<SinhVienView> thongKeDanhSachSinhVien(String idKy,String idNganh,String idMon);
     List<SinhVienView> findSinhVienTheoLop(String idLop);
+    int countSinhVienByLop(String maLop);
 }

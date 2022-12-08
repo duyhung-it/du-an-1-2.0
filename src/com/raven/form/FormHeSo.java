@@ -12,6 +12,8 @@ import com.nhomsau.service.IMonService;
 import com.nhomsau.service.impl.DauDiemService;
 import com.nhomsau.service.impl.DauDiem_MonService;
 import com.nhomsau.service.impl.MonService;
+import com.nhomsau.util.MessageInfo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -55,6 +57,8 @@ public class FormHeSo extends javax.swing.JFrame {
         iDauDiemService = new DauDiemService();
         iDauDiem_MonService = new DauDiem_MonService();
         txtHeSo.setLabelText("Hệ số");
+        txtSua.setLabelText("Sửa hệ số");
+        txtTen.setLabelText("Tìm kiếm");
     }
 
     public void loadDaCo() {
@@ -112,13 +116,17 @@ public class FormHeSo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lbTong = new javax.swing.JLabel();
+        txtSua = new com.raven.swing.textfield.TextField();
         panelTransparent4 = new com.raven.swing.PanelTransparent();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblChuaCo = new com.raven.swing.table.Table();
         jLabel4 = new javax.swing.JLabel();
         txtHeSo = new com.raven.swing.textfield.TextField();
+        txtTen = new com.raven.swing.textfield.TextField();
+        btnTimKiem = new com.raven.swing.button.Button();
         btnThem = new com.raven.swing.button.Button();
         btnXoa = new com.raven.swing.button.Button();
+        btnSua = new com.raven.swing.button.Button();
 
         table2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,7 +200,9 @@ public class FormHeSo extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        panelTransparent1.setOpaque(true);
 
         tblDaCo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -205,6 +215,11 @@ public class FormHeSo extends javax.swing.JFrame {
                 "Đầu điểm", "Hệ số"
             }
         ));
+        tblDaCo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDaCoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDaCo);
 
         jLabel1.setText("Đầu điểm đã có");
@@ -220,15 +235,18 @@ public class FormHeSo extends javax.swing.JFrame {
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(lbTong)
-                .addGap(236, 236, 236))
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addComponent(txtSua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbTong)
+                        .addGap(236, 236, 236))
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(16, Short.MAX_VALUE))))
         );
         panelTransparent1Layout.setVerticalGroup(
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,12 +255,21 @@ public class FormHeSo extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(lbTong))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lbTong))
+                        .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
+
+        panelTransparent4.setEnabled(false);
+        panelTransparent4.setOpaque(true);
 
         tblChuaCo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -264,25 +291,42 @@ public class FormHeSo extends javax.swing.JFrame {
 
         jLabel4.setText("Đầu điểm chưa có");
 
+        btnTimKiem.setText("Tỉm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelTransparent4Layout = new javax.swing.GroupLayout(panelTransparent4);
         panelTransparent4.setLayout(panelTransparent4Layout);
         panelTransparent4Layout.setHorizontalGroup(
             panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTransparent4Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelTransparent4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(txtTen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransparent4Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(txtHeSo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtHeSo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTransparent4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTransparent4Layout.setVerticalGroup(
             panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent4Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelTransparent4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelTransparent4Layout.createSequentialGroup()
@@ -307,6 +351,13 @@ public class FormHeSo extends javax.swing.JFrame {
             }
         });
 
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -320,7 +371,9 @@ public class FormHeSo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(156, 156, 156)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139)
+                .addGap(18, 18, 18)
+                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -335,7 +388,9 @@ public class FormHeSo extends javax.swing.JFrame {
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(panelTransparent4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -346,32 +401,30 @@ public class FormHeSo extends javax.swing.JFrame {
 
     private void tblChuaCoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChuaCoMouseClicked
         // TODO add your handling code here:
-        int row = tblChuaCo.getSelectedRow();
-        if (row > 0) {
-            String ten = (String) tblChuaCo.getValueAt(row, 0);
-            String id = iDauDiem_MonService.getIdDauDiem(ten);
-        }
+        txtHeSo.setText("");
     }//GEN-LAST:event_tblChuaCoMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         int row = tblChuaCo.getSelectedRow();
-        String ten = (String) tblChuaCo.getValueAt(row, 0);
-        String id = iDauDiem_MonService.getIdDauDiem(ten);
-        int heSo = 0;
-        try {
-            heSo = Integer.valueOf(txtHeSo.getText());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Hệ số phải là số");
-        }
-        DauDiemMon dd = new DauDiemMon(id, idMon, heSo);
-        if (tinhTongHeSo() + heSo > 100 || tinhTongHeSo() + heSo < 0) {
-            JOptionPane.showMessageDialog(this, "Tổng hệ số của môn không đuược quá 100! Hệ số tối đa có thể thêm là : " + (100 - tinhTongHeSo()));
+        if (row != -1) {
+            String ten = (String) tblChuaCo.getValueAt(row, 0);
+            String id = iDauDiem_MonService.getIdDauDiem(ten);
+            int heSo = 0;
+            try {
+                heSo = Integer.valueOf(txtHeSo.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Hệ số phải là số");
+            }
+            DauDiemMon dd = new DauDiemMon(id, idMon, heSo);
+            if (tinhTongHeSo() + heSo > 100 || tinhTongHeSo() + heSo < 0) {
+                JOptionPane.showMessageDialog(this, "Tổng hệ số của môn không đuược quá 100! Hệ số tối đa có thể thêm là : " + (100 - tinhTongHeSo()));
 
-        } else {
-            iDauDiem_MonService.insert(dd);
+            } else {
+                iDauDiem_MonService.insert(dd);
+            }
+            setIdMon(idMon);
         }
-        setIdMon(idMon);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -386,43 +439,62 @@ public class FormHeSo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnXoaActionPerformed
 
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        int row = tblDaCo.getSelectedRow();
+        if (row > 0) {
+            String tenDauDiem = tblDaCo.getValueAt(row, 0).toString();
+            String idDauDiem = iDauDiem_MonService.getIdDauDiem(tenDauDiem);
+            int heSo = 0;
+            try {
+                heSo = Integer.valueOf(txtSua.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Hệ số phải là số");
+            }
+            DauDiemMon dd = new DauDiemMon(idDauDiem, idMon, heSo);
+            iDauDiem_MonService.update(dd);
+            setIdMon(idMon);
+            txtSua.setText("");
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        List<DauDiem> lstFindDauDiem = new ArrayList<>();
+        String tenDauDiem = txtTen.getText();
+        if (tenDauDiem.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập đầu điểm cần tìm");
+        } else {
+            for (DauDiem dauDiem : dsDauDiem) {
+                if (dauDiem.getTenDauDiem().contains(tenDauDiem)) {
+                    lstFindDauDiem.add(dauDiem);
+                }
+            }
+        }
+        model = (DefaultTableModel) tblChuaCo.getModel();
+        model.setRowCount(0);
+        for (DauDiem dauDiem : lstFindDauDiem) {
+            model.addRow(new Object[]{dauDiem.getTenDauDiem()});
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void tblDaCoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDaCoMouseClicked
+        // TODO add your handling code here:
+        int row = tblDaCo.getSelectedRow();
+        if (row > 0) {
+            String heSoString = tblDaCo.getValueAt(row, 1).toString();
+            txtSua.setText(heSoString);
+        }
+    }//GEN-LAST:event_tblDaCoMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormHeSo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormHeSo().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.swing.button.Button btnSua;
     private com.raven.swing.button.Button btnThem;
+    private com.raven.swing.button.Button btnTimKiem;
     private com.raven.swing.button.Button btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -443,6 +515,8 @@ public class FormHeSo extends javax.swing.JFrame {
     private com.raven.swing.table.Table tblChuaCo;
     private com.raven.swing.table.Table tblDaCo;
     private com.raven.swing.textfield.TextField txtHeSo;
+    private com.raven.swing.textfield.TextField txtSua;
+    private com.raven.swing.textfield.TextField txtTen;
     // End of variables declaration//GEN-END:variables
 
 }

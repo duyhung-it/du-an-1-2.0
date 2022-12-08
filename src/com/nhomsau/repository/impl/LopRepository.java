@@ -9,6 +9,7 @@ import com.nhomsau.mapper.LopMapper;
 import com.nhomsau.repository.ILopRepository;
 import com.nhomsau.util.DBConnection;
 import com.nhomsau.viewmodel.QuanLyLop;
+import com.nhomsau.viewmodel.TienDoDiemModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
@@ -205,5 +206,29 @@ public class LopRepository implements ILopRepository {
             System.out.println("Lôi sql lop");
         }
         return lops;
+    }
+
+    @Override
+    public List<TienDoDiemModel> thongKeTienDoTheoLop(String idDauDiem, String idMon, String idLop) {
+        StringBuilder sql = new StringBuilder("select MaLop,TenLop,Users.HoTen,MAX(Diem.NgayNhap) 'NgayNhap',COUNT(Diem.IdSinhVien) 'DaNhap' from Lop ");
+        sql.append(" join Users on Lop.IdGiaoVien = Users.Id and ChucVu = 2 ");
+        sql.append(" join DauDiem_Mon on DauDiem_Mon.IdMon = Lop.IdMon ");
+        sql.append(" join SinhVien_Lop on Lop.Id = SinhVien_Lop.IdLop ");
+        sql.append(" join Diem on Diem.IdDauDiem = DauDiem_Mon.IdDauDiem and Lop.IdMon = Diem.IdMonHoc and SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
+        sql.append(" where DauDiem_Mon.IdDauDiem = ? and Lop.IdMon = ? ");
+        if(idLop != null){
+            sql.append(" and Lop.Id = ? ");
+        }
+        sql.append(" group by MaLop,TenLop,Users.HoTen ");
+        List<TienDoDiemModel> listResult = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), idDauDiem,idMon);
+            while(rs.next()){
+                listResult.add(mapper.mapTienDoDiem(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LopRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResult;
     }
 }

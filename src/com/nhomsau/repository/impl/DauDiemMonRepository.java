@@ -108,4 +108,10 @@ public class DauDiemMonRepository implements IDauDiemMonRepository {
         }
         return null;
     }
+
+    @Override
+    public void update(DauDiemMon dm) {
+        String sql = "update DauDiem_Mon set HeSo = ? where idDauDiem = ? and idMon = ?";
+        DBConnection.ExcuteDungna(sql, dm.getHeSo(), dm.getIdDauDiem(), dm.getIdMon());
+    }
 }

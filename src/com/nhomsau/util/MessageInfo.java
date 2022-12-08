@@ -4,6 +4,8 @@
  */
 package com.nhomsau.util;
 
+import com.raven.dialog.Message;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,5 +35,9 @@ public class MessageInfo {
             return true;
         }
         return false;
+    }
+    public static void showMessage(JFrame frame,String msg){
+        Message mesage = new Message(frame, true);
+        mesage.showMessage(msg);
     }
 }
