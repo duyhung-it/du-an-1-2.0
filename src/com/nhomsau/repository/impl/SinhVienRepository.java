@@ -262,4 +262,24 @@ public class SinhVienRepository implements ISinhVienRepository {
         }
        return -1;
     }
+
+    @Override
+    public void update1(String matKhau, String id) {
+        String sql = "update users set matkhau=? where id='1BEE6F9D-20BA-4E89-9174-046439ED223B'";
+        DBConnection.ExcuteDungna(sql, matKhau);
+    }
+            @Override
+        public List<SinhVien> findAll3(String id) {
+        String sql = "select * from users where id = ?";
+        List<SinhVien> listResults = new ArrayList<>();
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql,id);
+            while (rs.next()) {
+                listResults.add(mapper.mapRowDomain(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SinhVienRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listResults;
+    }
 }

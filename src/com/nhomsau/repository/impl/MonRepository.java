@@ -228,4 +228,32 @@ public class MonRepository implements IMonRepository {
         }
         return idMon;
     }
+    @Override
+    public int getTinChi1(String idnganh){
+        String sql="select sum(tinchi) as tinchi from mon join mon_nganh on mon.id=mon_nganh.id where idnganh=? ";
+        int a=0;
+        try {
+            ResultSet rs=DBConnection.getDataFromQuery(sql, idnganh);
+            while (rs.next()) {                
+                a=rs.getInt("tinchi");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+    @Override
+    public int getTinChi(String idnganh,String tenmon){
+        String sql="select sum(tinchi) as tinchi from mon join mon_nganh on mon.id=mon_nganh.id where idnganh=? and tenmon=?";
+        int a=0;
+        try {
+            ResultSet rs=DBConnection.getDataFromQuery(sql, idnganh,tenmon);
+            while (rs.next()) {                
+                a=rs.getInt("tinchi");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
 }

@@ -14,4 +14,5 @@ import java.util.List;
 public interface INganhRepository {
      List<QuanLyNganh> findAll1();
      QuanLyNganh findOne(String idNganh);
+     String findTen(String idNganh);
 }
