@@ -9,6 +9,7 @@ import com.raven.component.Menu;
 import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
+import com.raven.form.FormDauDiem;
 import com.raven.form.FormDiemTheoLop;
 import com.raven.form.FormKy;
 import com.raven.form.FormNganh;
@@ -91,6 +92,8 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new Form_Lecturers());
                     } else if(subMenuIndex == 4){
                         main.showForm(new LopHocPanel());
+                    } else if(subMenuIndex == 5){
+                        main.showForm(new FormDauDiem());
                     }
                 } else if(menuIndex == 3){
                     if(subMenuIndex == 0){

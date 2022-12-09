@@ -47,9 +47,9 @@ public class DauDiemRepository implements IDauDiemRepository {
     }
 
     @Override
-    public void delete(DauDiem dd) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void delete(String ma) {
+        String sql = "Delete from DauDiem where MaDauDiem = ?";                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DBConnection.ExcuteDungna(sql, ma);
     }
 
     final String Select_DauDiem = "select DauDiem.Id,MaDauDiem,TenDauDiem\n"
@@ -188,5 +188,11 @@ public class DauDiemRepository implements IDauDiemRepository {
     @Override
     public DauDiem findDauDiemByTen(String tenDauDiem) {
         return null;
+    }
+
+    @Override
+    public void update(DauDiem dd) {
+        String sql = "Update DauDiem set TenDauDiem = ? where MaDauDiem = ?";
+        DBConnection.ExcuteDungna(sql, dd.getTenDauDiem(),dd.getMaDauDiem());
     }
 }

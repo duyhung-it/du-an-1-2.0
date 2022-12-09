@@ -3,18 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.nhomsau.viewmodel;
+import java.io.Serializable;
 import java.sql.Date;
 /**
  *
  * @author Nguyen Duy Hung
  */
-public class LoginModel {
+public class LoginModel implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String idUser;
     private String maUser;
     private String hoTen;
     private boolean gioiTinh;
     
-    private Date dOB;
+    private transient Date dOB;
     private String email;
     private String sDT;
     private String password;

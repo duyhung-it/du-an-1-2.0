@@ -16,7 +16,8 @@ public interface IDauDiemRepository {
     List<DauDiem> findAllDauDiem(String id);
     String getTenDauDiem(String id);
     void insert(DauDiem dd);
-    void delete(DauDiem dd);
+    void delete(String ma);
+    void update(DauDiem dd);
     int countDauDiem(String idMon,String idNganh);
     List<DauDiem> findDauDiemByMon(String idMon,String idNganh);
     DauDiem findDauDiemByTen(String tenDauDiem);
