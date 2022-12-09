@@ -21,4 +21,7 @@ public interface IMonService {
     void update (QuanLyMon mon);
     void delete(String idMon);
     String getTenMon(String id);
+    List<QuanLyMon> getMonDaCo(String idKy,String idNganh); 
+    List<QuanLyMon> getMonChuaCo(String idKy,String idNganh);
+    String getIdMon(String maMon);
 }

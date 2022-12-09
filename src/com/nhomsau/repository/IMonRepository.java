@@ -22,4 +22,7 @@ public interface IMonRepository {
     void update(Mon mon);
     List<QuanLyMon> findMon(String idky);
     String getTenMon(String id);
+    List<QuanLyMon> getMonDaCo(String idKy,String idNganh); 
+    List<QuanLyMon> getMonChuaCo(String idKy,String idNganh); 
+    String getIdMon(String maMon);
 }

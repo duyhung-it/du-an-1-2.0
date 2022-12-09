@@ -47,4 +47,9 @@ public class KyService implements IKyService {
         this.repository.update(k);
     }
 
+    @Override
+    public String getIdKy(String maKy) {
+        return this.repository.getIdKy(maKy);
+    }
+
 }

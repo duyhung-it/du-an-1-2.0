@@ -206,6 +206,21 @@ public class FormKy extends javax.swing.JPanel {
         txtMaKy.setText(tblKy.getValueAt(selectRow, 0).toString());
         txtTenKy.setText(tblKy.getValueAt(selectRow, 1).toString());
         txtNamHoc.setText(tblKy.getValueAt(selectRow, 2).toString());
+        if(selectRow >= 0){
+            String maKy = tblKy.getValueAt(selectRow, 0).toString();
+            String idKy = iKyService.getIdKy(maKy);
+            String tenKy = tblKy.getValueAt(selectRow, 1).toString();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                FormThemMonVaoKy formThemMonVaoKy = new FormThemMonVaoKy();
+                formThemMonVaoKy.setIdKy(idKy);
+                formThemMonVaoKy.loadDaCo();
+                formThemMonVaoKy.loadChuaCo();
+                formThemMonVaoKy.setVisible(true);
+                formThemMonVaoKy.setTitle(tenKy);
+            }
+        });
+        }
     }//GEN-LAST:event_tblKyMouseClicked
 
     private void txtNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamHocActionPerformed
