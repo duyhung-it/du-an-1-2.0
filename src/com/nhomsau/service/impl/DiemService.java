@@ -24,13 +24,13 @@ public class DiemService implements IDiemService {
     }
     
     @Override
-    public List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idNganh,String idKy,Float min,Float max) {
-        return this.repository.thongKeDiemTheoMon(idMon, idKy, idNganh, min, max);
+    public List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idNganh,String idKy,Float min,Float max,Integer top, String sort) {
+        return this.repository.thongKeDiemTheoMon(idMon, idKy, idNganh, min, max,top,sort);
     }
 
     @Override
-    public List<BangDiemTheoMon> thongKeDiemTaCaMon(String idNganh, String idKy,Double min,Double max) {
-        return this.repository.thongKeDiemTatCaMon(idNganh, idKy,min,max);
+    public List<BangDiemTheoMon> thongKeDiemTaCaMon(String idNganh,String idKy,Double min, Double max,Integer top, String sort) {
+        return this.repository.thongKeDiemTatCaMon(idNganh, idKy,min,max,top,sort);
     }
 
     @Override

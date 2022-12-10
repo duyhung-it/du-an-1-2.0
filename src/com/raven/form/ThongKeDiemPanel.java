@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
@@ -22,25 +22,21 @@ import com.nhomsau.viewmodel.QuanLyKy;
 import com.nhomsau.viewmodel.QuanLyMon;
 import com.nhomsau.viewmodel.QuanLyNganh;
 import com.nhomsau.viewmodel.SinhVienView;
-import com.raven.swing.table.Table;
 import java.awt.CardLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -82,10 +78,8 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         sinhVienService = new SinhVienService();
         kyService = new KyService();
         nganhService = new NganhService();
-
         pnTable.setVisible(false);
         table1.fixTable(jScrollPane1);
-
         initData();
     }
 
@@ -108,6 +102,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel = new com.raven.swing.PanelTransparent();
         cbxKy = new com.raven.swing.combobox.Combobox();
         cbxNganh = new com.raven.swing.combobox.Combobox();
@@ -118,8 +113,12 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         txtMax = new com.raven.swing.textfield.TextField();
         btnLoc = new com.raven.swing.button.Button();
-        button1 = new com.raven.swing.button.Button();
+        btnChiTiet = new com.raven.swing.button.Button();
+        txtTop = new com.raven.swing.textfield.TextField();
+        cbxTang = new com.raven.swing.radio_button.RadioButtonCustom();
+        cbxGiam = new com.raven.swing.radio_button.RadioButtonCustom();
         pnTable = new com.raven.swing.PanelTransparent();
+        panelTransparent1 = new com.raven.swing.PanelTransparent();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.raven.swing.table.Table();
         pnChart = new com.raven.swing.PanelTransparent();
@@ -175,12 +174,18 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
             }
         });
 
-        button1.setText("Chi Tiet");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnChiTiet.setText("Chi Tiet");
+        btnChiTiet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnChiTietActionPerformed(evt);
             }
         });
+
+        buttonGroup1.add(cbxTang);
+        cbxTang.setText("Tăng");
+
+        buttonGroup1.add(cbxGiam);
+        cbxGiam.setText("Giảm ");
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
@@ -196,18 +201,27 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                     .addGroup(jPanelLayout.createSequentialGroup()
                         .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cbxMon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtMin, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMin, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMax, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMax, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(cbxTang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(cbxGiam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12))
         );
         jPanelLayout.setVerticalGroup(
@@ -217,7 +231,9 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxKy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxTang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxGiam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,7 +242,8 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -246,7 +263,23 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(table1);
 
-        pnTable.add(jScrollPane1, "card2");
+        javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
+        panelTransparent1.setLayout(panelTransparent1Layout);
+        panelTransparent1Layout.setHorizontalGroup(
+            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransparent1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelTransparent1Layout.setVerticalGroup(
+            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTransparent1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE))
+        );
+
+        pnTable.add(panelTransparent1, "card4");
 
         pnChart.setPreferredSize(new java.awt.Dimension(741, 300));
         pnTable.add(pnChart, "card3");
@@ -263,7 +296,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnTable, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addComponent(pnTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -287,7 +320,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String score = "Score";
         for (double i = 0; i < 10; i += 0.5) {
-            List<BangDiemTheoMon> listBangDiem = this.diemService.thongKeDiemTheoMon(idMon, idNganh, idKy, Float.parseFloat(i + ""), Float.parseFloat((i + 0.5) + ""));
+            List<BangDiemTheoMon> listBangDiem = this.diemService.thongKeDiemTheoMon(idMon, idNganh, idKy, Float.parseFloat(i + ""), Float.parseFloat((i + 0.5) + ""),null,null);
             Double soLuong = Double.valueOf(listBangDiem.size() + "");
             dataset.addValue(soLuong, score, i + "");
         }
@@ -306,7 +339,12 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
     private void cbxKyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxKyItemStateChanged
         // TODO add your handling code here:
         QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
-        QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        QuanLyNganh nganh;
+        if(cbxNganh.getSelectedIndex() != 0){
+            nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        }else {
+            nganh = new QuanLyNganh();
+        }
         if (ky != null && nganh != null) {
             System.out.println(ky.getId());
             System.out.println(nganh.getId());
@@ -325,7 +363,12 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
     private void cbxNganhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNganhItemStateChanged
         // TODO add your handling code here:
         QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
-        QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        QuanLyNganh nganh;
+        if(cbxNganh.getSelectedIndex() != 0){
+            nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        }else {
+            nganh = new QuanLyNganh();
+        }
 
         if (ky != null && nganh != null) {
             List<QuanLyMon> listMons = this.monService.getMonTheoNganh(nganh.getId(), ky.getId());
@@ -337,21 +380,25 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 }
             }
         }
-
     }//GEN-LAST:event_cbxNganhItemStateChanged
 
     private void cbxMonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMonItemStateChanged
         // TODO add your handling code here:
         QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
-        QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        QuanLyNganh nganh;
+        if(cbxNganh.getSelectedIndex() != 0){
+            nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        }else {
+            nganh = new QuanLyNganh();
+        }
         if (cbxMon.getSelectedIndex() == 0) {
             if (ky != null && nganh != null) {
-                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(), null, null);
+                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(), null, null,null,null);
             }
         } else {
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
             if (mon != null) {
-                list = this.diemService.thongKeDiemTheoMon(mon.getId(), nganh.getId(), ky.getId(), null, null);
+                list = this.diemService.thongKeDiemTheoMon(mon.getId(), nganh.getId(), ky.getId(), null, null,null, null);
                 this.initBarChart(nganh, ky, mon);
             }
         }
@@ -427,32 +474,59 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here:
         QuanLyKy ky = (QuanLyKy) cbxKy.getSelectedItem();
-        QuanLyNganh nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
-        float min = Float.valueOf(txtMin.getText());
-        float max = Float.valueOf(txtMax.getText());
+        QuanLyNganh nganh;
+        if(cbxNganh.getSelectedIndex() != 0){
+            nganh = (QuanLyNganh) cbxNganh.getSelectedItem();
+        }else {
+            nganh = new QuanLyNganh();
+        }
+        Float min = null;
+        Float max = null;
+        Integer top = null;
+        String sort = null;
+        if(cbxTang.isSelected()){
+            sort = "ASC";
+        }else if(cbxGiam.isSelected()){
+            sort = "DESC";
+        }
+        try{
+         if(!(txtMin.getText().isEmpty() || txtMax.getText().isBlank())){
+         min = Float.valueOf(txtMin.getText());
+         max = Float.valueOf(txtMax.getText());
+         }
+         if(!txtTop.getText().isBlank())
+         top = Integer.valueOf(txtTop.getText());
+        }catch(NumberFormatException ex){
+            ex.printStackTrace();
+        }
         if (cbxMon.getSelectedIndex() == 0) {
             if (ky != null && nganh != null) {
-                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(), (double) min, (double) max);
+                if(min != null && max != null){
+                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(), (double) min, (double) max,top, sort);
+                }else {
+                list = this.diemService.thongKeDiemTaCaMon(nganh.getId(), ky.getId(),null,null,top, sort);    
+                }
             }
         } else {
             QuanLyMon mon = (QuanLyMon) cbxMon.getSelectedItem();
             if (mon != null) {
-                list = this.diemService.thongKeDiemTheoMon(mon.getId(), nganh.getId(), ky.getId(), min, max);
+                list = this.diemService.thongKeDiemTheoMon(mon.getId(), nganh.getId(), ky.getId(), min, max,top, sort);
             }
         }
         showTable();
     }//GEN-LAST:event_btnLocActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietActionPerformed
         // TODO add your handling code here:
         pnTable.setVisible(false);
         showTable();
         CardLayout layout = (CardLayout) pnTable.getLayout();
         layout.first(pnTable);
         pnTable.setVisible(true);
-    }//GEN-LAST:event_button1ActionPerformed
+    }//GEN-LAST:event_btnChiTietActionPerformed
     private void initData() {
         initCombobox();
+        txtTop.setLabelText("Top");
         txtMax.setLabelText("Max");
         txtMin.setLabelText("Min");
     }
@@ -461,6 +535,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
         List<QuanLyNganh> listNganhs = this.nganhService.findAll1();
         cbxNganh.setLabeText("Ngành Học");
         if (!listNganhs.isEmpty()) {
+            cbxNganh.addItem("Tất Cả");
             for (QuanLyNganh nganh : listNganhs) {
                 cbxNganh.addItem(nganh);
                 System.out.println("oke");
@@ -491,6 +566,7 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                 model.setNumRows(0);
                 for (BangDiemTheoMon b : list) {
                     SinhVienView sinhVienView = this.sinhVienService.findById(b.getIdSv());
+                    
                     Lop lop = this.lopService.findById(b.getIdLop());
                     Object[] obj = new Object[]{
                         table1.getModel().getRowCount() + 1,
@@ -501,7 +577,8 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                         sinhVienView.getMa(),
                         lop.getTenLop(),
                         mon.getTinChi(),
-                        b.getDiemTB()
+                        b.getDiemTB(),
+                        sinhVienView.getNganhHoc()
                     };
                     table1.addRow(obj);
                 }
@@ -524,27 +601,32 @@ public class ThongKeDiemPanel extends javax.swing.JPanel {
                     lop.getTenLop(),
                     mon.getTinChi(),
                     b.getDiemTB(),
-                    b.getTrangThai()
+                    sinhVienView.getNganhHoc()
                 };
                 table1.addRow(obj);
             }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.swing.button.Button btnChiTiet;
     private com.raven.swing.button.Button btnExport;
     private com.raven.swing.button.Button btnLoc;
     private com.raven.swing.button.Button btnPreview;
-    private com.raven.swing.button.Button button1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private com.raven.swing.radio_button.RadioButtonCustom cbxGiam;
     private com.raven.swing.combobox.Combobox cbxKy;
     private com.raven.swing.combobox.Combobox cbxMon;
     private com.raven.swing.combobox.Combobox cbxNganh;
+    private com.raven.swing.radio_button.RadioButtonCustom cbxTang;
     private javax.swing.JLabel jLabel1;
     private com.raven.swing.PanelTransparent jPanel;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.raven.swing.PanelTransparent panelTransparent1;
     private com.raven.swing.PanelTransparent pnChart;
     private com.raven.swing.PanelTransparent pnTable;
     private com.raven.swing.table.Table table1;
     private com.raven.swing.textfield.TextField txtMax;
     private com.raven.swing.textfield.TextField txtMin;
+    private com.raven.swing.textfield.TextField txtTop;
     // End of variables declaration//GEN-END:variables
 }

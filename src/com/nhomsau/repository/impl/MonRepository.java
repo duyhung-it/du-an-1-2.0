@@ -76,12 +76,27 @@ public class MonRepository implements IMonRepository {
 
     @Override
     public List<QuanLyMon> getMonTheoNganh(String idNganh, String idKy) {
-        String sql = "select Mon.* from Mon join Mon_Nganh on Mon.Id = Mon_Nganh.Id\n"
-                + "                   join Ky_Mon on Mon.Id = Ky_Mon.IdMon "
-                + "where Mon_Nganh.IdNganh = ? and Ky_Mon.IdKy = ?";
+        ResultSet rs = null;
+        String sql = "select Mon.* from Mon "
+                + "                   join Ky_Mon on Mon.Id = Ky_Mon.IdMon ";
+        if(idNganh != null){
+            sql += "where Ky_Mon.idNganh = ? and Ky_Mon.IdKy = ?";
+            try {
+                rs = DBConnection.getDataFromQuery(sql, idNganh, idKy);
+            } catch (SQLException ex) {
+                Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else {
+            sql += "where Ky_Mon.IdKy = ?";
+            try {
+                rs = DBConnection.getDataFromQuery(sql, idKy);
+            } catch (SQLException ex) {
+                Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         List<QuanLyMon> listResult = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh, idKy);
+             
             while (rs.next()) {
                 listResult.add(mapper.mapRow(rs));
             }

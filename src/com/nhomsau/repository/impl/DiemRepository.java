@@ -24,8 +24,13 @@ import java.util.logging.Logger;
 public class DiemRepository implements IDiemRepository {
 
     @Override
-    public List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idKy,String idNganh,Float min,Float max) {
-        String sql = "{call proc_diem_trung_binh_theo_mon(?,?,?,?,?)}";
+    public List<BangDiemTheoMon> thongKeDiemTheoMon(String idMon,String idKy,String idNganh,Float min,Float max,Integer top, String sort) {
+        String sql = "";
+        if(idNganh != null){
+            sql = "{call proc_diem_trung_binh_theo_mon_nganh(?,?,?,?,?)}";
+        }else {
+            sql = "{call proc_diem_trung_binh_theo_mon(?,?,?,?,?)}";
+        }
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromProc(sql, idMon,idKy,idNganh,min,max);
@@ -43,26 +48,45 @@ public class DiemRepository implements IDiemRepository {
     }
     
     @Override
-    public List<BangDiemTheoMon> thongKeDiemTatCaMon(String idNganh,String idKy,Double min, Double max){
+    public List<BangDiemTheoMon> thongKeDiemTatCaMon(String idNganh,String idKy,Double min, Double max,Integer top, String sort){
         StringBuilder sql = new StringBuilder();
-        sql.append("select Diem.IdSinhVien  ,SinhVien_Lop.IdLop 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh'");
+        ResultSet rs = null;
+        sql.append("select ");
+        if(top != null) sql.append(" top ").append(top);
+        sql.append(" Diem.IdSinhVien,Lop.Id 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh' ");
         sql.append(" from Diem ");
         sql.append("join DauDiem_Mon on DauDiem_Mon.IdDauDiem = Diem.IdDauDiem and Diem.IdMonHoc = DauDiem_Mon.IdMon ");
         sql.append("join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
-        sql.append("join Users on users.Id = Diem.IdSinhVien ");
+        sql.append(" join Lop on Lop.Id = SinhVien_Lop.IdLop and Lop.IdMon = Diem.IdMonHoc ");
+        sql.append("join Users on users.Id = SinhVien_Lop.IdSinhVien and ChucVu = 1 ");
         sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc ");
-        sql.append(" where users.IdNganh = ? and Ky_Mon.IdKy = ? ");
-        sql.append("group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc");
+        sql.append(" where Ky_Mon.IdKy = ? ");
+        if(idNganh != null){
+            sql.append(" and Users.IdNganh = ?");
+        }
+        sql.append(" group by Diem.IdSinhVien  ,Lop.Id ,Diem.IdMonHoc ");
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {
-            ResultSet rs = null;
+            
             if(max != null && min != null){
             sql.append(" having Sum(Diem.Diem * DauDiem_Mon.HeSo/100) between ? and ?");
-            rs = DBConnection.getDataFromQuery(sql.toString(),idNganh,idKy,min,max);
+            if(sort != null){
+                sql.append(" order by Sum(Diem.Diem * DauDiem_Mon.HeSo/100) ").append(sort);
+            }   
+                if(idNganh != null)
+                rs = DBConnection.getDataFromQuery(sql.toString(),idKy,idNganh,min,max);
+                else
+                rs = DBConnection.getDataFromQuery(sql.toString(),idKy,min,max);
             }
             else{
-                rs = DBConnection.getDataFromQuery(sql.toString(),idNganh,idKy );
+                if(sort != null){
+                sql.append(" order by Sum(Diem.Diem * DauDiem_Mon.HeSo/100) ").append(sort);
             }
+                if(idNganh != null){
+                    rs = DBConnection.getDataFromQuery(sql.toString(),idKy,idNganh );
+                }else rs = DBConnection.getDataFromQuery(sql.toString(),idKy );
+            }
+            
             while(rs.next()){
                 String idSv = rs.getString("IdSinhVien");
                 String idLop = rs.getString("IdLop");
