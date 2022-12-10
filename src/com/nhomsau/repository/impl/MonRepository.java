@@ -155,13 +155,13 @@ public class MonRepository implements IMonRepository {
     @Override
     public List<QuanLyMon> getMonTheoGV(String idNganh, String idKy, String idGV) {
         String sql = "select Mon.*\n"
-                +" From Users join Lop on Users.Id = Lop.IdGiaoVien"
-                +" join Mon on Lop.IdMon = Mon.Id"
-                +" join Ky_Mon on Mon.Id = Ky_Mon.IdMon"
-                +" where Users.IdNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
+                + " From Users join Lop on Users.Id = Lop.IdGiaoVien"
+                + " join Mon on Lop.IdMon = Mon.Id"
+                + " join Ky_Mon on Mon.Id = Ky_Mon.IdMon"
+                + " where Users.IdNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
         List<QuanLyMon> listResult = new ArrayList<>();
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh, idKy,idGV);
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh, idKy, idGV);
             while (rs.next()) {
                 listResult.add(mapper.mapRow(rs));
             }
@@ -169,5 +169,91 @@ public class MonRepository implements IMonRepository {
             Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listResult;
+    }
+
+    @Override
+    public List<QuanLyMon> getMonDaCo(String idKy, String idNganh) {
+        List<QuanLyMon> list = new ArrayList<>();
+        String sql = " select MaMon,TenMon\n"
+                + " from Ky_Mon join Mon on Ky_Mon.IdMon = Mon.Id\n"
+                + " where Ky_Mon.IdKy = ? and Ky_Mon.idNganh = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idKy, idNganh);
+            while (rs.next()) {
+                String maMon = rs.getString("MaMon");
+                String tenMon = rs.getNString("TenMon");
+                QuanLyMon qlm = new QuanLyMon(maMon, tenMon);
+                list.add(qlm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<QuanLyMon> getMonChuaCo(String idKy, String idNganh) {
+        List<QuanLyMon> list = new ArrayList<>();
+        String sql = "select MaMon,TenMon\n"
+                + "from Mon\n"
+                + "EXCEPT\n"
+                + "select MaMon,TenMon\n"
+                + "from Ky_Mon join Mon on Ky_Mon.IdMon = Mon.Id\n"
+                + "where Ky_Mon.IdKy = ? and idNganh = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idKy, idNganh);
+            while (rs.next()) {
+                String maMon = rs.getString("MaMon");
+                String tenMon = rs.getNString("TenMon");
+                QuanLyMon qlm = new QuanLyMon(maMon, tenMon);
+                list.add(qlm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public String getIdMon(String maMon) {
+        String idMon = "";
+        String sql = "select Id from Mon where MaMon = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, maMon);
+            while (rs.next()) {
+                idMon = rs.getString("Id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idMon;
+    }
+    @Override
+    public int getTinChi1(String idnganh){
+        String sql="select sum(tinchi) as tinchi from mon join mon_nganh on mon.id=mon_nganh.id where idnganh=? ";
+        int a=0;
+        try {
+            ResultSet rs=DBConnection.getDataFromQuery(sql, idnganh);
+            while (rs.next()) {                
+                a=rs.getInt("tinchi");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+    @Override
+    public int getTinChi(String idnganh,String tenmon){
+        String sql="select sum(tinchi) as tinchi from mon join mon_nganh on mon.id=mon_nganh.id where idnganh=? and tenmon=?";
+        int a=0;
+        try {
+            ResultSet rs=DBConnection.getDataFromQuery(sql, idnganh,tenmon);
+            while (rs.next()) {                
+                a=rs.getInt("tinchi");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
     }
 }

@@ -270,7 +270,9 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
                     XSSFRow excelRow = excelSheet.getRow(row);
                     XSSFCell excelCell =  excelRow.getCell(0);
                     SinhVienView sv = this.sinhVienService.findByMa(excelCell.toString());
-                    if(sv!= null) list.add(sv);
+                    if(sv!= null){
+                        list.add(sv);
+                    }
                 }
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());

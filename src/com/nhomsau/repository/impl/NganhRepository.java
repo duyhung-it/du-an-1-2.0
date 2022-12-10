@@ -112,5 +112,17 @@ public class NganhRepository implements INganhRepository {
         }
         return null;
     }
-    
+    public String findTen(String idNganh){
+        String sql="select tennganh from nganh where id=?";
+        String tenNganh=null;
+        try {
+            ResultSet rs=DBConnection.getDataFromQuery(sql, idNganh);
+            while (rs.next()) {                
+               tenNganh=rs.getString("tenNganh");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NganhRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenNganh;
+    }
 }

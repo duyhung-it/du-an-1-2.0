@@ -65,5 +65,10 @@ public class SinhVienService implements ISinhVienService {
     public List<SinhVienView> findSinhVienTheoLop(String idLop) {
         return this.repository.findSinhVienTheoLop(idLop);
     }
+
+    @Override
+    public int countSinhVienByLop(String maLop) {
+        return this.repository.countSinhVienByLop(maLop);
+    }
     
 }

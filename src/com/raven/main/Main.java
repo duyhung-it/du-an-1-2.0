@@ -3,11 +3,13 @@ package com.raven.main;
 import com.nhomsau.util.CheckLogin;
 import com.nhomsau.view.Form_Lecturers;
 import com.nhomsau.view.Form_Statistical;
+import com.nhomsau.viewmodel.LoginModel;
 import com.raven.component.Header;
 import com.raven.component.Menu;
 import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
+import com.raven.form.FormDauDiem;
 import com.raven.form.FormDiemTheoLop;
 import com.raven.form.FormKy;
 import com.raven.form.FormNganh;
@@ -42,9 +44,12 @@ public class Main extends javax.swing.JFrame {
     private Header header;
     private MainForm main;
     private Animator animator;
-
+    private LoginModel loginModel;
     public Main() {
         initComponents();
+        if(CheckLogin.isLogin()){
+            loginModel = CheckLogin.loginModel;
+        }
         init();
     }
 
@@ -53,6 +58,10 @@ public class Main extends javax.swing.JFrame {
         bg.setLayout(layout);
         menu = new Menu();
         header = new Header();
+        if (loginModel != null) {
+            System.out.println(loginModel.getHoTen());
+            header.setNameUser(loginModel);
+        }
         main = new MainForm();
         //  Init google icon font
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
@@ -86,6 +95,8 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new Form_Lecturers());
                     } else if(subMenuIndex == 4){
                         main.showForm(new LopHocPanel());
+                    } else if(subMenuIndex == 5){
+                        main.showForm(new FormDauDiem());
                     }
                 } else if(menuIndex == 3){
                     if(subMenuIndex == 0){
@@ -94,8 +105,9 @@ public class Main extends javax.swing.JFrame {
                         int confirm = JOptionPane.showConfirmDialog(Main.getFrames()[0], "Ban co muon dang xuat khong?");
                         if(confirm == JOptionPane.YES_OPTION){
                             CheckLogin.loginModel = null;
-                            new LoginFrame().setVisible(true);
+                            
                             Main.getFrames()[0].dispose();
+                            new LoginFrame().setVisible(true);
                         }
                         
                     }
@@ -235,14 +247,11 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                SwingAcrylic.prepareSwing();
-                Main frame = new Main();
-                frame.setVisible(true);
-                SwingAcrylic.processFrame(frame);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            SwingAcrylic.prepareSwing();
+            Main frame = new Main();
+            frame.setVisible(true);
+            SwingAcrylic.processFrame(frame);
         });
     }
 

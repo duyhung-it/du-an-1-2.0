@@ -58,4 +58,19 @@ public class KyRepository implements IKyRepository{
         String sql = "Update Ky set TenKy = ? ,NamHoc = ? where Id = ?";
         DBConnection.ExcuteDungna(sql,ky.getTenKy(),ky.getNamHoc(),ky.getId());
     }
+
+    @Override
+    public String getIdKy(String maKy) {
+        String idKy = "";
+        String sql = "select Id from Ky where MaKy=?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, maKy);
+            while (rs.next()) {                
+                idKy = rs.getString("Id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idKy;
+    }
 }

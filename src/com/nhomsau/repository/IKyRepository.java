@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface IKyRepository {
     List<QuanLyKy> findAll();
+    String getIdKy(String maKy);
     void insert(Ky ky);
     void delete(String idKy);
     void update(Ky ky);

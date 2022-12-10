@@ -7,6 +7,7 @@ package com.raven.form;
 import com.nhomsau.service.IUserSevice;
 import com.nhomsau.service.impl.UserService;
 import com.nhomsau.util.CheckLogin;
+import com.nhomsau.util.Writor;
 import com.nhomsau.viewmodel.LoginModel;
 import com.raven.dialog.Message;
 import com.raven.main.Main;
@@ -28,17 +29,24 @@ public class LoginFrame extends javax.swing.JFrame {
      * Creates new form LoginFrame
      */
     private IUserSevice userSevice;
+
     public LoginFrame() {
         initComponents();
         setImageIcon();
         initTextField();
         userSevice = new UserService();
     }
-
+    
     private void initTextField() {
         txtUser.setLabelText("Tài khoản");
         txtPassword.setLabelText("Mật khẩu");
         txtPassword.setShowAndHide(true);
+        Writor<LoginModel> writor = new Writor<>();
+        LoginModel model = writor.read();
+        if(model != null){
+            txtUser.setText(model.getEmail());
+            txtPassword.setText(model.getPassword());
+        }
     }
 
     private void setImageIcon() {
@@ -47,6 +55,7 @@ public class LoginFrame extends javax.swing.JFrame {
         Image newImage = image.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
         lblImage.setIcon(new ImageIcon(newImage));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,7 +74,7 @@ public class LoginFrame extends javax.swing.JFrame {
         txtPassword = new com.raven.swing.textfield.PasswordField();
         btnLogin = new com.raven.swing.button.Button();
         btnCanel = new com.raven.swing.button.Button();
-        jCheckBoxCustom1 = new com.raven.swing.checkbox.JCheckBoxCustom();
+        cbxNhoMatKhau = new com.raven.swing.checkbox.JCheckBoxCustom();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,11 +108,10 @@ public class LoginFrame extends javax.swing.JFrame {
 
         txtUser.setBackground(new java.awt.Color(255, 255, 255));
         txtUser.setForeground(new java.awt.Color(0, 0, 0));
+        txtUser.setCaretColor(new java.awt.Color(255, 255, 255));
         txtUser.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtUser.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
-        txtPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtPassword.setLineColor(new java.awt.Color(255, 255, 255));
 
         btnLogin.setText(" Đăng nhập");
@@ -116,9 +124,14 @@ public class LoginFrame extends javax.swing.JFrame {
 
         btnCanel.setText("Thoát");
         btnCanel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnCanel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCanelActionPerformed(evt);
+            }
+        });
 
-        jCheckBoxCustom1.setText("Nhớ mật khẩu");
-        jCheckBoxCustom1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cbxNhoMatKhau.setText("Nhớ mật khẩu");
+        cbxNhoMatKhau.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelTransparent3Layout = new javax.swing.GroupLayout(panelTransparent3);
         panelTransparent3.setLayout(panelTransparent3Layout);
@@ -129,7 +142,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     .addGroup(panelTransparent3Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBoxCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxNhoMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,7 +165,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBoxCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxNhoMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelTransparent3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,9 +210,12 @@ public class LoginFrame extends javax.swing.JFrame {
         System.out.println(password);
         LoginModel loginModel = this.userSevice.verifyLogin(user, password);
         if (loginModel != null) {
-            System.out.println("Oke");
+            if(cbxNhoMatKhau.isSelected()){
+                Writor<LoginModel> writor = new Writor<>();
+                writor.wirte(loginModel);
+            }
             CheckLogin.loginModel = loginModel;
-            switch(loginModel.getChucVu()){
+            switch (loginModel.getChucVu()) {
                 case "Sinh Viên":
                     java.awt.EventQueue.invokeLater(() -> {
                         SwingAcrylic.prepareSwing();
@@ -207,21 +223,24 @@ public class LoginFrame extends javax.swing.JFrame {
                         frame.setVisible(true);
                         SwingAcrylic.processFrame(frame);
                     });
+
                     break;
                 case "Giảng Viên":
+
                     java.awt.EventQueue.invokeLater(() -> {
                         SwingAcrylic.prepareSwing();
                         MainLecturer frame = new MainLecturer();
                         frame.setVisible(true);
                         SwingAcrylic.processFrame(frame);
                     });
+
                     break;
                 case "Giáo Vụ":
-                    java.awt.EventQueue.invokeLater(() -> {
-                        SwingAcrylic.prepareSwing();
-                        Main frame = new Main();
-                        frame.setVisible(true);
-                        SwingAcrylic.processFrame(frame);
+                    java.awt.EventQueue.invokeLater(() -> {                   
+                            SwingAcrylic.prepareSwing();
+                            Main frame = new Main();
+                            frame.setVisible(true);
+                            SwingAcrylic.processFrame(frame);
                     });
                     break;
             }
@@ -230,12 +249,17 @@ public class LoginFrame extends javax.swing.JFrame {
             this.showMessage("Dang nhap that bai!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
-    private void showMessage(String message){
+
+    private void btnCanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanelActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "Ban co muon thoat khong");
+        if(confirm == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnCanelActionPerformed
+    private void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -250,28 +274,31 @@ public class LoginFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginFrame().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            SwingAcrylic.prepareSwing();
+            LoginFrame frame = new LoginFrame();
+            frame.setVisible(true);
+            SwingAcrylic.processFrame(frame);
         });
     }
-
+    /**
+     * @param args the command line arguments
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button btnCanel;
     private com.raven.swing.button.Button btnLogin;
-    private com.raven.swing.checkbox.JCheckBoxCustom jCheckBoxCustom1;
+    private com.raven.swing.checkbox.JCheckBoxCustom cbxNhoMatKhau;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblImage;
     private com.raven.swing.PanelTransparent panelTransparent1;

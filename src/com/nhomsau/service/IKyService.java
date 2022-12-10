@@ -21,4 +21,6 @@ public interface IKyService {
     void delete(String idKy);
 
     void update(QuanLyKy ky);
+    
+    String getIdKy(String maKy);
 }

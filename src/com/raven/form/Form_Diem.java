@@ -120,12 +120,10 @@ public class Form_Diem extends javax.swing.JPanel {
             for (int j = 0; j < row; j++) {
                 String maSV = tblDiem.getValueAt(j, 1).toString();
                 String idSV = sinhVienRepository.getIdSV(maSV);
-
                 Object diemOb = tblDiem.getValueAt(j, i);
-                System.out.println(tblDiem.getValueAt(j, 4));
-                String diemString = null;
+                String diemString = "";
                 if (diemOb == null) {
-                    diemString = "0";
+                    diemString = Integer.MAX_VALUE + "";
                 } else {
                     diemString = diemOb.toString();
                 }
@@ -133,7 +131,8 @@ public class Form_Diem extends javax.swing.JPanel {
                 float diemTbl = 0;
                 try {
                     diemTbl = Float.valueOf(diemString);
-                    if (diemTbl < 0) {
+                    if(diemTbl == Integer.MAX_VALUE) continue;
+                    if (diemTbl < 0 || diemTbl > 10 ) {
                         JOptionPane.showMessageDialog(this, "Không thêm được điểm cho SV có maSV= " + maSV + " do điểm < 0");
                         continue;
                     }
@@ -150,7 +149,6 @@ public class Form_Diem extends javax.swing.JPanel {
                     diem.setIdDauDiem(idDauDiem);
                     diem.setDiem(diemTbl);
                     int checkSV = diemRepository.checkSV(idSV, lop.getIdMon(), idDauDiem);
-
                     if (checkSV == 1) {
                         diemRepository.updateDiem(diem);
                     } else {
@@ -544,9 +542,9 @@ public class Form_Diem extends javax.swing.JPanel {
     }
     private void tblDiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDiemMouseClicked
         // TODO add your handling code here:
-        Point p = evt.getPoint();
-        System.out.println(tblDiem.rowAtPoint(p));
-        System.out.println(tblDiem.columnAtPoint(p));
+//        Point p = evt.getPoint();
+//        System.out.println(tblDiem.rowAtPoint(p));
+//        System.out.println(tblDiem.columnAtPoint(p));
     }//GEN-LAST:event_tblDiemMouseClicked
 
 

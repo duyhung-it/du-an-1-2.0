@@ -6,10 +6,12 @@ package com.nhomsau.mapper;
 
 import com.nhomsau.domainmodel.Lop;
 import com.nhomsau.viewmodel.QuanLyLop;
+import com.nhomsau.viewmodel.TienDoDiemModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Date;
 /**
  *
  * @author Nguyen Duy Hung
@@ -27,6 +29,23 @@ public class LopMapper {
                 } catch (SQLException ex) {
                 Logger.getLogger(LopMapper.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        return null;
+    }
+    public TienDoDiemModel mapTienDoDiem(ResultSet rs){
+        if(rs != null){
+            try {
+                String maLop = rs.getString("MaLop");
+                String tenLop = rs.getString("TenLop");
+                String hoTen = rs.getString("HoTen");
+                Date ngayNhap = rs.getDate("NgayNhap");
+                int soSinhVienDaNhap = rs.getInt("DaNhap");
+                TienDoDiemModel result = new TienDoDiemModel(maLop, tenLop, hoTen, ngayNhap, soSinhVienDaNhap);
+                return result;
+            } catch (SQLException ex) {
+                Logger.getLogger(LopMapper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
         return null;
     }
