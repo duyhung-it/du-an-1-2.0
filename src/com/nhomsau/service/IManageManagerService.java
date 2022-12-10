@@ -21,5 +21,7 @@ public interface IManageManagerService {
     public List<Statistical> findTotalListStudent(String idMon, String idNganh, String idKy, double minScore, double maxScore);
 
     public List<Statistical> findTotalListStudentToMinMax(String idNganh, String idKy, double minScore, double maxScore);
+
+    public List<Statistical> findTongSinhVienHocLuc(String idKy, String idNganh, double minScore, double maxScore);
     
 }

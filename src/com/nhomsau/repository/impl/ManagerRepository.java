@@ -204,4 +204,26 @@ public class ManagerRepository implements IManagerRepository {
         return null;
     }
 
+    @Override
+    public List<Statistical> findTongSinhVienHocLuc(String idNganh, String idKy, double minScore, double maxScore) {
+        
+            String sql = "{call proc_thong_ke_diem_trung_binh_theo_ky(?, ?, ?, ?)}";
+            List<Statistical> list = new ArrayList<>();
+           
+            try {
+                 ResultSet rs = DBConnection.getDataFromProc(sql, idKy, idNganh, minScore, maxScore);
+                while (rs.next()) {
+                    Statistical st = new Statistical(rs.getString(2),
+                            rs.getString(3),
+                            rs.getDouble(6),
+                            rs.getString(4),
+                            rs.getString(5));
+                    list.add(st);
+                }
+                return list;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+    }
 }

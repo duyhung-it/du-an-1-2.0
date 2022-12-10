@@ -26,4 +26,6 @@ public interface IManagerRepository {
 
     public List<Statistical> findTotalListStudent(String idNganh, String idKy, double minScore, double maxScore);
 
+    public List<Statistical> findTongSinhVienHocLuc(String idNganh, String idKy, double minScore, double maxScore);
+
 }

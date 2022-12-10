@@ -85,8 +85,10 @@ public class Statistical {
             return "Trung bình";
         } else if (score <= 7.9) {
             return "Khá";
-        } else {
+        }else if (score <= 8.9) {
             return "Giỏi";
+        } else {
+            return "Xuất sắc";
         }
     }
 

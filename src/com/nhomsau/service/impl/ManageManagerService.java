@@ -74,4 +74,10 @@ public class ManageManagerService implements IManageManagerService {
          return list;
     }
 
+    @Override
+    public List<Statistical> findTongSinhVienHocLuc(String idKy, String idNganh, double minScore, double maxScore) {
+        List<Statistical> list = _manageRepository.findTongSinhVienHocLuc(idNganh,idKy, minScore, maxScore);
+         return list;
+    }
+
 }
