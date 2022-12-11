@@ -173,7 +173,7 @@ public class MonRepository implements IMonRepository {
                 + " From Users join Lop on Users.Id = Lop.IdGiaoVien"
                 + " join Mon on Lop.IdMon = Mon.Id"
                 + " join Ky_Mon on Mon.Id = Ky_Mon.IdMon"
-                + " where Users.IdNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
+                + " where Ky_Mon.idNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
         List<QuanLyMon> listResult = new ArrayList<>();
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh, idKy, idGV);

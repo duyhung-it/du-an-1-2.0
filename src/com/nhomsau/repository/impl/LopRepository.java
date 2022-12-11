@@ -195,7 +195,7 @@ public class LopRepository implements ILopRepository {
                 + " From Users join Lop on Users.Id = Lop.IdGiaoVien"
                 + " join Mon on Lop.IdMon = Mon.Id"
                 + " join Ky_Mon on Mon.Id = Ky_Mon.IdMon"
-                + " where Mon.Id = ? and Users.IdNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
+                + " where Mon.Id = ? and Ky_Mon.idNganh = ? and Ky_Mon.IdKy = ? and Lop.IdGiaoVien = ?";
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql, idMon, idNganh, idKy, idGV);
             while (rs.next()) {
