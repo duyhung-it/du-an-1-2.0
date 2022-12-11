@@ -9,11 +9,12 @@ import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.Form1;
+import com.raven.form.FormGuiEmail;
 import com.raven.form.FormThongTinSv;
 import com.raven.form.Form_DanhSachSinhVien;
 import com.raven.form.Form_Diem;
-import com.raven.form.Form_GuiEmail;
 import com.raven.form.Form_Home;
+import com.raven.form.FormguiEmailGV;
 import com.raven.form.LoginFrame;
 import com.raven.form.MainForm;
 import com.raven.form.ThongTinSinhVien;
@@ -71,7 +72,7 @@ public class MainLecturer extends javax.swing.JFrame {
                         }
                     }
                 } else if (menuIndex == 1) {
-                    main.showForm(new Form_GuiEmail());
+                        main.showForm(new FormguiEmailGV());
                 }else if(menuIndex == 2){
                     if (subMenuIndex == 0) {
                         main.showForm(new FormThongTinSv());
