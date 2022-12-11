@@ -59,6 +59,7 @@ public class FormKy extends javax.swing.JPanel {
         TxtId = new com.raven.swing.textfield.TextField();
         txtMaKy = new com.raven.swing.textfield.TextField();
         txtTenKy = new com.raven.swing.textfield.TextField();
+        btnThemMon = new com.raven.swing.button.Button();
 
         txtNamHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +108,13 @@ public class FormKy extends javax.swing.JPanel {
 
         TxtId.setEditable(false);
 
+        btnThemMon.setText("Thêm môn hoc");
+        btnThemMon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemMonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,11 +131,17 @@ public class FormKy extends javax.swing.JPanel {
                         .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
                     .addComponent(TxtId, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(txtTenKy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNamHoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMaKy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNamHoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaKy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(66, 66, 66))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnThemMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +158,8 @@ public class FormKy extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addContainerGap())
@@ -206,6 +221,16 @@ public class FormKy extends javax.swing.JPanel {
         txtMaKy.setText(tblKy.getValueAt(selectRow, 0).toString());
         txtTenKy.setText(tblKy.getValueAt(selectRow, 1).toString());
         txtNamHoc.setText(tblKy.getValueAt(selectRow, 2).toString());
+        
+    }//GEN-LAST:event_tblKyMouseClicked
+
+    private void txtNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamHocActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamHocActionPerformed
+
+    private void btnThemMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemMonActionPerformed
+        // TODO add your handling code here:
+        int selectRow = tblKy.getSelectedRow();
         if(selectRow >= 0){
             String maKy = tblKy.getValueAt(selectRow, 0).toString();
             String idKy = iKyService.getIdKy(maKy);
@@ -221,11 +246,7 @@ public class FormKy extends javax.swing.JPanel {
             }
         });
         }
-    }//GEN-LAST:event_tblKyMouseClicked
-
-    private void txtNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamHocActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNamHocActionPerformed
+    }//GEN-LAST:event_btnThemMonActionPerformed
 
         private void clear() {
         TxtId.setText("");
@@ -302,6 +323,7 @@ public class FormKy extends javax.swing.JPanel {
     private com.raven.swing.textfield.TextField TxtId;
     private com.raven.swing.button.Button btnSua;
     private com.raven.swing.button.Button btnThem;
+    private com.raven.swing.button.Button btnThemMon;
     private com.raven.swing.button.Button btnXoa;
     private javax.swing.JScrollPane jScrollPane1;
     private com.raven.swing.table.Table tblKy;

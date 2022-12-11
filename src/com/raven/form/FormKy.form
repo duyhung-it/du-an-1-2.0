@@ -30,12 +30,21 @@
                   <Component id="TxtId" pref="288" max="32767" attributes="0"/>
                   <Component id="txtTenKy" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="157" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtNamHoc" alignment="1" min="-2" pref="274" max="-2" attributes="0"/>
-                  <Component id="txtMaKy" alignment="1" min="-2" pref="274" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace pref="157" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtNamHoc" alignment="1" min="-2" pref="274" max="-2" attributes="0"/>
+                          <Component id="txtMaKy" alignment="1" min="-2" pref="274" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnThemMon" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,6 +66,7 @@
                   <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnThemMon" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="252" max="32767" attributes="0"/>
@@ -148,6 +158,14 @@
     <Component class="com.raven.swing.textfield.TextField" name="txtMaKy">
     </Component>
     <Component class="com.raven.swing.textfield.TextField" name="txtTenKy">
+    </Component>
+    <Component class="com.raven.swing.button.Button" name="btnThemMon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Th&#xea;m m&#xf4;n hoc"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemMonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -4,8 +4,12 @@
  */
 package com.raven.form;
 
+import com.nhomsau.domainmodel.Lop;
 import com.nhomsau.domainmodel.ModelSinhVienLop;
+import com.nhomsau.domainmodel.SinhVienMon;
+import com.nhomsau.repository.impl.SinhVienMonService;
 import com.nhomsau.service.INganhService;
+import com.nhomsau.service.ISinhVienMonService;
 import com.nhomsau.service.ISinhVienService;
 import com.nhomsau.service.impl.LopService;
 import com.nhomsau.service.impl.NganhService;
@@ -48,7 +52,7 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
     private SinhVienView sinhvien;
     List<SinhVienView> listUsers;
     private QuanLyLop lop;
-
+    private ISinhVienMonService sinhVienMonService;
     public DialogThemSinhVienVaoLop(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -56,6 +60,7 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
         nganhService= new NganhService();
         sinhVienService = new SinhVienService();
         sinhVienLopService = new SinhVienLopService();
+        sinhVienMonService = new SinhVienMonService();
         lopService = new LopService();
         initTextField();
     }
@@ -180,12 +185,12 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
                     .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(panelTransparent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(panelTransparent2, "card3");
@@ -219,7 +224,16 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
             ModelSinhVienLop modelSVL = new ModelSinhVienLop();
             modelSVL.setIdLop(this.lop.getIdLop());
             modelSVL.setIdSinhVien(sinhvien.getId());
-            result = this.sinhVienLopService.themSinhVienLop(modelSVL);
+            SinhVienMon svm = new SinhVienMon();
+            Lop lop = this.lopService.findById(modelSVL.getIdLop());
+            svm.setIdMon(lop.getIdMonHoc());
+            svm.setIdSinhVien(sinhvien.getId());
+            svm.setTinhTrang("Đang học");
+            if(this.sinhVienMonService.insert(svm)){
+                result = this.sinhVienLopService.themSinhVienLop(modelSVL);
+            }else{
+                result = "Sinh viên dã hoc mon nay";
+            }
             JOptionPane.showMessageDialog(this, result);
             loadTable();
         }

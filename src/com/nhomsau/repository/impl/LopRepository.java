@@ -213,8 +213,8 @@ public class LopRepository implements ILopRepository {
         StringBuilder sql = new StringBuilder("select MaLop,TenLop,Users.HoTen,MAX(Diem.NgayNhap) 'NgayNhap',COUNT(Diem.IdSinhVien) 'DaNhap' from Lop ");
         sql.append(" join Users on Lop.IdGiaoVien = Users.Id and ChucVu = 2 ");
         sql.append(" join DauDiem_Mon on DauDiem_Mon.IdMon = Lop.IdMon ");
-        sql.append(" join SinhVien_Lop on Lop.Id = SinhVien_Lop.IdLop ");
-        sql.append(" join Diem on Diem.IdDauDiem = DauDiem_Mon.IdDauDiem and Lop.IdMon = Diem.IdMonHoc and SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
+        sql.append(" left join SinhVien_Lop on Lop.Id = SinhVien_Lop.IdLop ");
+        sql.append(" left join Diem on Diem.IdDauDiem = DauDiem_Mon.IdDauDiem and Lop.IdMon = Diem.IdMonHoc and SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
         sql.append(" where DauDiem_Mon.IdDauDiem = ? and Lop.IdMon = ? ");
         if(idLop != null){
             sql.append(" and Lop.Id = ? ");

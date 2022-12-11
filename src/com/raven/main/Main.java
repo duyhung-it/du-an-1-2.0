@@ -13,6 +13,7 @@ import com.raven.form.FormDauDiem;
 import com.raven.form.FormDiemTheoLop;
 import com.raven.form.FormKy;
 import com.raven.form.FormNganh;
+import com.raven.form.FormThongTinSv;
 import com.raven.form.Form_Home;
 import com.raven.form.Form_MonHoc;
 import com.raven.form.Form_Mon_DauDiem;
@@ -100,7 +101,7 @@ public class Main extends javax.swing.JFrame {
                     }
                 } else if(menuIndex == 3){
                     if(subMenuIndex == 0){
-                        
+                        main.showForm(new FormThongTinSv());
                     }else if(subMenuIndex == 1){
                         int confirm = JOptionPane.showConfirmDialog(Main.getFrames()[0], "Ban co muon dang xuat khong?");
                         if(confirm == JOptionPane.YES_OPTION){

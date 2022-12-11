@@ -15,10 +15,17 @@ import com.nhomsau.util.DBConnection;
 public class SinhVienMonRepository implements ISinhVienMonRepository{
 
     @Override
-    public void insert(SinhVienMon sinhVienMon) {
+    public boolean insert(SinhVienMon sinhVienMon) {
         String sql = "INSERT INTO [dbo].[SinhVien_Mon] ([IdSinhVien],[IdMon],[TinhTrang]) " +
                     " VALUES (?,?,?)";
-        DBConnection.ExcuteDungna(sql, sinhVienMon.getIdSinhVien(),sinhVienMon.getIdMon(),sinhVienMon.getTinhTrang());
+        try{
+        int aff = DBConnection.ExcuteDungna(sql, sinhVienMon.getIdSinhVien(),sinhVienMon.getIdMon(),sinhVienMon.getTinhTrang());
+            if (aff > 0) {
+                return true;
+            }else return false;
+        }catch(Exception e){
+            return false;
+        }
     }
 
     @Override
