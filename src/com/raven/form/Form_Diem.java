@@ -443,9 +443,9 @@ public class Form_Diem extends javax.swing.JPanel {
                 excelJtableImport = new XSSFWorkbook(excelBIS);
                 XSSFSheet excelSheet = excelJtableImport.getSheetAt(0);
 
-                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
+                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
                     XSSFRow excelRow = excelSheet.getRow(row);
-                    for (int column = 3; column < excelRow.getLastCellNum() - 1; column++) {
+                    for (int column = 3; column < excelRow.getLastCellNum(); column++) {
                         XSSFCell excelCell = excelRow.getCell(column);
 
                         Object diemOb = tblDiem.getValueAt(row - 1, column);
@@ -499,7 +499,7 @@ public class Form_Diem extends javax.swing.JPanel {
                 }
                 for (int i = 0; i < tblDiem.getRowCount(); i++) {
                     Row row = sheet.createRow(i + 1);
-                    for (int j = 0; j < tblDiem.getColumnCount(); j++) {
+                    for (int j = 0; j < tblDiem.getColumnCount()-1; j++) {
                         Cell cell = row.createCell(j);
                         if (tblDiem.getValueAt(i, j) != null) {
                             cell.setCellValue(tblDiem.getValueAt(i, j).toString());

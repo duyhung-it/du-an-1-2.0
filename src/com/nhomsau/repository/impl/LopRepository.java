@@ -174,7 +174,7 @@ public class LopRepository implements ILopRepository {
         List<QuanLyLop> lops = new ArrayList<>();
         StringBuilder sql = new StringBuilder("select Lop.* from Lop ");
         sql.append("join Ky_Mon on Ky_Mon.IdMon = Lop.IdMon ");
-        sql.append("join Mon_Nganh on Mon_Nganh.Id = Lop.IdMon ");
+        sql.append("join Mon_Nganh on Mon_Nganh.Id = Lop.IdMon and Ky_Mon.idNganh = Mon_Nganh.IdNganh ");
         sql.append("where Lop.IdMon = ? and Ky_Mon.IdKy = ? and Mon_Nganh.IdNganh = ?");
         try {
             ResultSet rs = DBConnection.getDataFromQuery(sql.toString(), idMon, idKy, idNganh);

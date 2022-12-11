@@ -77,8 +77,8 @@ public class MonRepository implements IMonRepository {
     @Override
     public List<QuanLyMon> getMonTheoNganh(String idNganh, String idKy) {
         ResultSet rs = null;
-        String sql = "select Mon.* from Mon "
-                + "                   join Ky_Mon on Mon.Id = Ky_Mon.IdMon ";
+        String sql = "select distinct Mon.* from Mon "
+                + "   join Ky_Mon on Mon.Id = Ky_Mon.IdMon ";
         if(idNganh != null){
             sql += "where Ky_Mon.idNganh = ? and Ky_Mon.IdKy = ?";
             try {

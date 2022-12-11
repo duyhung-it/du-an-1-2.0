@@ -98,6 +98,7 @@ public class Form_Statistical extends javax.swing.JPanel {
         chartPanel = new ChartPanel(barChart);
         pnlTrDaTa.setVisible(false);
         tblStatistical.fixTable(jScrollPane1);
+        tblModel = (DefaultTableModel) tblStatistical.getModel();
         loadCBB();
         loadTable();
     }

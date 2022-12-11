@@ -299,7 +299,13 @@ public class DialogThemSinhVienVaoLop extends javax.swing.JDialog {
             ModelSinhVienLop sinhVienLop = new ModelSinhVienLop();
             sinhVienLop.setIdLop(lop.getIdLop());
             sinhVienLop.setIdSinhVien(sv.getId());
+            SinhVienMon svm = new SinhVienMon();
+            svm.setIdMon(lop.getIdMon());
+            svm.setIdSinhVien(sinhVienLop.getIdSinhVien());
+            svm.setTinhTrang("Dang Hoc");
+            if(this.sinhVienMonService.insert(svm)){
             String hello = this.sinhVienLopService.themSinhVienLop(sinhVienLop);
+            }   
         }
         loadTable();
     }//GEN-LAST:event_btnImportActionPerformed

@@ -124,9 +124,7 @@ public class DauDiemRepository implements IDauDiemRepository {
 
     @Override
     public List<DauDiem> findAllDauDiem(String idMon) {
-        String sql = "select distinct daudiem.id, daudiem.madaudiem ,DauDiem.TenDauDiem\n"
-                + "from mon join DauDiem_Mon on mon.Id = DauDiem_Mon.IdMon\n"
-                + "		join DauDiem on DauDiem_Mon.IdDauDiem = DauDiem.Id\n"
+        String sql = "select distinct * from daudiem "
                 + "except  \n"
                 + "select daudiem.id, daudiem.madaudiem, DauDiem.TenDauDiem\n"
                 + "from mon join DauDiem_Mon on mon.Id = DauDiem_Mon.IdMon\n"
