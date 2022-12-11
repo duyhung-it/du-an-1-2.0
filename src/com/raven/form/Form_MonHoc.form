@@ -22,7 +22,10 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lbId" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                              <Component id="lbId" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="txtMa" alignment="0" pref="292" max="32767" attributes="0"/>
                           <Component id="txtTen" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -40,7 +43,9 @@
                       <Component id="btnSua" min="-2" pref="90" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Component id="btnXoa" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="457" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="button1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="313" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -69,6 +74,7 @@
                   <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="button1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="242" max="32767" attributes="0"/>
@@ -165,6 +171,14 @@
     <Component class="com.raven.swing.textfield.TextField" name="txtSoBuoi">
     </Component>
     <Component class="com.raven.swing.textfield.TextField" name="txtTinChi">
+    </Component>
+    <Component class="com.raven.swing.button.Button" name="button1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Th&#xea;m &#x111;&#x1ea7;u &#x111;i&#x1ec3;m"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -97,6 +97,7 @@ public class Form_MonHoc extends javax.swing.JPanel {
         btnXoa = new com.raven.swing.button.Button();
         txtSoBuoi = new com.raven.swing.textfield.TextField();
         txtTinChi = new com.raven.swing.textfield.TextField();
+        button1 = new com.raven.swing.button.Button();
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +156,13 @@ public class Form_MonHoc extends javax.swing.JPanel {
             }
         });
 
+        button1.setText("Thêm đầu điểm");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,7 +173,9 @@ public class Form_MonHoc extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbId, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(lbId))
                             .addComponent(txtMa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                             .addComponent(txtTen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,7 +190,9 @@ public class Form_MonHoc extends javax.swing.JPanel {
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(457, 457, 457))))
+                        .addGap(38, 38, 38)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(313, 313, 313))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +213,8 @@ public class Form_MonHoc extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addContainerGap())
@@ -222,51 +235,33 @@ public class Form_MonHoc extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        QuanLyMon ql = validateMon();
-        if (ql != null) {
-            int row = tblMon.getSelectedRow();
-            if (row >= 0) {
-                String id = dsQlMon.get(row).getId();
-                ql.setId(id);
-                iMonService.update(ql);
-                JOptionPane.showMessageDialog(this, "Thành công");
-
+        int selectedRow = tblMon.getSelectedRow();
+        if(selectedRow != -1){
+            int confirm = JOptionPane.showConfirmDialog(this, "Ban co muon cap nhat?");
+            if(confirm == JOptionPane.YES_OPTION){
+            QuanLyMon mon = validateMon();
+            String id = this.iMonService.getIdMon(mon.getMa());
+            mon.setId(id);
+            this.iMonService.update(mon);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Thất bại");
+            loadTable();
         }
-        loadTable();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void tblMonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMonMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
         int row = tblMon.getSelectedRow();
         if (row >= 0) {
+            String ma = tblMon.getValueAt(row, 0).toString();
+            String ten = tblMon.getValueAt(row, 1).toString();
+            String tinChi = tblMon.getValueAt(row, 2).toString();
+            String buoiHoc = tblMon.getValueAt(row, 3).toString();
 
-            String id = dsQlMon.get(row).getId();
-            
-            String tenMon = dsQlMon.get(row).getTen();
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    FormHeSo fhs = new FormHeSo();
-                    fhs.setIdMon(id);
-                    fhs.setVisible(true);
-                    fhs.setTitle(tenMon);
-                    
-                }
-            });
-//            String ma = tblMon.getValueAt(row, 0).toString();
-//            String ten = tblMon.getValueAt(row, 1).toString();
-//            String tinChi = tblMon.getValueAt(row, 2).toString();
-//            String buoiHoc = tblMon.getValueAt(row, 3).toString();
+            txtMa.setText(ma);
+            txtTen.setText(ten);
+            txtTinChi.setText(tinChi);
+            txtSoBuoi.setText(buoiHoc);
 
-//            lbId.setText(id);
-//            txtMa.setText(ma);
-//            txtTen.setText(ten);
-//            txtTinChi.setText(tinChi);
-//            txtSoBuoi.setText(buoiHoc);
-        }
         }
     }//GEN-LAST:event_tblMonMouseClicked
 
@@ -282,10 +277,31 @@ public class Form_MonHoc extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        int row = tblMon.getSelectedRow();
+        if (row >= 0) {
+
+            String id = dsQlMon.get(row).getId();
+
+            String tenMon = dsQlMon.get(row).getTen();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    FormHeSo fhs = new FormHeSo();
+                    fhs.setIdMon(id);
+                    fhs.setVisible(true);
+                    fhs.setTitle(tenMon);
+
+                }
+            });
+        }
+    }//GEN-LAST:event_button1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.button.Button btnSua;
     private com.raven.swing.button.Button btnThem;
     private com.raven.swing.button.Button btnXoa;
+    private com.raven.swing.button.Button button1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbId;
     private com.raven.swing.table.Table tblMon;
