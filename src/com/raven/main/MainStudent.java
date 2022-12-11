@@ -8,6 +8,7 @@ import com.raven.dialog.Message;
 import com.raven.event.EventMenuSelected;
 import com.raven.event.EventShowPopupMenu;
 import com.raven.form.FormBangDiemTheoKy;
+import com.raven.form.FormGuiEmail;
 import com.raven.form.FormLichSuHoc;
 import com.raven.form.FormThongTinSv;
 import com.raven.form.Form_Home;
@@ -60,25 +61,26 @@ public class MainStudent extends javax.swing.JFrame {
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
 //                if (CheckLogin.isLogin() && CheckLogin.loginModel.getChucVu().trim().equalsIgnoreCase("Sinh Viên")) {
-                    if (menuIndex == 0) {
-                        if (subMenuIndex == 0) {
-                            main.showForm(new FormBangDiemTheoKy());
-                        } else if (subMenuIndex == 1) {
-                            main.showForm(new FormLichSuHoc());
-                        }
+                if (menuIndex == 0) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new FormBangDiemTheoKy());
+                    } else if (subMenuIndex == 1) {
+                        main.showForm(new FormLichSuHoc());
                     }
-                    if (menuIndex == 1) {
-                        if (subMenuIndex == 0) {
-                            main.showForm(new FormThongTinSv());
-                        }else if(subMenuIndex == 1){
-                            int confirm = JOptionPane.showConfirmDialog(MainStudent.getFrames()[0], "Ban co muon dang xuat khong?");
-                        if(confirm == JOptionPane.YES_OPTION){
+                } else if (menuIndex == 1) {
+                    main.showForm(new FormGuiEmail());
+                } else  if (menuIndex == 2) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new FormThongTinSv());
+                    } else if (subMenuIndex == 1) {
+                        int confirm = JOptionPane.showConfirmDialog(MainStudent.getFrames()[0], "Ban co muon dang xuat khong?");
+                        if (confirm == JOptionPane.YES_OPTION) {
                             CheckLogin.loginModel = null;
                             new LoginFrame().setVisible(true);
                             MainStudent.getFrames()[0].dispose();
                         }
-                        }
                     }
+                }
 //                } else {
 //                    showMessage("Ban chua dang nhap!");
 //                }

@@ -57,7 +57,7 @@ public class MenuStudent extends PanelTransparent {
 
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/1.png")), "Điểm", "Bảng điểm theo kỳ", "Lịch sử học","Bảng điểm"));
-//        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/2.png")), "Charts", "Morris", "Flot", "Line"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/2.png")), "Liên hệ"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/com/raven/icon/3.png")), "Account", "Profile", "Log out"));
   
     }
