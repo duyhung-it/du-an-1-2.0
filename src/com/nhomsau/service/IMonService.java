@@ -16,7 +16,7 @@ public interface IMonService {
     List<QuanLyMon> getMonTheoNganh(String idNganh,String idKy);
     List<QuanLyMon> getMonTheoGV(String idNganh,String idKy,String idGV); 
     QuanLyMon findOne(String id);
-    List<QuanLyMon> findMon(String idky);
+    List<QuanLyMon> findMon(String idky,String idNganh);
     void insert(QuanLyMon mon);
     void update (QuanLyMon mon);
     void delete(String idMon);

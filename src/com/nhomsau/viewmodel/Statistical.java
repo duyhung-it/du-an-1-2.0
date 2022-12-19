@@ -79,13 +79,13 @@ public class Statistical {
         this.classname = classname;
     }
     public String getNote() {
-        if (score > 0 && score <= 2.9) {
+        if (score > 0 && score <= 5) {
             return "Yếu";
-        } else if (score <= 4.9) {
+        } else if (score <= 6.5) {
             return "Trung bình";
-        } else if (score <= 7.9) {
+        } else if (score <= 8) {
             return "Khá";
-        }else if (score <= 8.9) {
+        }else if (score <= 9) {
             return "Giỏi";
         } else {
             return "Xuất sắc";

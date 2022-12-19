@@ -21,8 +21,12 @@ public class LichSuDiemReposiroty implements ILichSubangDiemRepository{
     final String sql="select TenMon,MaMon,TenKy,NamHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh'\n" +
 "	from Diem " +
 "	join DauDiem_Mon on DauDiem_Mon.IdDauDiem = Diem.IdDauDiem and Diem.IdMonHoc = DauDiem_Mon.IdMon " +
-"	join Mon on Diem.IdMonHoc = Mon.Id " +
-"	join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc " +
+"	join Mon on Diem.IdMonHoc = Mon.Id and DauDiem_Mon.IdMon = Mon.Id "
+        + " join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien "
+            + " join Lop on Lop.Id = SinhVien_Lop.IdLop and Lop.IdMon = Diem.IdMonHoc " +
+ " join Users on users.Id = Diem.IdSinhVien " +
+            "	join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc and Ky_Mon.idNganh = Users.IdNganh "
+            +
 "	join Ky on Ky_Mon.IdKy = Ky.Id " +
 "       where Diem.IdSinhVien = ? "+
 "	group by TenMon,MaMon,TenKy,NamHoc";

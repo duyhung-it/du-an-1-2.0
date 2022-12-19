@@ -20,11 +20,13 @@ public interface IMonRepository {
     void insert(Mon mon);
     void delete(String idMon);
     void update(Mon mon);
-    List<QuanLyMon> findMon(String idky);
+    List<QuanLyMon> findMon(String idky,String idNganh);
     String getTenMon(String id);
     List<QuanLyMon> getMonDaCo(String idKy,String idNganh); 
     List<QuanLyMon> getMonChuaCo(String idKy,String idNganh); 
     String getIdMon(String maMon);
     int getTinChi(String idNganh,String tenMon);
     int getTinChi1(String idNganh);
+    String getTenMonNganh(String idNganh);
+    String getIdByName(String name);
 }

@@ -125,4 +125,16 @@ public class NganhRepository implements INganhRepository {
         }
         return tenNganh;
     }
+
+    @Override
+    public String findIdNganh(String maNganh) {
+        String sql = "SELECT * FROM Nganh where MaNganh = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql,maNganh);
+            while(rs.next()) return rs.getString("Id");
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

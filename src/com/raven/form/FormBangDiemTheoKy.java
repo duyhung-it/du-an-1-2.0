@@ -294,7 +294,6 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
         if (mon1 != null) {
             if (modelLogin != null) {
                 list = new DiemRepository().getDiem(modelLogin.getIdUser(), mon1.getId());
-                System.out.println(modelLogin.getIdUser());
                 for (BangDiem b : list) {
                     Object[] obj = new Object[]{
                         tbDiem.getRowCount() + 1,
@@ -351,7 +350,7 @@ public class FormBangDiemTheoKy extends javax.swing.JPanel {
         if (k != null) {
             System.out.println(k.getTen());
         }
-        List<QuanLyMon> lists = this.iMonService.findMon(k.getId());
+        List<QuanLyMon> lists = this.iMonService.findMon(k.getId(),modelLogin.getIdNganh());
         cbxMon.removeAllItems();
         if (!lists.isEmpty()) {
             for (QuanLyMon mo : lists) {

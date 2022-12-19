@@ -29,18 +29,18 @@ public class DiemRepository implements IDiemRepository {
         ResultSet rs = null;
         sql.append("select ");
         if(top != null) sql.append(" top ").append(top);
-        sql.append(" Diem.IdSinhVien,Lop.Id 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh' ");
+        sql.append(" Diem.IdSinhVien,SinhVien_Lop.IdLop 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh' ");
         sql.append(" from Diem ");
         sql.append("join DauDiem_Mon on DauDiem_Mon.IdDauDiem = Diem.IdDauDiem and Diem.IdMonHoc = DauDiem_Mon.IdMon ");
         sql.append("join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
         sql.append(" join Lop on Lop.Id = SinhVien_Lop.IdLop and Lop.IdMon = Diem.IdMonHoc ");
         sql.append("join Users on users.Id = SinhVien_Lop.IdSinhVien and ChucVu = 1 ");
-        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc ");
+        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc and Ky_Mon.idNganh = Users.IdNganh ");
         sql.append(" where Ky_Mon.IdKy = ? and Diem.IdMonHoc = ? ");
         if(idNganh != null){
             sql.append(" and Users.IdNganh = ?");
         }
-        sql.append(" group by Diem.IdSinhVien  ,Lop.Id ,Diem.IdMonHoc ");
+        sql.append(" group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc ");
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {
             
@@ -84,18 +84,18 @@ public class DiemRepository implements IDiemRepository {
         ResultSet rs = null;
         sql.append("select ");
         if(top != null) sql.append(" top ").append(top);
-        sql.append(" Diem.IdSinhVien,Lop.Id 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh' ");
+        sql.append(" Diem.IdSinhVien,SinhVien_Lop.IdLop 'IdLop',Diem.IdMonHoc, Sum(Diem.Diem * DauDiem_Mon.HeSo/100) 'DiemTrungBinh' ");
         sql.append(" from Diem ");
         sql.append("join DauDiem_Mon on DauDiem_Mon.IdDauDiem = Diem.IdDauDiem and Diem.IdMonHoc = DauDiem_Mon.IdMon ");
         sql.append("join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
         sql.append(" join Lop on Lop.Id = SinhVien_Lop.IdLop and Lop.IdMon = Diem.IdMonHoc ");
         sql.append("join Users on users.Id = SinhVien_Lop.IdSinhVien and ChucVu = 1 ");
-        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc ");
+        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc and Ky_Mon.idNganh = Users.IdNganh ");
         sql.append(" where Ky_Mon.IdKy = ? ");
         if(idNganh != null){
             sql.append(" and Users.IdNganh = ?");
         }
-        sql.append(" group by Diem.IdSinhVien  ,Lop.Id ,Diem.IdMonHoc ");
+        sql.append(" group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc ");
         List<BangDiemTheoMon> listResults = new ArrayList<>();
         try {
             
@@ -133,7 +133,10 @@ public class DiemRepository implements IDiemRepository {
         return listResults;
     }
     
-    final String sql="select TenDauDiem, Diem from Diem join DauDiem on Diem.IdDauDiem = DauDiem.Id where IdMonHoc = ? and IdSinhVien = ?";
+    final String sql="select TenDauDiem, Diem from Diem "
+            + " join DauDiem on Diem.IdDauDiem = DauDiem.Id "
+            
+            + " where IdMonHoc = ? and IdSinhVien = ? ";
     @Override
     public List<BangDiem> getDiem(String idsv,String idMon){
         List<BangDiem> list = new ArrayList<>();
@@ -207,9 +210,10 @@ public class DiemRepository implements IDiemRepository {
     @Override
     public List<QuanLyDiem> getDiemByMon(String idDauDiem, String idMon, String idLop) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select IdSinhVien,Diem,ghichu from Diem ");
+        sql.append("select Diem.IdSinhVien,Diem,ghichu from Diem ");
         sql.append("join Users on USers.Id = Diem.IdSinhVien ");
         sql.append("join Lop on Lop.IdMon = Diem.IdMonHoc ");
+        sql.append(" join SinhVien_Lop on Lop.Id = SinhVien_Lop.IdLop and Diem.IdSinhVien = SinhVien_Lop.IdSinhVien ");
         sql.append("where IdDauDiem = ? and IdMonHoc = ? and Lop.Id = ? ");
         sql.append("order by HoTen");
         
@@ -239,8 +243,9 @@ public class DiemRepository implements IDiemRepository {
         sql.append(" from Diem ");
         sql.append("join DauDiem_Mon on DauDiem_Mon.IdDauDiem = Diem.IdDauDiem and Diem.IdMonHoc = DauDiem_Mon.IdMon ");
         sql.append("join SinhVien_Lop on SinhVien_Lop.IdSinhVien = Diem.IdSinhVien ");
+        sql.append("join Lop on Lop.Id = SinhVien_Lop.IdLop and Lop.IdMon = Diem.IdMonHoc ");
         sql.append("join Users on users.Id = Diem.IdSinhVien ");
-        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc ");
+        sql.append("join Ky_Mon on Ky_Mon.IdMon = Diem.IdMonHoc and Users.IdNganh = Ky_Mon.IdNganh ");
         sql.append("where users.IdNganh = ? and Ky_Mon.IdKy = ? and Diem.IdMonHoc = ? and Diem.IdSinhVien = ? ");
         sql.append("group by Diem.IdSinhVien  ,SinhVien_Lop.IdLop ,Diem.IdMonHoc");
         List<BangDiemTheoMon> listResults = new ArrayList<>();

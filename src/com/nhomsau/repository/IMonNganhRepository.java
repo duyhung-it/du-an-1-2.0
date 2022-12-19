@@ -4,16 +4,16 @@
  */
 package com.nhomsau.repository;
 
-import com.nhomsau.viewmodel.QuanLyNganh;
+import com.nhomsau.domainmodel.MonNganh;
 import java.util.List;
 
 /**
  *
- * @author Nguyen Duy Hung
+ * @author HaTanBinh
  */
-public interface INganhRepository {
-     List<QuanLyNganh> findAll1();
-     QuanLyNganh findOne(String idNganh);
-     String findTen(String idNganh);
-     String findIdNganh(String maNganh);
+public interface IMonNganhRepository {
+    List<MonNganh> findMonNganh1(String idNganh);
+    List<MonNganh> findMonNganh(String idNganh);
+    void insert(MonNganh monNganh);
+    void delete(MonNganh mn);
 }

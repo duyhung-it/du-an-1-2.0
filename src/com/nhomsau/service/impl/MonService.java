@@ -40,8 +40,8 @@ public class MonService implements IMonService {
     }
 
     @Override
-    public List<QuanLyMon> findMon(String idky) {
-        return this.repository.findMon(idky);
+    public List<QuanLyMon> findMon(String idky,String idNganh) {
+        return this.repository.findMon(idky,idNganh);
     }
 
     @Override

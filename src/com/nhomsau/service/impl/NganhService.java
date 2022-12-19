@@ -60,5 +60,10 @@ public class NganhService implements INganhService {
     public QuanLyNganh findOne(String idNganh) {
         return this.repository.findOne(idNganh);
     }
+
+    @Override
+    public String findIdNganh(String maNganh) {
+        return this.repository.findIdNganh(maNganh);
+    }
     
 }

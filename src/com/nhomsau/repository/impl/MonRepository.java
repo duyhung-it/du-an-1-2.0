@@ -25,7 +25,9 @@ public class MonRepository implements IMonRepository {
 
     private final MonMapper mapper;
     String sql = "select * from mon";
-    String selectAll_find_ten = "select * from mon join ky_mon on mon.id=ky_mon.idmon  where idky=?";
+    String selectAll_find_ten = "select * from mon "
+            + " join ky_mon on mon.id=ky_mon.idmon "
+            + " where idky= ? and idNganh = ?";
     List<QuanLyMon> list;
 
     public MonRepository() {
@@ -107,8 +109,8 @@ public class MonRepository implements IMonRepository {
     }
 
     @Override
-    public List<QuanLyMon> findMon(String idky) {
-        return getSelectSql(selectAll_find_ten, idky);
+    public List<QuanLyMon> findMon(String idky,String idNganh) {
+        return getSelectSql(selectAll_find_ten, idky,idNganh);
     }
 
     public List<QuanLyMon> getSelectSql(String sql, Object... args) {
@@ -210,13 +212,13 @@ public class MonRepository implements IMonRepository {
     public List<QuanLyMon> getMonChuaCo(String idKy, String idNganh) {
         List<QuanLyMon> list = new ArrayList<>();
         String sql = "select MaMon,TenMon\n"
-                + "from Mon\n"
+                + "from Mon join Mon_Nganh on Mon.Id = Mon_Nganh.Id  where IdNganh = ?\n"
                 + "EXCEPT\n"
                 + "select MaMon,TenMon\n"
                 + "from Ky_Mon join Mon on Ky_Mon.IdMon = Mon.Id\n"
-                + "where Ky_Mon.IdKy = ? and idNganh = ?";
+                + "where idNganh = ?";
         try {
-            ResultSet rs = DBConnection.getDataFromQuery(sql, idKy, idNganh);
+            ResultSet rs = DBConnection.getDataFromQuery(sql, idNganh,idNganh);
             while (rs.next()) {
                 String maMon = rs.getString("MaMon");
                 String tenMon = rs.getNString("TenMon");
@@ -271,4 +273,34 @@ public class MonRepository implements IMonRepository {
         }
         return a;
     }
+    @Override
+    public String getTenMonNganh(String idNganh) {
+        String ten = null;
+        String select_Mon = "select distinct tenmon "
+                + "from mon "
+                + " where id = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(select_Mon, idNganh);
+            while (rs.next()) {
+                ten = rs.getNString("tenmon");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ten;
+    }
+
+    @Override
+    public String getIdByName(String name) {
+        String idMon = "";
+        String sql = "select Id from Mon where TenMon = ?";
+        try {
+            ResultSet rs = DBConnection.getDataFromQuery(sql, name);
+            while (rs.next()) {
+                idMon = rs.getString("Id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idMon;}
 }

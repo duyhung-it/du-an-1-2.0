@@ -14,4 +14,5 @@ import java.util.List;
 public interface INganhService {
     List<QuanLyNganh> findAll1();
     QuanLyNganh findOne(String idNganh);
+    String findIdNganh(String maNganh);
 }
